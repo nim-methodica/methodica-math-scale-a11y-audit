@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>דוח בקרת נגישות — קנה מידה (Scale) · מודול 01-03</title>
+<style>
+  :root { --blocker:#d12; --warning:#e67e00; --polish:#1769d1; }
+  body { font-family:"Assistant","Segoe UI",Arial,sans-serif; line-height:1.65; max-width:1000px;
+         margin:0 auto; padding:24px; color:#222; background:#fafafa; }
+  h1 { font-size:1.7rem; border-bottom:2px solid #ccc; padding-bottom:8px; }
+  h2 { font-size:1.3rem; margin-top:30px; }
+  h3 { font-size:1.1rem; margin-top:26px; background:#eef1f5; padding:6px 12px; border-radius:6px;
+       border-inline-start:5px solid #6b7a90; }
+  table { border-collapse:collapse; width:100%; margin:8px 0 18px; background:#fff; font-size:0.95rem; }
+  th,td { border:1px solid #d6d6d6; padding:8px 10px; text-align:right; vertical-align:top; }
+  th { background:#33405a; color:#fff; font-weight:600; }
+  th:nth-child(1),td:nth-child(1) { width:16%; }
+  th:nth-child(2),td:nth-child(2) { width:30%; }
+  th:nth-child(3),td:nth-child(3) { width:30%; }
+  th:nth-child(4),td:nth-child(4) { width:24%; }
+  tr.blocker td:first-child { border-inline-start:5px solid var(--blocker); background:#fdecec; }
+  tr.warning td:first-child { border-inline-start:5px solid var(--warning); background:#fff6e9; }
+  tr.polish  td:first-child { border-inline-start:5px solid var(--polish);  background:#eaf2fd; }
+  code { background:#eee; padding:1px 5px; border-radius:4px; font-family:Consolas,monospace; direction:ltr; display:inline-block; }
+  pre { background:#1e2433; color:#e6e6e6; padding:14px 16px; border-radius:8px; overflow:auto;
+        direction:ltr; text-align:left; margin:10px 0; line-height:1.5; }
+  pre code { background:none; color:inherit; padding:0; display:block; white-space:pre; font-size:0.86rem; }
+  details.solution { border:1px solid #c9d2e0; border-radius:8px; margin:12px 0; background:#f3f6fb; }
+  details.solution > summary { cursor:pointer; padding:10px 14px; font-weight:700; color:#23406e;
+        background:#e7eef9; border-radius:8px; user-select:none; }
+  details.solution[open] > summary { border-radius:8px 8px 0 0; border-bottom:1px solid #c9d2e0; }
+  details.solution > :not(summary) { margin-inline:14px; }
+  details.solution > pre { margin:12px 14px; }
+  blockquote { color:#555; border-inline-start:3px solid #bbb; margin:12px 0; padding:4px 12px; font-style:italic; }
+  ul { padding-inline-start:20px; }
+  strong { color:#000; }
+</style>
+</head>
+<body>
+<h1>דוח בקרת נגישות — קנה מידה (Scale) · מודול 01-03</h1>
+<p class=""><strong>מודול:</strong> methodica-math-scale-01-03 (משימת כיתה) · <strong>קבצים:</strong> index.html / script.js / styles.css · <strong>תאריך:</strong> 2026-06-24</p>
+<p class=""><strong>תקן:</strong> WCAG 2.1 AA + ת"י 5568 · <strong>שיטה:</strong> scan.py + axe-core 4.10.2 על <strong>כל 3 המסכים</strong> (ניווט <code>goTo</code>) + ניגודיות מחושבת + אינוונטר מלא</p>
+<p class="blocker"><strong>סיכום:</strong> 🔴 1 חוסם · 🟠 2 אזהרות · 🔵 3 ליטוש</p>
+<blockquote><strong>כיסוי:</strong> נסרקו 3/3 המסכים בריצה חיה. אישור סופי דורש קורא-מסך אנושי.</blockquote>
+<h2>מה נמצא תקין (אומת חי)</h2>
+<ul>
+<li class=""><code>&lt;html lang="he" dir="rtl"&gt;</code> ✓ · כותרת ✓ · <strong>2 תמונות — כולן עם <code>alt</code>, לא שבורות</strong> ✓</li>
+<li class=""><strong>ניגודיות תקינה בכל המסכים</strong> (טקסט כהה על לבן) ✓ · אין גרירה אינטראקטיבית · אין GIF מונפש</li>
+<li class="">הקונפיגורציה <code>correctMap/revealMap</code> ב-script.js היא <strong>תצוגת-פתרון</strong> בלבד (אין <code>draggable</code>) — לא תרגיל-גרירה</li>
+</ul>
+<h2>ממצאים</h2>
+<table>
+<thead><tr><th>סוג הבעיה</th><th>מיקום</th><th>מה נמצא (אומת חי)</th><th>המלצת תיקון</th><th>מה הפתרון פותר</th></tr></thead>
+<tbody>
+<tr class="blocker"><td>🔴 #28 שדה קלט ללא תווית</td><td><code>index.html:80</code> (<code>.s35-input</code>, מסך 2)</td><td>שדה <code>&lt;input&gt;</code> ללא <code>&lt;label&gt;</code>/<code>aria-label</code> — axe critical</td><td><strong>הוסיפו</strong> <code>aria-label</code> מתאר</td><td>קורא-מסך מזהה ייעוד השדה (WCAG 1.3.1/4.1.2 A)</td></tr>
+<tr class="warning"><td>🟠 #13 חיווי-פוקוס חלש</td><td><code>styles.css:141</code> + מופעי <code>outline:none</code>; פוקוס נשען על <code>border-color:#a51cff75</code> שקוף</td><td>אינו <code>:focus-visible</code> בולט אחיד</td><td><strong>אחדו</strong> ל-<code>:focus-visible</code> בולט (כמו <code>flag-btn</code>)</td><td>פוקוס נראה (WCAG 2.4.7 AA)</td></tr>
+<tr class="warning"><td>🟠 #26 reflow/הגדלה</td><td>קנבס קבוע 1280×710</td><td>מתכווץ כיחידה ולא משתקף; טקסט זעיר במובייל/בזום</td><td><strong>אפשרו reflow</strong> / ודאו זום 200%</td><td>קריאוּת בהגדלה (WCAG 1.4.4/1.4.10 AA)</td></tr>
+<tr class="polish"><td>🔵 #3 ריבוי H1</td><td><code>index.html</code></td><td>נמצאו <strong>2</strong> תגי <code>&lt;h1&gt;</code> (רצוי אחד)</td><td><strong>השאירו</strong> <code>&lt;h1&gt;</code> יחיד; הורידו את השני ל-<code>&lt;h2&gt;</code></td><td>היררכיית-כותרות (WCAG 1.3.1 A — best practice)</td></tr>
+<tr class="polish"><td>🔵 #4 אין landmark ראשי</td><td><code>index.html</code></td><td>אין <code>&lt;main&gt;</code></td><td><strong>עטפו</strong> ב-<code>&lt;main&gt;</code></td><td>ניווט-מהיר (best practice)</td></tr>
+<tr class="polish"><td>🔵 #30 אין prefers-reduced-motion</td><td><code>styles.css</code></td><td>חסר בלוק תנועה-מופחתת</td><td><strong>הוסיפו</strong> <code>@media (prefers-reduced-motion)</code></td><td>רגישי-תנועה (AAA — מומלץ)</td></tr>
+</tbody></table>
+<h2>הערת-תיקון</h2>
+<p class="">דיווח קודם (מדגמי) טען לבעיית-ניגודיות סגולה — <strong>הופרך</strong> בבדיקה החיה: ניגודיות תקינה בכל המסכים.</p>
+<h2>פתרונות מפורטים — קוד</h2>
+<p class="">כל ממצאי מודול זה (#28 שדה, #13 פוקוס, #26 reflow, #3 H1, #4 main, #30 reduced-motion) הם</p>
+<p class=""><strong>תיקונים גלובליים</strong> עם קוד מלא בדוח הסיכום — ראו <code>accessibility-report-SUMMARY</code> › "פתרונות מפורטים".</p>
+<p class="">דוגמה מהירה ל-#28 (שדה 80): הוסיפו <code>aria-label="הקלידו את התשובה"</code> ל-<code>&lt;input class="s35-input"&gt;</code>.</p>
+<h2>עדיפויות</h2>
+<p class="blocker">1. 🔴 <code>aria-label</code> לשדה (80). 2. 🟠 חיווי-פוקוס, reflow. 3. 🔵 H1 יחיד + main + reduced-motion.</p>
+<p class=""><strong>צעד הבא:</strong> בדיקת קורא-מסך — הכרזת-משוב, ניתוב-פוקוס.</p>
+</body>
+</html>

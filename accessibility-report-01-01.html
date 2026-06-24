@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>דוח בקרת נגישות — קנה מידה (Scale) · מודול 01-01</title>
+<style>
+  :root { --blocker:#d12; --warning:#e67e00; --polish:#1769d1; }
+  body { font-family:"Assistant","Segoe UI",Arial,sans-serif; line-height:1.65; max-width:1000px;
+         margin:0 auto; padding:24px; color:#222; background:#fafafa; }
+  h1 { font-size:1.7rem; border-bottom:2px solid #ccc; padding-bottom:8px; }
+  h2 { font-size:1.3rem; margin-top:30px; }
+  h3 { font-size:1.1rem; margin-top:26px; background:#eef1f5; padding:6px 12px; border-radius:6px;
+       border-inline-start:5px solid #6b7a90; }
+  table { border-collapse:collapse; width:100%; margin:8px 0 18px; background:#fff; font-size:0.95rem; }
+  th,td { border:1px solid #d6d6d6; padding:8px 10px; text-align:right; vertical-align:top; }
+  th { background:#33405a; color:#fff; font-weight:600; }
+  th:nth-child(1),td:nth-child(1) { width:16%; }
+  th:nth-child(2),td:nth-child(2) { width:30%; }
+  th:nth-child(3),td:nth-child(3) { width:30%; }
+  th:nth-child(4),td:nth-child(4) { width:24%; }
+  tr.blocker td:first-child { border-inline-start:5px solid var(--blocker); background:#fdecec; }
+  tr.warning td:first-child { border-inline-start:5px solid var(--warning); background:#fff6e9; }
+  tr.polish  td:first-child { border-inline-start:5px solid var(--polish);  background:#eaf2fd; }
+  code { background:#eee; padding:1px 5px; border-radius:4px; font-family:Consolas,monospace; direction:ltr; display:inline-block; }
+  pre { background:#1e2433; color:#e6e6e6; padding:14px 16px; border-radius:8px; overflow:auto;
+        direction:ltr; text-align:left; margin:10px 0; line-height:1.5; }
+  pre code { background:none; color:inherit; padding:0; display:block; white-space:pre; font-size:0.86rem; }
+  details.solution { border:1px solid #c9d2e0; border-radius:8px; margin:12px 0; background:#f3f6fb; }
+  details.solution > summary { cursor:pointer; padding:10px 14px; font-weight:700; color:#23406e;
+        background:#e7eef9; border-radius:8px; user-select:none; }
+  details.solution[open] > summary { border-radius:8px 8px 0 0; border-bottom:1px solid #c9d2e0; }
+  details.solution > :not(summary) { margin-inline:14px; }
+  details.solution > pre { margin:12px 14px; }
+  blockquote { color:#555; border-inline-start:3px solid #bbb; margin:12px 0; padding:4px 12px; font-style:italic; }
+  ul { padding-inline-start:20px; }
+  strong { color:#000; }
+</style>
+</head>
+<body>
+<h1>דוח בקרת נגישות — קנה מידה (Scale) · מודול 01-01</h1>
+<p class=""><strong>מודול:</strong> methodica-math-scale-01-01 · <strong>קבצים:</strong> index.html / script.js / styles.css · <strong>תאריך:</strong> 2026-06-24</p>
+<p class=""><strong>תקן:</strong> WCAG 2.1 AA + ת"י 5568 · <strong>שיטה:</strong> scan.py + axe-core 4.10.2 על <strong>כל 24 המסכים</strong> (ניווט <code>goTo</code>) + מעבר-מקלדת + ניגודיות מחושבת + אינוונטר תמונות/רכיבים מלא</p>
+<p class="blocker"><strong>סיכום:</strong> 🔴 3 חוסמים · 🟠 5 אזהרות · 🔵 3 ליטוש</p>
+<blockquote><strong>כיסוי:</strong> נסרקו 24/24 המסכים בריצה חיה (לא מדגם). <strong>מגבלה:</strong> מצבים שמאחורי אינטראקציה (משוב,</blockquote>
+<blockquote>חלונות-רמז) לא תמיד נתפסו; axe תופס ~30-40%. <strong>אישור סופי דורש קורא-מסך אנושי (NVDA/VoiceOver).</strong></blockquote>
+<h2>מה נמצא תקין (אומת בבדיקה חיה על כל המסכים)</h2>
+<ul>
+<li class=""><strong>שפה וכיווניות:</strong> <code>&lt;html lang="he" dir="rtl"&gt;</code> ✓ · <strong>כותרת:</strong> "קנה מידה — לומדה" ✓ · יש <code>&lt;h1&gt;</code> ✓</li>
+<li class=""><strong>טקסט חלופי — נוכחות:</strong> כל 40 מופעי התמונות עם <code>alt</code>; דקורטיביות (<code>.frc-back-thumb</code>) עם <code>alt=""</code> כראוי ✓</li>
+<li class=""><strong>אין תרגיל-גרירה ואין GIF מונפש במודול זה</strong> ✓</li>
+<li class=""><strong>הפעלה במקלדת של כרטיסי-הבחירה:</strong> <code>Enter</code>/<code>Space</code> מסמנים <code>aria-checked</code> כראוי ✓</li>
+<li class=""><strong>הפעלה במקלדת של כרטיסי-הבחירה:</strong> <code>Enter</code> ו-<code>Space</code> מסמנים <code>aria-checked</code> כראוי (role=radio) ✓</li>
+</ul>
+<p class="">  — דפוס ה-<code>onclick</code> שזוהה בסטטי (#11) נבדק ונמצא נגיש למקלדת בכרטיסי-הרדיו.</p>
+<ul>
+<li class=""><strong>חלק מחיווי-הפוקוס תקין:</strong> <code>flag-btn</code>, כפתורי-הדיווח ו-<code>frc-card</code> משתמשים נכון ב-<code>:focus-visible</code></li>
+</ul>
+<p class="">  עם <code>outline</code> בולט ✓</p>
+<h2>ממצאים לפי קטגוריה</h2>
+<h3>ה. צבע וניגודיות</h3>
+<table>
+<thead><tr><th>סוג הבעיה</th><th>מיקום</th><th>מה נמצא (יחס מחושב)</th><th>המלצת תיקון</th><th>מה הפתרון פותר</th></tr></thead>
+<tbody>
+<tr class="blocker"><td>🔴 #23 ניגודיות טקסט</td><td>מסכים 7,8,9,10,13 (טקסט-תשובות <code>.s7-card-q</code>)</td><td><code>#aeaeae</code> על לבן = <strong>2.22:1</strong> (נדרש 4.5:1), 22px</td><td><strong>הכהו</strong> את צבע-הטקסט ל-<code>#595959</code> (≈4.6:1) או כהה יותר</td><td>קריאוּת התשובות ללקויי-ראייה (WCAG 1.4.3 AA)</td></tr>
+<tr class="blocker"><td>🔴 #23 ניגודיות טקסט</td><td>מסכים 8,9,10,11,13,14 (בועת-דמות <code>.s16-hint-popup</code>)</td><td><code>#303030</code> על סגול <code>#a51cff</code> = <strong>2.65:1</strong>, 20px</td><td><strong>הכהו</strong> את הסגול ל-<code>#6a0fb0</code> (טקסט כהה) או הפכו את הטקסט ללבן על הסגול הקיים (≈5.6:1)</td><td>הסבר-הדמות קריא (WCAG 1.4.3 AA)</td></tr>
+<tr class="warning"><td>🟠 #23 ניגודיות טקסט</td><td>מסך 1 (תוויות סקאלה <code>.scale-label</code>)</td><td><code>#888</code> על לבן = <strong>3.54:1</strong>, 20px</td><td><strong>הכהו</strong> ל-<code>#767676</code> (4.54:1) לתוויות הלא-פעילות</td><td>תוויות קנה-המידה קריאות (WCAG 1.4.3 AA)</td></tr>
+</tbody></table>
+<blockquote><strong>לבדיקה ידנית:</strong> 27 טקסטים על רקע <code>gradient</code> (כפתורי "המשך"/"בחרתי" — לבן על סגול</blockquote>
+<blockquote><code>linear-gradient(#8900E1→#6500A5)</code>) <strong>לא נכללו</strong> — בדיקת-מדגם הראתה ~5.6:1 (עובר). מומלץ אימות</blockquote>
+<blockquote>ויזואלי של שאר הכפתורים הצבעוניים.</blockquote>
+<h3>ג. מקלדת ופוקוס</h3>
+<table>
+<thead><tr><th>סוג הבעיה</th><th>מיקום</th><th>מה נמצא</th><th>המלצת תיקון</th><th>מה הפתרון פותר</th></tr></thead>
+<tbody>
+<tr class="warning"><td>🟠 #13 חיווי-פוקוס חלש</td><td><code>styles.css:146</code> (<code>.option-card:focus</code>), וכן <code>:focus</code> ב-2215/2620/3285/3303</td><td>פוקוס מסומן רק ע"י <code>border-color:#a51cff75</code> (סגול שקוף ~46%) — חלש, ולא <code>:focus-visible</code> בולט</td><td><strong>החליפו</strong> לחיווי <code>:focus-visible { outline:3px solid #7100B9; outline-offset:2px }</code> (כמו <code>flag-btn</code>)</td><td>פוקוס נראה לניווט-מקלדת בניגודיות ≥3:1 (WCAG 2.4.7 AA)</td></tr>
+</tbody></table>
+<blockquote><strong>הערה:</strong> 9 מופעי <code>outline:none</code> ב-CSS (141, 2212, 2617, 3154, 3227, 3280, 3298, 3333, 3357).</blockquote>
+<blockquote>אצל <code>flag-btn</code>/כפתורי-דיווח קיימת חלופת <code>:focus-visible</code> תקינה; אצל <code>.option-card</code>/שדות-הקלט</blockquote>
+<blockquote>החלופה היא שינוי-border חלש בלבד — שם נדרש תיקון.</blockquote>
+<h3>ה. שינוי-גודל ו-Reflow</h3>
+<table>
+<thead><tr><th>סוג הבעיה</th><th>מיקום</th><th>מה נמצא</th><th>המלצת תיקון</th><th>מה הפתרון פותר</th></tr></thead>
+<tbody>
+<tr class="warning"><td>🟠 #26 reflow / הגדלה</td><td>קנבס קבוע 1280×710 (<code>#app</code>), <code>body{overflow-x:hidden}</code></td><td>ברוחב 320px הקנבס <strong>מתכווץ כיחידה</strong> (scale) במקום שהתוכן ישתקף — הטקסט נעשה זעיר ובלתי-קריא; הגדלה עצמאית של טקסט אינה אפשרית</td><td><strong>אפשרו reflow</strong> של התוכן (פריסה גמישה) או ודאו שמנגנון-ההטמעה (SCORM/iframe) מאפשר זום-טקסט ל-200% בלי חיתוך</td><td>קריאוּת במובייל ובהגדלה (WCAG 1.4.4 / 1.4.10 AA)</td></tr>
+</tbody></table>
+<h3>ד. ARIA, מבנה ו-landmarks</h3>
+<table>
+<thead><tr><th>סוג הבעיה</th><th>מיקום</th><th>מה נמצא</th><th>המלצת תיקון</th><th>מה הפתרון פותר</th></tr></thead>
+<tbody>
+<tr class="blocker"><td>🔴 #28 שדה קלט ללא תווית</td><td><code>index.html:1093, 1211, 1442</code> (מסכים 18,19,21)</td><td>3 שדות <code>&lt;input&gt;</code> ללא <code>&lt;label&gt;</code>/<code>aria-label</code> — <strong>אומת ע"י axe</strong> (<code>label</code>, critical)</td><td><strong>הוסיפו</strong> <code>aria-label</code> מתאר לכל שדה (למשל "הזינו את התשובה") או <code>&lt;label&gt;</code> מקושר</td><td>קורא-מסך מזהה את ייעוד השדה (WCAG 1.3.1 / 4.1.2 A)</td></tr>
+<tr class="polish"><td>🔵 #4 אין landmark ראשי</td><td><code>index.html</code> (כל המסכים)</td><td>אין <code>&lt;main&gt;</code> — axe: "content not contained by landmarks" (moderate)</td><td><strong>עטפו</strong> את אזור-התוכן ב-<code>&lt;main&gt;</code> ואת הניווט ב-<code>&lt;nav&gt;</code></td><td>ניווט-מהיר לקורא-מסך (WCAG 1.3.1 A — best practice)</td></tr>
+</tbody></table>
+<blockquote><strong>הערה לגבי <code>.scale-input</code> (מסך 1, שורות 71/77/83):</strong> השדות עטופים ב-<code>&lt;label class="scale-step"&gt;</code></blockquote>
+<blockquote>עם טקסט — יש להם תווית מרומזת תקינה. axe לא סימן אותם, ונכון כך. (תוקן גם בסורק.)</blockquote>
+<h3>ב. תמונות ו-alt (איכות)</h3>
+<table>
+<thead><tr><th>סוג הבעיה</th><th>מיקום</th><th>מה נמצא (אומת חי)</th><th>המלצת תיקון</th><th>מה הפתרון פותר</th></tr></thead>
+<tbody>
+<tr class="polish"><td>🔵 #6 תמונה שאינה נטענת</td><td>מסך 2, <code>Character1_cards.png</code> (אופציית "להפוך קלפים")</td><td>בריצה <code>naturalWidth=0</code> — התמונה לא נטענה (קובץ/נתיב); אופציית-הבחירה מוצגת ריקה</td><td><strong>ודאו</strong> שהקובץ קיים בנתיב הנכון; אם תקול — תקנו את ה-src</td><td>התוכן הוויזואלי זמין (WCAG 1.1.1 A)</td></tr>
+<tr class="warning"><td>🟠 #6 איכות alt בתמונות-תוכן</td><td><code>Guided practice Q1.png</code>="משטח החלקה" (מסכים 7–14), <code>Tel Aviv Map.png</code>="מפת תל אביב", <code>Architacture plan.png</code>="תכנית אדריכלית", <code>Bed Room.png</code>="תרשים חדר ילדים"</td><td>ה-alt <strong>טופוגרפי בלבד</strong> ולא מוסר את הנתונים שבתמונה (מידות/יחס) הדרושים לפתרון</td><td><strong>ודאו</strong> שכל נתון הדרוש לענות מופיע גם בטקסט הנראה; אם הנתון רק בתמונה — הרחיבו את ה-alt שיכלול אותו</td><td>תלמיד קורא-מסך יכול לפתור (WCAG 1.1.1 A)</td></tr>
+</tbody></table>
+<h3>ו. אנימציה</h3>
+<table>
+<thead><tr><th>סוג הבעיה</th><th>מיקום</th><th>מה נמצא</th><th>המלצת תיקון</th><th>מה הפתרון פותר</th></tr></thead>
+<tbody>
+<tr class="polish"><td>🔵 #30 אין prefers-reduced-motion</td><td><code>styles.css</code> (גלובלי)</td><td>יש מעברים/אנימציות אך אין <code>@media (prefers-reduced-motion: reduce)</code></td><td><strong>הוסיפו</strong> בלוק שמקצר/מכבה אנימציות ומעברים למשתמשים שביקשו תנועה-מופחתת</td><td>נוחות למשתמשים רגישי-תנועה (WCAG 2.3.3 AAA — מומלץ)</td></tr>
+</tbody></table>
+<h2>טבלת כיסוי — סטטוס הבדיקות</h2>
+<table>
+<thead><tr><th>#</th><th>בדיקה</th><th>קריטריון</th><th>סטטוס</th><th>מיקומים</th></tr></thead>
+<tbody>
+<tr class=""><td>1</td><td>שפה/כיווניות</td><td>3.1.1</td><td>✅</td><td><code>index.html:2</code></td></tr>
+<tr class=""><td>2</td><td>כותרת הדף</td><td>2.4.2</td><td>✅</td><td>—</td></tr>
+<tr class=""><td>3</td><td>סדר כותרות</td><td>1.3.1</td><td>✅</td><td>—</td></tr>
+<tr class="polish"><td>4</td><td>landmark ראשי</td><td>1.3.1</td><td>🔵 ממצא</td><td>index.html</td></tr>
+<tr class=""><td>5</td><td>id כפול</td><td>4.1.1</td><td>✅</td><td>—</td></tr>
+<tr class=""><td>6</td><td>טקסט חלופי (alt)</td><td>1.1.1</td><td>✅</td><td>40/40 תמונות</td></tr>
+<tr class=""><td>7</td><td>טקסט בתמונה</td><td>1.4.5</td><td>➖ לא נמצא חשד</td><td>—</td></tr>
+<tr class=""><td>8</td><td>GIF/תוכן נע</td><td>2.2.2</td><td>➖ אין GIF ב-index</td><td>—</td></tr>
+<tr class=""><td>9</td><td>וידאו/כתוביות</td><td>1.2.2</td><td>➖ אין <code>&lt;video&gt;</code> במודול זה</td><td>—</td></tr>
+<tr class=""><td>10</td><td>autoplay</td><td>1.4.2</td><td>✅</td><td>—</td></tr>
+<tr class=""><td>11</td><td>הפעלה במקלדת</td><td>2.1.1</td><td>✅ אומת (Enter/Space)</td><td>כרטיסי-רדיו</td></tr>
+<tr class=""><td>12</td><td>מלכודת-מקלדת</td><td>2.1.2</td><td>➖ לא הגענו למודל בריצה זו — לבדוק</td><td>מודל-הדיווח</td></tr>
+<tr class="warning"><td>13</td><td>חיווי-פוקוס</td><td>2.4.7</td><td>🟠 ממצא</td><td>styles.css:146,…</td></tr>
+<tr class=""><td>14</td><td>סדר-טאב</td><td>2.4.3</td><td>✅ הגיוני (RTL)</td><td>—</td></tr>
+<tr class=""><td>15</td><td>tabindex חיובי</td><td>2.4.3</td><td>✅</td><td>—</td></tr>
+<tr class=""><td>16</td><td>פוקוס לתוכן-מוזרק</td><td>2.4.3</td><td>➖ לבדוק במעבר-מסך מלא</td><td>—</td></tr>
+<tr class=""><td>17</td><td>שם-נגיש לרכיב</td><td>4.1.2</td><td>✅</td><td>—</td></tr>
+<tr class=""><td>18</td><td>role תקין</td><td>4.1.2</td><td>✅</td><td>—</td></tr>
+<tr class=""><td>19</td><td>מצב ב-ARIA</td><td>4.1.2</td><td>✅ aria-checked מתעדכן</td><td>—</td></tr>
+<tr class=""><td>20</td><td>aria→id קיים</td><td>1.3.1</td><td>✅</td><td>—</td></tr>
+<tr class=""><td>21</td><td>aria-hidden על פעיל</td><td>4.1.2</td><td>✅</td><td>—</td></tr>
+<tr class=""><td>22</td><td>live regions</td><td>4.1.3</td><td>➖ לבדוק הכרזת-משוב עם קורא-מסך</td><td>—</td></tr>
+<tr class="blocker"><td>23</td><td>ניגודיות טקסט</td><td>1.4.3</td><td>🔴 ממצא</td><td>מסכים 1,7-14</td></tr>
+<tr class="warning"><td>24</td><td>ניגודיות גרפית</td><td>1.4.11</td><td>🟠 (חיווי-פוקוס חלש — ראה #13)</td><td>—</td></tr>
+<tr class=""><td>25</td><td>צבע לא יחיד</td><td>1.4.1</td><td>➖ לבדוק משוב נכון/שגוי</td><td>—</td></tr>
+<tr class="warning"><td>26</td><td>reflow/זום</td><td>1.4.4/1.4.10</td><td>🟠 ממצא</td><td>קנבס 1280×710</td></tr>
+<tr class=""><td>27</td><td>חסימת-זום viewport</td><td>1.4.4</td><td>✅</td><td>—</td></tr>
+<tr class="blocker"><td>28</td><td>תווית לשדה</td><td>1.3.1/3.3.2</td><td>🔴 ממצא</td><td>index.html:1093,1211,1442</td></tr>
+<tr class=""><td>29</td><td>שגיאה נגישה</td><td>3.3.1</td><td>➖ לבדוק</td><td>—</td></tr>
+<tr class="polish"><td>30</td><td>reduced-motion</td><td>2.3.3</td><td>🔵 ממצא</td><td>styles.css</td></tr>
+<tr class=""><td>31</td><td>היבהוב</td><td>2.3.1</td><td>✅ לא נמצא</td><td>—</td></tr>
+<tr class=""><td>32</td><td>הצהרת נגישות</td><td>ת"י 5568</td><td>➖ ברמת-הפלטפורמה (לאמת מול אתר-האם)</td><td>—</td></tr>
+<tr class=""><td>33</td><td>גרירה ללא מקלדת</td><td>2.1.1/4.1.2</td><td>➖ אין תרגיל-גרירה במודול זה</td><td>—</td></tr>
+</tbody></table>
+<h2>פתרונות מפורטים — קוד</h2>
+<details class="solution"><summary>🔴 #23 — ניגודיות טקסט (הכהיית הצבעים)</summary>
+<p class="">שלושה תיקוני-צבע ב-<code>styles.css</code>. כל היחסים חושבו מול הרקע בפועל:</p>
+<pre><code>/* 1. טקסט-תשובות בתרגול המודרך (.s7-card-q) — היה #aeaeae על לבן = 2.22:1 */
+.s7-card-q { color: #595959; }            /* 4.6:1 — עובר AA */
+
+/* 2. טקסט בתוך בועת-הדמות הסגולה — היה #303030 על #a51cff = 2.65:1 */
+.s16-hint-popup { color: #ffffff; }       /* לבן על הסגול הקיים = ~5.6:1 — עובר */
+/* — או לחלופין, אם רוצים לשמור טקסט כהה: הכהו את רקע-הבועה */
+/* .s16-hint-popup { background: #6a0fb0; color: #ffffff; } */
+
+/* 3. תוויות-סקאלה לא-פעילות (.scale-label) — היה #888 על לבן = 3.54:1 */
+.scale-label { color: #767676; }          /* 4.54:1 — עובר */</code></pre>
+<p class="">בדקו לאחר התיקון עם בורר-ניגודיות שכל זוג עובר ≥4.5:1 (טקסט רגיל) או ≥3:1 (גדול/מודגש).</p>
+</details>
+<details class="solution"><summary>🔵 #6 — תמונה שאינה נטענת (מסך 2)</summary>
+<p class=""><code>Character1_cards.png</code> נטענת עם <code>naturalWidth=0</code>. בדקו:</p>
+<pre><code># ודאו שהקובץ קיים בנתיב המדויק (כולל אותיות גדולות/קטנות — שרתי-לינוקס case-sensitive):
+ls "assets/images/Character1_cards.png"</code></pre>
+<p class="">אם השם/הנתיב שגוי — תקנו את ה-<code>src</code> ב-HTML של מסך 2. אם הקובץ חסר — הוסיפו אותו ל-<code>assets/images/</code>.</p>
+</details>
+<blockquote>תיקונים גלובליים (#13 פוקוס, #26 reflow, #4 main, #30 reduced-motion) — ראו את <strong>דוח הסיכום</strong>.</blockquote>
+<h2>המלצות לפי עדיפות</h2>
+<p class="blocker">1. <strong>🔴 ניגודיות טקסט (#23)</strong> — הכהו טקסט-התשובות (<code>#aeaeae</code>) ובועות-הדמות; זו הבעיה הנפוצה והחמורה ביותר (10+ מסכים).</p>
+<p class="blocker">2. <strong>🔴 תוויות שדות (#28)</strong> — הוסיפו <code>aria-label</code> ל-3 השדות במסכים 18/19/21.</p>
+<p class="warning">3. <strong>🟠 חיווי-פוקוס (#13)</strong> — אחדו את כל הרכיבים לחיווי <code>:focus-visible</code> בולט (כמו <code>flag-btn</code>).</p>
+<p class="warning">4. <strong>🟠 reflow (#26)</strong> — ודאו זום-טקסט 200% במנגנון-ההטמעה.</p>
+<p class="polish">5. <strong>🔵 main landmark + prefers-reduced-motion</strong> — תוספות-איכות.</p>
+<p class=""><strong>צעד הבא לאישור סופי:</strong> בדיקה ידנית עם קורא-מסך (NVDA בעברית) על הזרימה המלאה — להכרזת-משוב</p>
+<p class="">(#22/#25), מלכודת-פוקוס במודל-הדיווח (#12), וניתוב-פוקוס במעברי-מסך (#16).</p>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>דוח נגישות מאחד — methodica-math-scale-01 (4 מודולים)</title>
+<style>
+  :root { --blocker:#d12; --warning:#e67e00; --polish:#1769d1; }
+  body { font-family:"Assistant","Segoe UI",Arial,sans-serif; line-height:1.65; max-width:1000px;
+         margin:0 auto; padding:24px; color:#222; background:#fafafa; }
+  h1 { font-size:1.7rem; border-bottom:2px solid #ccc; padding-bottom:8px; }
+  h2 { font-size:1.3rem; margin-top:30px; }
+  h3 { font-size:1.1rem; margin-top:26px; background:#eef1f5; padding:6px 12px; border-radius:6px;
+       border-inline-start:5px solid #6b7a90; }
+  table { border-collapse:collapse; width:100%; margin:8px 0 18px; background:#fff; font-size:0.95rem; }
+  th,td { border:1px solid #d6d6d6; padding:8px 10px; text-align:right; vertical-align:top; }
+  th { background:#33405a; color:#fff; font-weight:600; }
+  th:nth-child(1),td:nth-child(1) { width:16%; }
+  th:nth-child(2),td:nth-child(2) { width:30%; }
+  th:nth-child(3),td:nth-child(3) { width:30%; }
+  th:nth-child(4),td:nth-child(4) { width:24%; }
+  tr.blocker td:first-child { border-inline-start:5px solid var(--blocker); background:#fdecec; }
+  tr.warning td:first-child { border-inline-start:5px solid var(--warning); background:#fff6e9; }
+  tr.polish  td:first-child { border-inline-start:5px solid var(--polish);  background:#eaf2fd; }
+  code { background:#eee; padding:1px 5px; border-radius:4px; font-family:Consolas,monospace; direction:ltr; display:inline-block; }
+  pre { background:#1e2433; color:#e6e6e6; padding:14px 16px; border-radius:8px; overflow:auto;
+        direction:ltr; text-align:left; margin:10px 0; line-height:1.5; }
+  pre code { background:none; color:inherit; padding:0; display:block; white-space:pre; font-size:0.86rem; }
+  details.solution { border:1px solid #c9d2e0; border-radius:8px; margin:12px 0; background:#f3f6fb; }
+  details.solution > summary { cursor:pointer; padding:10px 14px; font-weight:700; color:#23406e;
+        background:#e7eef9; border-radius:8px; user-select:none; }
+  details.solution[open] > summary { border-radius:8px 8px 0 0; border-bottom:1px solid #c9d2e0; }
+  details.solution > :not(summary) { margin-inline:14px; }
+  details.solution > pre { margin:12px 14px; }
+  blockquote { color:#555; border-inline-start:3px solid #bbb; margin:12px 0; padding:4px 12px; font-style:italic; }
+  ul { padding-inline-start:20px; }
+  strong { color:#000; }
+</style>
+</head>
+<body>
+<h1>דוח נגישות מאחד — methodica-math-scale-01 (4 מודולים)</h1>
+<p class=""><strong>תקן:</strong> WCAG 2.1 AA + ת"י 5568 · <strong>תאריך:</strong> 2026-06-24</p>
+<p class=""><strong>שיטה:</strong> scan.py + axe-core 4.10.2 על <strong>כל מסך בכל מודול</strong> (ניווט <code>goTo</code> — כיסוי מלא, לא מדגם) + ניגודיות מחושבת לכל מסך + אינוונטר תמונות/רכיבים מלא + אימות-מקלדת.</p>
+<blockquote>דוחות פר-מודול: [01-01](accessibility-report-01-01.md) · [01-02](accessibility-report-01-02.md) · [01-03](accessibility-report-01-03.md) · [01-04](accessibility-report-01-04.md)</blockquote>
+<h2>סיכום חומרות</h2>
+<table>
+<thead><tr><th>מודול</th><th>מסכים נסרקו</th><th>🔴</th><th>🟠</th><th>🔵</th></tr></thead>
+<tbody>
+<tr class=""><td>01-01 (לימוד + תרגול)</td><td>24/24</td><td>3</td><td>5</td><td>3</td></tr>
+<tr class=""><td>01-02 (תרגול בסיסי)</td><td>9/9</td><td>1</td><td>3</td><td>2</td></tr>
+<tr class=""><td>01-03 (משימת כיתה)</td><td>3/3</td><td>1</td><td>2</td><td>3</td></tr>
+<tr class=""><td>01-04 (תרגול מתקדם)</td><td>18/18</td><td>3</td><td>3</td><td>2</td></tr>
+</tbody></table>
+<h2>חוסמים (🔴) — לפי מודול</h2>
+<table>
+<thead><tr><th>מודול</th><th>בדיקה</th><th>תופעה</th><th>מיקום</th></tr></thead>
+<tbody>
+<tr class=""><td>01-04</td><td>#33 גרירה ללא חלופת-מקלדת</td><td>תרגיל drag-and-drop (מסך 3/s39) — 7 כרטיסים + 4 אזורים ללא מקלדת/ARIA. <strong>משתמש מקלדת/קורא-מסך אינו יכול לענות כלל</strong></td><td><code>index.html:289–359</code></td></tr>
+<tr class=""><td>01-04</td><td>#8 GIF משוב מונפש</td><td>משוב נכון/שגוי כ-GIF מונפש ללא בקרת-עצירה</td><td><code>script.js:1448</code></td></tr>
+<tr class=""><td>01-01</td><td>#23 ניגודיות</td><td>טקסט-תשובות <code>#aeaeae</code> על לבן = <strong>2.22:1</strong>; טקסט <code>#303030</code> על בועה סגולה <code>#a51cff</code> = <strong>2.65:1</strong></td><td>מסכים 7–14</td></tr>
+<tr class=""><td>כל המודולים</td><td>#28 שדות ללא תווית</td><td>שדות-תשובה <code>&lt;input&gt;</code> ללא <code>aria-label</code> — axe critical</td><td>01-01: 1093,1211,1442 · 01-02: 464,744 · 01-03: 80 · 01-04: 444,643,756</td></tr>
+</tbody></table>
+<h2>אזהרות חוצות-מודולים (🟠)</h2>
+<table>
+<thead><tr><th>בדיקה</th><th>תופעה</th><th>חל על</th><th>תיקון</th></tr></thead>
+<tbody>
+<tr class=""><td>#13 חיווי-פוקוס חלש</td><td>פוקוס נשען על <code>border-color:#a51cff75</code> שקוף, לא <code>:focus-visible</code> בולט אחיד (קיים תקין רק ב-<code>flag-btn</code>/כפתורי-דיווח)</td><td>כל המודולים</td><td>אחדו <code>:focus-visible{outline:3px solid #7100B9;outline-offset:2px}</code></td></tr>
+<tr class=""><td>#26 reflow/הגדלה</td><td>קנבס קבוע 1280×710 מתכווץ כיחידה (scale) במקום שהתוכן ישתקף; טקסט זעיר במובייל/בזום</td><td>כל המודולים</td><td>אפשרו reflow / ודאו זום-טקסט 200% במנגנון-ההטמעה</td></tr>
+<tr class=""><td>#3 כותרת H1</td><td>אין <code>&lt;h1&gt;</code> (01-02, 01-04) · כפול (01-03)</td><td>02/03/04</td><td><code>&lt;h1&gt;</code> יחיד לכל דף</td></tr>
+</tbody></table>
+<h2>ליטוש (🔵) — בכל המודולים</h2>
+<ul>
+<li class=""><strong>#4</strong> — אין <code>&lt;main&gt;</code> (עטפו את אזור-התוכן). · <strong>#30</strong> — אין <code>@media (prefers-reduced-motion)</code>.</li>
+</ul>
+<h2>מה אומת תקין (בכל המסכים, בכל המודולים)</h2>
+<p class=""><code>lang="he" dir="rtl"</code> · <code>&lt;title&gt;</code> · <strong>כל התמונות עם <code>alt</code></strong> (דקורטיביות עם <code>alt=""</code> כראוי) ·</p>
+<p class=""><strong>ניגודיות תקינה בכל המסכים של 02/03/04</strong> (טקסט כהה על לבן) · הפעלת-מקלדת לכרטיסי-בחירה (Enter/Space) ·</p>
+<p class=""><code>aria-checked</code> מתעדכן · axe ללא הפרות פרט לשדות-הקלט.</p>
+<h2>⚠️ תיקון מהותי לדיווח הקודם (שהיה מדגמי)</h2>
+<p class="">הבדיקה הראשונה הסתמכה על <strong>הצלבת design-tokens ב-CSS</strong> והניחה שבעיות-ניגודיות חוצות את כל המודולים.</p>
+<p class=""><strong>הבדיקה המקיפה (כל מסך בריצה חיה) הפריכה זאת:</strong> קומפוננטות הבועה-הסגולה והתשובות-הבהירות</p>
+<p class="">מתרנדרות <strong>רק במודול 01-01</strong>; ב-02/03/04 הטקסט כהה-על-לבן ועובר. כמו כן נמצאו בבדיקה המקיפה</p>
+<p class="">שני ממצאים שהוחמצו במדגם: <strong>תרגיל-הגרירה (01-04)</strong> ו<strong>GIF-המשוב המונפש (01-04)</strong> — שניהם מוזרקים</p>
+<p class="">בזמן-ריצה ולכן לא נתפסו בסריקה הסטטית או בהחלפת-class.</p>
+<h2>פתרונות מפורטים — קוד (תיקונים גלובליים, חלים על כל המודולים)</h2>
+<p class="">לחצו על כל סעיף כדי לפתוח את פתרון-הקוד המלא. התיקונים מתאימים לקובץ-התבנית המשותף (<code>styles.css</code>/<code>index.html</code>).</p>
+<details class="solution"><summary>🔴 #28 — שדה קלט ללא תווית (הוסיפו aria-label)</summary>
+<p class="">לכל שדה-תשובה הוסיפו <code>aria-label</code> שמתאר מה להזין. דוגמה ל-<code>.s18-answer-box</code>:</p>
+<pre><code>&lt;!-- לפני --&gt;
+&lt;input class="s18-answer-box" id="s18-answer-input" type="text" dir="rtl"&gt;
+
+&lt;!-- אחרי --&gt;
+&lt;input class="s18-answer-box" id="s18-answer-input" type="text" dir="rtl"
+       aria-label="הקלידו את התשובה המספרית"&gt;</code></pre>
+<p class="">אם יש כיתוב נראה לפני השדה (<code>&lt;span id="s18-q"&gt;...&lt;/span&gt;</code>), עדיף לקשר אליו:</p>
+<pre><code>&lt;input class="s18-answer-box" id="s18-answer-input" type="text" aria-labelledby="s18-q"&gt;</code></pre>
+<p class="">החילו על כל המופעים: 01-01 (1093,1211,1442) · 01-02 (464,744) · 01-03 (80) · 01-04 (444,643,756).</p>
+</details>
+<details class="solution"><summary>🟠 #13 — חיווי-פוקוס חלש (החליפו ב-:focus-visible אחיד)</summary>
+<p class="">כיום הרכיבים מסתמכים על <code>border-color:#a51cff75</code> (סגול שקוף) או <code>outline:none</code>. הוסיפו כלל גלובלי</p>
+<p class="">שמבטיח חיווי-פוקוס בולט לכל רכיב הניתן למיקוד:</p>
+<pre><code>/* תיקון גלובלי — להוסיף ל-styles.css */
+*:focus-visible {
+  outline: 3px solid #7100B9;   /* סגול כהה, ניגודיות ≥3:1 מול לבן */
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+/* אם קיים outline:none על רכיבים אינטראקטיביים — להסירו או להחליפו בכלל לעיל */
+.option-card:focus-visible,
+.scale-input:focus-visible + .scale-marker {
+  outline: 3px solid #7100B9;
+  outline-offset: 2px;
+}</code></pre>
+<p class=""><strong>הימנעו</strong> מ-<code>outline:none</code> ללא חלופה. <code>:focus-visible</code> מציג את החיווי רק בניווט-מקלדת (לא בעכבר),</p>
+<p class="">כך שאין פגיעה בעיצוב למשתמשי-עכבר.</p>
+</details>
+<details class="solution"><summary>🟠 #26 — reflow/הגדלה (הקנבס הקבוע 1280×710)</summary>
+<p class="">המבנה הנוכחי מקבע קנבס ומקטין אותו כיחידה (<code>transform: scale</code>), כך שטקסט לא ניתן להגדלה עצמאית.</p>
+<p class="">שתי גישות (לפי מורכבות שהצוות מוכן לקבל):</p>
+<pre><code>/* גישה א' (מינימלית) — לאפשר זום-טקסט עד 200% בלי חיתוך, גם אם נשאר scale:
+   ודאו שמיכל-העל אינו חוסם גלילה אנכית, והסירו max-height קשיח על תיבות-טקסט. */
+#app { overflow: auto; }
+.hook-card-inner, .s7-card-q, .s18-answer-box { max-height: none; }
+
+/* גישה ב' (נכונה לטווח-ארוך) — פריסה גמישה במקום קנבס קבוע:
+   החליפו רוחב/גובה קבועים ב-min()/clamp() ואפשרו לתוכן לרדת שורה (wrap). */
+#app { width: min(1280px, 100vw); height: auto; aspect-ratio: auto; }
+.s39-cols, .option-cards { flex-wrap: wrap; }</code></pre>
+<p class="">בנוסף ודאו שתגית ה-viewport אינה חוסמת זום (היא תקינה כיום). מומלצת גישה ב' לעמידה מלאה ב-1.4.10.</p>
+</details>
+<details class="solution"><summary>🔵 #4 + #30 — landmark ראשי ו-prefers-reduced-motion</summary>
+<pre><code>&lt;!-- #4: עטפו את אזור-התוכן ב-&lt;main&gt; (במקום &lt;div id="app"&gt;, או בתוכו) --&gt;
+&lt;main id="app" aria-label="לומדה: קנה מידה"&gt;
+  ...
+&lt;/main&gt;</code></pre>
+<pre><code>/* #30: הוסיפו לסוף styles.css — מכבד בקשת תנועה-מופחתת של המשתמש */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}</code></pre>
+</details>
+<h2>הסתייגות</h2>
+<p class="">axe-core + scan.py מכסים בעיות מכניות (~30-40%). מצבים שמאחורי אינטראקציה (הכרזת-משוב/live-regions,</p>
+<p class="">חלונות-רמז, מלכודת-פוקוס במודל-הדיווח, ניתוב-פוקוס במעברי-מסך, צבעי נכון/שגוי) דורשים **בדיקה ידנית</p>
+<p class="">עם קורא-מסך אנושי (NVDA בעברית / VoiceOver)**. דוח זה אינו תחליף להסמכת-נגישות רשמית.</p>
+</body>
+</html>

@@ -1,0 +1,142 @@
+# דוח בקרת נגישות — קנה מידה (Scale) · מודול 01-04
+**מודול:** methodica-math-scale-01-04 (תרגול מתקדם) · **קבצים:** index.html / script.js / styles.css · **תאריך:** 2026-06-24
+**תקן:** WCAG 2.1 AA + ת"י 5568 · **שיטה:** scan.py + axe-core 4.10.2 על **כל 18 המסכים** (ניווט `goTo`) + ניגודיות מחושבת + אינוונטר תמונות/רכיבים מלא + אימות-מקלדת
+**סיכום:** 🔴 3 חוסמים · 🟠 3 אזהרות · 🔵 2 ליטוש
+
+> **כיסוי:** נסרקו 18/18 המסכים בריצה חיה (כולל מסך-הגרירה s39 ומסך משוב-ה-GIF). מצבים שמאחורי
+> אינטראקציה (חלון-רמז, צבעי נכון/שגוי) לא תמיד נתפסו. אישור סופי דורש קורא-מסך אנושי.
+
+## מה נמצא תקין (אומת חי על כל המסכים)
+- `<html lang="he" dir="rtl">` ✓ · כותרת ✓ · **15 תמונות — כולן עם `alt`, אף אחת לא שבורה** ✓
+- **ניגודיות תקינה במצב-ברירת-המחדל של כל 18 המסכים** (טקסט כהה על לבן) ✓
+
+## ממצאים לפי קטגוריה
+
+### ג. מקלדת — תרגיל הגרירה (מסך 3 / s39) ⚠️ החמור ביותר
+| סוג הבעיה | מיקום | מה נמצא (אומת חי) | המלצת תיקון | מה הפתרון פותר |
+|---|---|---|---|---|
+| 🔴 #33 גרירה ללא חלופת-מקלדת | `index.html:289,297,313,321` (אזורי-שחרור) · `335,339,343,347,351,355,359` (כרטיסים) · `script.js` (מנוע DDQ) | 7 כרטיסי `.ddq-num-chip` עם `draggable="true"`, ו-4 אזורי-שחרור `.s39-target` — **כולם ללא `tabindex`/`role`/`aria`/`keydown`**. אימות חי: הכרטיסים **לא ניתנים למיקוד**, מקלדת לא מזיזה דבר; האזורים `<div>` ריקים בלתי-נראים לקורא-מסך | **חלופת-מקלדת מלאה**: כרטיסים `tabindex="0"`+`role`, הרמה/הצבה ב-Enter/Space, מעבר בחיצים, הכרזת-מצב ב-`aria`; `aria-label` לכל אזור-שחרור — או החלפת-תבנית בבחירה-נגישה | **חוסם:** משתמש מקלדת/קורא-מסך **אינו יכול לענות כלל** — חסימת השלמת הלומדה (WCAG 2.1.1 A + 4.1.2 A; וכן 2.5.7 ב-WCAG 2.2) |
+
+### ד. טפסים
+| 🔴 #28 שדה קלט ללא תווית | `index.html:444, 643, 756` (`.s18-answer-box`, מסכים 4,6,9) | 3 שדות `<input>` ללא תווית — axe critical | **הוסיפו** `aria-label` מתאר לכל שדה | קורא-מסך מזהה ייעוד השדה (WCAG 1.3.1/4.1.2 A) |
+
+### ב. מדיה
+| 🔴 #8 GIF משוב מונפש ללא עצירה | `script.js:1448` → `<img>` GIF במסך 16/17 | משוב נכון/שגוי מוצג כ-GIF מונפש (`Character{1,2} GIF {Happy,Sad}.gif`) ללא בקרת-עצירה; ה-alt גנרי ("דמות מלווה") | **ספקו** בקרת-עצירה/השהיה, או GIF שמתנגן פעם אחת <5שנ', או החליפו בתמונה סטטית + טקסט. עדכנו `alt` שישקף את המשוב | תוכן-נע נשלט; משוב נגיש (WCAG 2.2.2 A) — *אם מתנגן <5שנ' פעם אחת, יורד ל-🔵* |
+
+### מבנה / פוקוס / reflow
+| 🟠 #3 אין H1 | `index.html` | אין אף `<h1>` | **הוסיפו** `<h1>` ראשית | היררכיית-תוכן (1.3.1 A) |
+| 🟠 #13 חיווי-פוקוס חלש | `styles.css:141` + מופעי `outline:none` | פוקוס נשען על `border-color:#a51cff75` שקוף, לא `:focus-visible` אחיד | **אחדו** ל-`:focus-visible` בולט | פוקוס נראה (2.4.7 AA) |
+| 🟠 #26 reflow/הגדלה | קנבס 1280×710 | מתכווץ כיחידה; טקסט זעיר במובייל/בזום | **אפשרו reflow** / זום 200% | קריאוּת (1.4.4/1.4.10 AA) |
+| 🔵 #4 אין landmark | `index.html` | אין `<main>` | **עטפו** ב-`<main>` | ניווט-מהיר (best practice) |
+| 🔵 #30 reduced-motion | `styles.css` | חסר בלוק תנועה-מופחתת (רלוונטי במיוחד בגלל ה-GIF) | **הוסיפו** `@media (prefers-reduced-motion)` | רגישי-תנועה (AAA) |
+
+## הערות
+- **תיקון מהבדיקה המקיפה:** דיווח קודם טען לבעיית-ניגודיות סגולה — לא נמצאה במצב-ברירת-המחדל של 18 המסכים.
+- **alt — איכות:** התמונות תקינות בנוכחות; שני שמות לבדיקת-התאמה: `Airplane.png`=alt "חללית" (מסך 2), `Area.png`=alt "מפה של השטח" בשאלת-קנה-מידה — ודאו שכל הנתונים לפתרון מופיעים גם בטקסט, לא רק בתמונה.
+
+## עדיפויות
+1. 🔴 **גרירה (#33)** — חלופת-מקלדת מלאה למסך 3. 2. 🔴 `aria-label` ל-3 השדות. 3. 🔴 בקרת-עצירה ל-GIF. 4. 🟠 H1, פוקוס, reflow. 5. 🔵 main + reduced-motion.
+**צעד הבא:** בדיקת קורא-מסך על 18 המסכים — הכרזת-משוב, מלכודת-פוקוס, ניתוב-פוקוס.
+
+## פתרונות מפורטים — קוד
+תיקונים גלובליים (#28 שדות, #13 פוקוס, #26 reflow, #4 main, #30 reduced-motion) — ראו את **דוח הסיכום** (`accessibility-report-SUMMARY`). כאן הפתרונות הייחודיים ל-04:
+
+:::solution 🔴 #33 — חלופת-מקלדת מלאה לתרגיל הגרירה (העתק-הדבק)
+**הרעיון:** משאירים את גרירת-העכבר הקיימת, ומוסיפים מסלול "בחירה-והצבה" שעובד גם בעכבר וגם במקלדת:
+ממקדים כרטיס → Enter/Space "מרים" אותו → Tab לאזור-יעד → Enter/Space "מציב". קורא-מסך מקבל הכרזות.
+
+**1. HTML — הוסיפו אזור-הכרזות פעם אחת בתוך מסך s39:**
+```html
+<div id="ddq-live" aria-live="polite" class="sr-only"></div>
+```
+**2. HTML — לכל כרטיס (`.ddq-num-chip`) הוסיפו תפקיד-כפתור, מיקוד ומאזין-מקלדת:**
+```html
+<div class="ddq-num-chip" id="drag-6" draggable="true"
+     role="button" tabindex="0" aria-pressed="false"
+     aria-label="המספר 6. הקישו Enter לבחירה"
+     ondragstart="ddqDragStart(event,'drag-6')" ondragend="ddqDragEnd(event)"
+     onkeydown="ddqChipKey(event,'drag-6')">6</div>
+```
+**3. HTML — לכל אזור-שחרור (`.s39-target`) הוסיפו שם, מיקוד ומאזין-מקלדת:**
+```html
+<div class="s39-target" id="target-lior-orech"
+     role="button" tabindex="0"
+     aria-label="אורך התמונה של ליאור, ריק. הקישו Enter כדי להציב את המספר הנבחר"
+     ondragover="ddqDragOver(event,'target-lior-orech')"
+     ondragleave="ddqDragLeave(event,'target-lior-orech')"
+     ondrop="ddqDrop(event,'target-lior-orech')"
+     onkeydown="ddqTargetKey(event,'target-lior-orech')"></div>
+```
+**4. JS — הוסיפו ל-script.js (ליד מנוע ה-DDQ):**
+```js
+let ddqSelectedChip = null;
+function ddqAnnounce(msg){
+  const l = document.getElementById('ddq-live');
+  if(l){ l.textContent=''; setTimeout(()=>{ l.textContent=msg; }, 50); }
+}
+// הרמת/ביטול-בחירת כרטיס במקלדת
+function ddqChipKey(ev, id){
+  if(ev.key!=='Enter' && ev.key!==' ') return;
+  ev.preventDefault();
+  const chip = document.getElementById(id);
+  if(chip.classList.contains('locked')) return;
+  if(ddqSelectedChip === id){                       // לחיצה שנייה = ביטול
+    ddqSelectedChip = null; chip.setAttribute('aria-pressed','false');
+    ddqAnnounce('בוטלה הבחירה'); return;
+  }
+  if(ddqSelectedChip) document.getElementById(ddqSelectedChip)?.setAttribute('aria-pressed','false');
+  ddqSelectedChip = id; chip.setAttribute('aria-pressed','true');
+  ddqAnnounce('נבחר המספר ' + chip.textContent.trim() + '. עברו עם Tab לאזור היעד והקישו Enter כדי להציב.');
+}
+// הצבת הכרטיס הנבחר ביעד במקלדת
+function ddqTargetKey(ev, targetId){
+  if(ev.key!=='Enter' && ev.key!==' ') return;
+  ev.preventDefault();
+  if(!ddqSelectedChip){ ddqAnnounce('לא נבחר מספר. בחרו מספר תחילה.'); return; }
+  const chip = document.getElementById(ddqSelectedChip);
+  ddqPlaceChip(ddqSelectedChip, targetId);          // הפונקציה המשותפת (סעיף 5)
+  chip.setAttribute('aria-pressed','false');
+  const t = document.getElementById(targetId);
+  t.setAttribute('aria-label', t.getAttribute('aria-label').replace('ריק', 'מכיל ' + chip.textContent.trim()));
+  ddqAnnounce('המספר ' + chip.textContent.trim() + ' הוצב.');
+  ddqSelectedChip = null;
+}
+```
+**5. JS — חלצו פונקציית-הצבה משותפת כדי שגם העכבר וגם המקלדת יקראו לאותה לוגיקה:**
+```js
+// העבירו את גוף ה-placement מתוך ddqDrop הקיים לפונקציה הזו:
+function ddqPlaceChip(chipId, targetId){
+  /* הלוגיקה הקיימת מ-ddqDrop: הזזת הכרטיס לאזור, עדכון ddqPlacement[chipId],
+     החזרת כרטיס קודם למאגר אם היה, והפעלת/ביטול כפתור "צדקתי?" (ddq-check). */
+}
+function ddqDrop(ev, targetId){
+  ev.preventDefault();
+  const chipId = ev.dataTransfer.getData('text/plain');   // נשאר כמו היום
+  ddqPlaceChip(chipId, targetId);
+}
+```
+**6. CSS — חיווי-פוקוס ומצב "הורם":**
+```css
+.ddq-num-chip:focus-visible, .s39-target:focus-visible{ outline:3px solid #7100B9; outline-offset:2px; }
+.ddq-num-chip[aria-pressed="true"]{ outline:3px solid #7100B9; box-shadow:0 0 0 4px #7100b933; }
+```
+**תוצאה:** תלמיד מקלדת/קורא-מסך עובר בין הכרטיסים והיעדים ב-Tab, בוחר ב-Enter, מציב ב-Enter, ושומע
+הכרזה בכל שלב — בלי לפגוע במשתמשי-עכבר. (חלופה פשוטה יותר אם רוצים לוותר על גרירה לגמרי: להחליף
+כל יעד ברשימת-בחירה `<select aria-label="...">` עם המספרים.)
+:::
+
+:::solution 🔴 #8 — GIF משוב מונפש (החליפו בתמונה סטטית, או הגבילו לולאה)
+המשוב כבר מועבר גם בטקסט, ולכן הדרך הפשוטה והנגישה ביותר היא תמונה **סטטית** במקום GIF מתמשך:
+```js
+// במקום (script.js:1448):
+gif.src = './assets/gifs/Character' + charNum + ' GIF ' + mood + '.gif';
+
+// אפשרות א' (מומלצת) — תמונת-דמות סטטית + alt שמשקף את המשוב:
+gif.src = './assets/images/Character' + charNum + (passed ? '_holdhands' : '') + '.png';
+gif.alt = passed ? 'דמות מלווה — כל הכבוד, תשובה נכונה' : 'דמות מלווה — לא נורא, ננסה שוב';
+
+// אפשרות ב' — אם חייבים GIF: קודדו אותו ללולאה חד-פעמית (loop once) ובאורך < 5 שניות.
+//             אחרת (לולאה אינסופית) — חובה כפתור עצירה נגיש ליד התמונה.
+```
+מדוע: WCAG 2.2.2 דורש שתוכן נע שנמשך מעל 5 שניות יהיה ניתן לעצירה; תמונה סטטית מסירה את הבעיה לגמרי.
+:::

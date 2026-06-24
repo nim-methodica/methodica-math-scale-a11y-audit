@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>קנה מידה — לומדה</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+
+    <!-- ═══════════════════════════════════════
+         GLOBAL — Flag / Report Issue button
+    ════════════════════════════════════════ -->
+    <button class="flag-btn" id="flag-btn" onclick="openReportModal()" aria-label="דיווח על בעיה">
+      <span class="flag-icon" aria-hidden="true">⚑</span>
+      <span class="flag-label">מצאתי תקלה</span>
+    </button>
+    <section class="screen active" data-screen="0" id="s0">
+
+      <div class="s0-content">
+        <p class="s25-text-small">השלמת בהצלחה את התרגול – כל הכבוד!</p>
+        <p class="s25-text-large">זמן טוב ללמוד גם בצורה אחרת,</p>
+        <p class="s25-text-small">כי למידה מתרחשת בכל מיני צורות.</p>
+        <img id="s24-char-img" src="./assets/images/Character1.png" alt="דמות מלווה" class="s6-char-img">
+        <div class="s17-bubble s25-bubble s24-bubble">את המשימה הבאה נבצע בלי מחשב, במרחב הכיתה או בית הספר!</div>
+      </div>
+
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(23)">חזרה</button>
+        <button class="btn-continue" id="s24-continue" type="button" onclick="goTo(1)">המשך</button>
+      </div>
+
+    </section>
+
+    <section class="screen" data-screen="1" id="s1">
+
+      <div class="select-content">
+        <div class="select-head">
+          <h1 class="select-title">משימת כיתה</h1>
+          <div class="select-body">
+            <p><strong>מצאו חבר או חברה הנמצאים באותו שלב בלמידה. לא מצאתם? תוכלו לבצע את המשימה לבד.</strong></p>
+            <p><strong>העזרים הדרושים: סרגל, דף A4, כלי כתיבה.</strong></p>
+            <ol class="s34-list">
+              <li>מדדו בעזרת סרגל מהו האורך של צעד רגיל של אחד או אחת מכם</li>
+              <li>צאו לחצר, ובחרו מסלול שאורכו לפחות 100 צעדים</li>
+              <li>הכפילו את מספר הצעדים באורך הצעד כדי למצוא מהו אורך המסלול במציאות</li>
+              <li>חשבו מהו קנה המידה שיאפשר לכם לסרטט את המסלול במלואו על דף A4</li>
+              <li>סרטטו את המסלול המלא על הדף, ורשמו בתחתית שלו את קנה המידה.</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <!-- תמונה — צד ימין -->
+      <img class="s34-side-img" src="./assets/images/Geer for assiement.png" alt="ציוד למשימה">
+
+      <!-- דמות + בועה — שמאל למטה -->
+      <div class="character-widget" id="s34-char-widget">
+        <div class="speech-bubble">זמן טוב לחלץ עצמות!</div>
+        <img id="s34-char-img" src="./assets/images/Character1.png" alt="דמות מלווה">
+      </div>
+
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(0)">חזרה</button>
+        <button class="btn-continue s34-continue-btn" id="s34-continue" type="button" onclick="goTo(2)">חזרתי. אפשר להמשיך</button>
+      </div>
+
+    </section>
+
+    <section class="screen" data-screen="2" id="s2">
+
+      <div class="select-content">
+        <div class="select-head">
+          <h1 class="select-title">משימת כיתה</h1>
+          <div class="select-body">
+            <p><strong>אז מהו קנה המידה של המסלול שלכם?</strong></p>
+            <div class="s35-input-row">
+              <span class="s35-label">הקלידו אותו כאן:</span>
+              <input class="s35-input" id="s35-input" type="text" dir="rtl" oninput="s35OnInput()">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- דמות — מוסתרת עד להקלדה -->
+      <div class="character-widget hidden" id="s35-char-widget">
+        <div class="speech-bubble">יופי של קנה מידה!</div>
+        <img id="s35-char-img" src="./assets/images/Character1.png" alt="דמות מלווה">
+      </div>
+
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(1)">חזרה</button>
+        <button class="btn-continue s34-continue-btn" id="s35-continue" type="button" disabled onclick="goToAdvanced()">אפשר להמשיך</button>
+      </div>
+
+    </section>
+
+
+    <!-- ═══════════════════════════════════════
+         REPORT MODAL
+    ════════════════════════════════════════ -->
+    <div id="report-modal"
+         class="report-modal-overlay"
+         hidden
+         role="dialog"
+         aria-modal="true"
+         aria-labelledby="report-modal-title">
+      <div class="report-modal-box">
+        <button class="report-close-btn" onclick="tryCloseReportModal()" aria-label="סגור">&#10005;</button>
+        <h2 class="report-modal-title" id="report-modal-title">דיווח על בעיה</h2>
+        <p class="report-modal-body">משהו לא ברור או לא עובד כמו שצריך? ספרו לנו מה קרה כדי שנטפל.</p>
+
+        <div class="report-field">
+          <label class="report-label" for="report-type">מה סוג הבעיה <span class="required-star">*</span></label>
+          <select class="report-select" id="report-type">
+            <option value="" disabled selected>בחרו סוג בעיה</option>
+            <option value="technical">תקלה טכנית או שמשהו לא עובד</option>
+            <option value="unclear">משהו לא ברור לי</option>
+            <option value="other">אחר</option>
+          </select>
+        </div>
+
+        <div class="report-field">
+          <label class="report-label" for="report-text">מה קרה? <span class="required-star">*</span></label>
+          <textarea class="report-textarea" id="report-text" maxlength="250" rows="4" placeholder="תארו את הבעיה..."></textarea>
+          <span class="report-char-count" id="report-char-count">0 / 250</span>
+        </div>
+
+        <div class="report-actions">
+          <button class="report-submit-btn" onclick="submitReport()">שליחה</button>
+          <button class="report-cancel-btn" onclick="tryCloseReportModal()">ביטול</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         REPORT CONFIRM-CLOSE MODAL
+    ════════════════════════════════════════ -->
+    <div id="report-confirm-modal"
+         class="report-modal-overlay"
+         hidden
+         role="dialog"
+         aria-modal="true"
+         aria-labelledby="confirm-modal-title">
+      <div class="report-modal-box report-confirm-box">
+        <h2 class="report-modal-title" id="confirm-modal-title">בטוח לסגור את החלון?</h2>
+        <p class="report-modal-body">בלחיצה על סגירה לא יישלח דיווח</p>
+        <div class="report-actions">
+          <button class="report-cancel-btn" onclick="forceCloseReportModal()">סגור חלון</button>
+          <button class="report-submit-btn" onclick="backToReportForm()">אני רוצה לדווח</button>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

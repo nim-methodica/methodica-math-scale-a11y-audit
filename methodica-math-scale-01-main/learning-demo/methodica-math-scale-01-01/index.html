@@ -1,0 +1,1807 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>קנה מידה — לומדה</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+
+    <!-- ═══════════════════════════════════════
+         GLOBAL — Flag / Report Issue button
+    ════════════════════════════════════════ -->
+    <button class="flag-btn" id="flag-btn" onclick="openReportModal()" aria-label="דיווח על בעיה">
+      <span class="flag-icon" aria-hidden="true">⚑</span>
+      <span class="flag-label">מצאתי תקלה</span>
+    </button>
+    <section class="screen active" data-screen="0">
+      <div class="s0-content">
+        <h1 class="s0-title">איזו דמות תרצו שתלווה אתכם?</h1>
+        <div class="option-cards" role="radiogroup" aria-label="בחרו דמות מלווה">
+
+          <div class="option-card" role="radio" aria-checked="false"
+               tabindex="0" data-value="text" onclick="selectOption(this)">
+            <div class="option-card-img">
+              <img src="./assets/images/Character1.png" alt="דמות טקסטים — דמות ירוקה">
+            </div>
+          </div>
+
+          <div class="option-card" role="radio" aria-checked="false"
+               tabindex="0" data-value="video" onclick="selectOption(this)">
+            <div class="option-card-img">
+              <img src="./assets/images/Character2.png" alt="דמות סרטון — דמות כחולה">
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <button class="btn-continue" id="s0-continue" disabled onclick="advanceFromS0()">
+          בחרתי
+        </button>
+      </div>
+    </section>
+
+    <section class="screen" data-screen="1">
+
+      <!-- Header -->
+      <div class="screen-header"></div>
+
+      <!-- Scrollable white card -->
+      <div class="hook-card">
+        <div class="hook-card-inner">
+
+          <!-- Section A: טקסט + מגרש + סליידר -->
+          <div class="hook-section hook-section-a">
+            <p class="hook-intro">
+              אתם רוצים לצלם עם רחפן את משחק גמר ליגת הכדורגל של קבוצת הנוער העירונית.
+              הגדירו את גובה הרחפן באמצעות הכפתור ובדקו:
+              <strong>באיזה יחס נוכל לראות את מספר החולצה של השחקן במרכז המגרש?</strong>
+            </p>
+            <div class="scale-zone">
+              <div style="display:flex; flex-direction:column; align-items:flex-start;">
+                <p style="font-weight:700; margin-bottom:8px; font-size:26px;">יחס</p>
+                <div class="scale-widget" dir="rtl" role="group" aria-label="בחירת קנה מידה">
+                <div class="scale-track-wrap">
+                  <div class="scale-track"></div>
+
+                  <label class="scale-step">
+                    <input type="radio" name="scale" value="1000" class="sr-only scale-input" checked onchange="setScale(1000)">
+                    <span class="scale-marker"></span>
+                    <span class="scale-label">1,000 : 1</span>
+                  </label>
+
+                  <label class="scale-step">
+                    <input type="radio" name="scale" value="100" class="sr-only scale-input" onchange="setScale(100)">
+                    <span class="scale-marker"></span>
+                    <span class="scale-label">100 : 1</span>
+                  </label>
+
+                  <label class="scale-step">
+                    <input type="radio" name="scale" value="10" class="sr-only scale-input" onchange="setScale(10)">
+                    <span class="scale-marker"></span>
+                    <span class="scale-label">10 : 1</span>
+                  </label>
+                </div>
+              </div>
+              </div>
+              <div class="field-container" data-scale="1000">
+                <img id="field-img" src="./assets/images/Football yard.png" alt="מגרש כדורגל מהאוויר">
+              </div>
+            </div>
+          </div>
+
+          <!-- Section B: גילינו + מפת עיר -->
+          <div class="hook-section hook-section-b">
+            <p class="hook-body">
+              גילינו שביחס של 10 : 1 נוכל לראות את מספר החולצה של השחקן במרכז, ואם נרצה לראות את המגרש כולו - נעבור ליחס של 1,000 : 1.
+            </p>
+            <p class="hook-body">
+              <strong>זהו למעשה קנה מידה</strong> – הגדלה של המספר הימני ביחס (לדוגמה, <mark style="background:#CE82FF; color:inherit; border-radius:3px; padding:0 2px;">1,000</mark> : 1), מאפשרת לנו לכווץ מרחקים מהמציאות אל תוך המסך הקטן של הרחפן, ועדיין לייצג אותם במדוייק.
+            </p>
+            <p class="hook-body">
+              נשתמש בקנה מידה במקומות נוספים, למשל במפות - כשעיר שלמה מופיעה במדוייק על נייר די קטן:
+            </p>
+            <img class="hook-map-img" src="./assets/images/Tel Aviv Map.png" alt="מפת תל אביב">
+          </div>
+
+          <!-- Section C: אדריכלות -->
+          <div class="hook-section hook-section-c">
+            <p class="hook-body">
+              או למשל בתכנית אדריכלית – כששרטוט מדוייק של בית שלם נכנס על מסך מחשב:
+            </p>
+            <img class="hook-plan-img" src="./assets/images/Architacture plan.png" alt="תכנית אדריכלית">
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Character widget 1 (absolute, bottom-left) -->
+      <div class="character-widget s1-char-visible" id="s1-char-widget-1">
+        <div class="speech-bubble">מה אני רואה שם?<br>הוא מספר 6?</div>
+        <img id="s1-char-img-1" src="./assets/images/Character2_binoculars.png" alt="דמות מלווה">
+      </div>
+
+      <!-- Character widget 2 (absolute, bottom-left) -->
+      <div class="character-widget s1-char-hidden" id="s1-char-widget-2">
+        <div class="speech-bubble">בואו נלמד על קנה מידה!</div>
+        <img id="s1-char-img-2" src="./assets/images/Character2_binoculars.png" alt="דמות מלווה">
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="bottom-bar">
+        <button class="btn-continue" id="s1-continue" disabled onclick="goTo(2)">להמשיך</button>
+      </div>
+
+    </section>
+
+    <section class="screen" data-screen="2">
+      <div class="s0-content">
+        <h1 class="s0-title">בואו נלמד על קנה מידה</h1>
+        <p class="s2-subtitle">בחרו איך תרצו ללמוד:</p>
+        <div class="option-cards" role="radiogroup" aria-label="בחרו איך תרצו ללמוד">
+
+          <div class="option-card" role="radio" aria-checked="false"
+               tabindex="0" data-value="video" onclick="selectDesign(this)">
+            <div class="option-card-img">
+              <img id="s2-char-a" src="" alt="לצפות בסרטון קצר">
+            </div>
+            <span class="s2-card-label">לצפות בסרטון קצר</span>
+          </div>
+
+          <div class="option-card" role="radio" aria-checked="false"
+               tabindex="0" data-value="cards" onclick="selectDesign(this)">
+            <div class="option-card-img">
+              <img id="s2-char-b" src="" alt="להפוך קלפים">
+            </div>
+            <span class="s2-card-label">להפוך קלפים</span>
+          </div>
+
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <button class="btn-continue" id="s2-continue" disabled onclick="advanceFromS2()">
+          להמשיך
+        </button>
+      </div>
+    </section>
+
+    <section class="screen" data-screen="3" id="s3">
+      <div class="select-content">
+        <div class="select-head">
+          <h1 class="select-title">מהו קנה מידה?</h1>
+          <div class="select-body">
+            <p>קנה מידה הוא היחס בין אורך של עצם בשרטוט, במפה, בתרשים, בדגם או באיור לבין אורכו במציאות.</p>
+            <p>מצד ימין של היחס יצויין האורך במציאות, ומצד שמאל יצויין האורך בתמונה.</p>
+            <p><strong>לחצו על כל תמונת רחפן, כדי ללמוד על קנה המידה בה:</strong></p>
+          </div>
+        </div>
+        <div class="option-cards frc-row" role="group" aria-label="כרטיסיות — לחצו לגלות">
+
+          <!-- קלף 1: 1:1,000 -->
+          <button class="frc-card" data-index="0" type="button"
+                  aria-expanded="false" aria-label="כרטיסייה 1 — יחס 1:1,000. לחצו להפוך"
+                  onclick="frcFlip(this)">
+            <div class="frc-card-inner">
+              <div class="frc-card-front">
+                <div class="frc-field-container" data-zoom="1000">
+                  <img src="./assets/images/Football yard.png" alt="מגרש כדורגל — יחס 1:1,000">
+                </div>
+              </div>
+              <div class="frc-card-back" aria-hidden="true">
+                <div class="frc-back-thumb" data-zoom="1000">
+                  <img src="./assets/images/Football yard.png" alt="">
+                </div>
+                <span class="frc-ratio-label">1 : 1,000</span>
+                <div class="frc-card-back-content">
+                  <p>כל 1 ס"מ בתמונה<br>שווה ל-1,000 ס"מ במציאות.</p>
+                </div>
+              </div>
+            </div>
+          </button>
+
+          <!-- קלף 2: 1:100 -->
+          <button class="frc-card" data-index="1" type="button"
+                  aria-expanded="false" aria-label="כרטיסייה 2 — יחס 1:100. לחצו להפוך"
+                  onclick="frcFlip(this)">
+            <div class="frc-card-inner">
+              <div class="frc-card-front">
+                <div class="frc-field-container" data-zoom="100">
+                  <img src="./assets/images/Football yard.png" alt="מגרש כדורגל — יחס 1:100">
+                </div>
+              </div>
+              <div class="frc-card-back" aria-hidden="true">
+                <div class="frc-back-thumb" data-zoom="100">
+                  <img src="./assets/images/Football yard.png" alt="">
+                </div>
+                <span class="frc-ratio-label">1 : 100</span>
+                <div class="frc-card-back-content">
+                  <p>כל 1 ס"מ בתמונה<br>שווה ל-100 ס"מ במציאות.</p>
+                </div>
+              </div>
+            </div>
+          </button>
+
+          <!-- קלף 3: 10:1 -->
+          <button class="frc-card" data-index="2" type="button"
+                  aria-expanded="false" aria-label="כרטיסייה 3 — יחס 10:1. לחצו להפוך"
+                  onclick="frcFlip(this)">
+            <div class="frc-card-inner">
+              <div class="frc-card-front">
+                <div class="frc-field-container" data-zoom="10">
+                  <img src="./assets/images/Football yard.png" alt="מגרש כדורגל — יחס 10:1">
+                </div>
+              </div>
+              <div class="frc-card-back" aria-hidden="true">
+                <div class="frc-back-thumb" data-zoom="10">
+                  <img src="./assets/images/Football yard.png" alt="">
+                </div>
+                <span class="frc-ratio-label">10 : 1</span>
+                <div class="frc-card-back-content">
+                  <p>כל 1 ס"מ בתמונה<br>שווה ל-10 ס"מ במציאות.</p>
+                </div>
+              </div>
+            </div>
+          </button>
+
+        </div>
+      </div>
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(2)">חזרה</button>
+        <div class="s3-mode-toggle" role="group" aria-label="מצב למידה">
+          <button class="s3-toggle-opt" data-view="video" type="button" onclick="goTo(4)">לצפות בסרטון</button>
+          <button class="s3-toggle-opt s3-toggle-opt--active" data-view="cards" type="button">להפוך קלפים</button>
+        </div>
+        <button class="btn-continue" id="s3-continue" disabled onclick="advanceFromS3()">
+          להמשיך
+        </button>
+      </div>
+    </section>
+
+    <section class="screen" data-screen="4" id="s4">
+
+      <div class="s4-content">
+
+        <div class="s4-head">
+          <h1 class="s4-title">מהו קנה מידה?</h1>
+          <p class="s4-subtitle"><strong>לחצו על הסרטון לצפייה:</strong></p>
+        </div>
+
+        <div class="s4-player-wrap">
+
+          <!-- Placeholder (לפני לחיצה) -->
+          <div class="s4-placeholder" id="s4-placeholder">
+            <div class="s4-placeholder-icon">▶</div>
+          </div>
+
+          <!-- Playing state (לאחר לחיצה) -->
+          <div class="s4-playing" id="s4-playing" hidden>
+            <p class="s4-playing-label">הסרטון מתנגן...</p>
+            <div class="s4-placeholder-progress">
+              <div class="s4-progress-bar" id="s4-progress-bar"></div>
+            </div>
+          </div>
+
+          <!-- כפתור "להתחיל" — תמיד נגיש -->
+          <button class="s4-start-btn" id="s4-start-btn" type="button" onclick="s4Start()">
+            להתחיל
+          </button>
+
+        </div>
+      </div>
+
+      <div class="character-widget" id="s4-char-widget">
+        <div class="speech-bubble">אני כבר מוכנה עם פופקורן</div>
+        <img id="s4-char-img" src="./assets/images/Character1_popcorn.png" alt="דמות מלווה">
+      </div>
+
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(2)">חזרה</button>
+        <div class="s3-mode-toggle" role="group" aria-label="מצב למידה">
+          <button class="s3-toggle-opt s3-toggle-opt--active" data-view="video" type="button">לצפות בסרטון</button>
+          <button class="s3-toggle-opt" data-view="cards" type="button" onclick="goTo(3)">להפוך קלפים</button>
+        </div>
+        <button class="btn-continue" id="s4-continue" disabled onclick="advanceFromS3()">
+          להמשיך
+        </button>
+      </div>
+
+    </section>
+
+    <section class="screen" data-screen="5" id="s5">
+
+      <!-- Scrollable body (top: 0 — no header; bottom: 74px for bottom bar) -->
+      <div class="s5-body">
+
+        <!-- ─── Q1: question block ─── -->
+        <div class="s5-q1-wrap">
+          <div class="s5-question-block">
+
+            <!-- Text + answers (right column in RTL) -->
+            <div class="s5-text-col">
+              <div class="s5-title">ועכשיו אתם:</div>
+              <div class="s5-question-text">
+                קנה המידה של תכנית הבית שלפניכם הוא 100 : 1.<br>
+                מה מייצג המספר 100 בקנה המידה?
+              </div>
+              <div style="display:flex; flex-direction:column; align-items:flex-start;">
+                <div class="s5-answers" role="group" aria-label="אפשרויות תשובה">
+                  <button class="s5-opt" data-index="0" type="button" onclick="s5Select(0)"
+                          aria-label="אפשרות 1: את האורך במציאות">
+                    <span class="s5-opt-circle"></span>
+                    <span class="s5-opt-text">את האורך במציאות</span>
+                  </button>
+                  <button class="s5-opt" data-index="1" type="button" onclick="s5Select(1)"
+                          aria-label="אפשרות 2: את האורך בתמונה">
+                    <span class="s5-opt-circle"></span>
+                    <span class="s5-opt-text">את האורך בתמונה</span>
+                  </button>
+                </div>
+                <!-- בדוק — מיושר לשמאל לפי s5-answers -->
+                <button class="btn-continue s5-btn-check" id="s5-check" type="button" disabled onclick="s5Submit()" style="align-self:flex-end; margin-top:16px;">
+                  צדקתי?
+                </button>
+              </div>
+              <!-- Inline feedback — icon first = physical RIGHT in RTL -->
+              <div class="s5-inline-feedback" id="s5-inline-feedback" hidden>
+                <div class="s5-fb-icon" id="s5-fb-icon"></div>
+                <div class="s5-fb-text">
+                  <span class="s5-fb-bold" id="s5-fb-bold"></span>
+                  <span class="s5-fb-regular" id="s5-fb-regular"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Image (left column in RTL) -->
+            <div class="s5-img-wrap">
+              <img src="./assets/images/Architacture plan for Q1.png" alt="תכנית אדריכלית לדוגמה">
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ─── Informational text ─── -->
+        <div class="s5-info-section">
+          <p class="s5-info-p"><strong>שימו לב: נוכל לבנות קנה מידה רק בתנאי שיחידות המידה זהות.</strong></p>
+          <p class="s5-info-p"><strong>אם הן אינן זהות, עלינו להמיר אותן כך שיהיה זהות.</strong></p>
+          <p class="s5-info-p">לדוגמה, כשאורך קו מסויין בתמונה הוא 4 ס"מ, ואורכו במציאות הוא 8 מטרים – נמיר את המטרים לסנטימטרים על מנת לבנות את קנה המידה.</p>
+          <p class="s5-info-p">8 מטרים = 800 ס"מ</p>
+          <p class="s5-info-p">מכאן שקנה המידה שלנו יהיה 800 : 4</p>
+          <p class="s5-info-spacer"></p>
+          <p class="s5-info-p"><strong>זכרו:</strong></p>
+          <p class="s5-info-p">10 מ"מ = 1 ס"מ</p>
+          <p class="s5-info-p">100 ס"מ = 1 מטר</p>
+          <p class="s5-info-p">1,000 מטרים = 1 ק"מ</p>
+        </div>
+
+        <!-- ─── Q2: dropdown fill-in-the-blank ─── -->
+        <div class="s5-q2-wrap" id="s5-q2-wrap">
+          <div class="s5-title">בחרו את המספרים המתאימים מכל רשימה, והשלימו את המרות היחידות:</div>
+
+          <div class="s5-fill-rows">
+
+            <!-- שורה 0: ב-3 ק"מ יש [dropdown] מטרים -->
+            <div class="s5-fill-row">
+              <span class="s5-fill-text">ב-3 ק"מ יש</span>
+              <div class="s5-dropdown" data-row="0">
+                <button class="s5-dd-trigger" type="button" onclick="s5Q2Toggle(0)">
+                  <span class="s5-dd-icon" id="s5-dd-icon-0"></span>
+                  <span class="s5-dd-value" id="s5-dd-val-0">-</span>
+                  <span class="s5-dd-chevron"><svg width="16" height="8" viewBox="0 0 16 8" fill="none"><path d="M1 1L8 7L15 1" stroke="#AEAEAE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <div class="s5-dd-panel" id="s5-dd-panel-0" hidden>
+                  <button class="s5-dd-opt" type="button" onclick="s5Q2Select(0,'300')">300</button>
+                  <button class="s5-dd-opt" type="button" onclick="s5Q2Select(0,'3,000')">3,000</button>
+                  <button class="s5-dd-opt" type="button" onclick="s5Q2Select(0,'30,000')">30,000</button>
+                </div>
+              </div>
+              <span class="s5-fill-text">מטרים</span>
+            </div>
+
+            <!-- שורה 1: ב-17 מטרים יש [dropdown] ס"מ -->
+            <div class="s5-fill-row">
+              <span class="s5-fill-text">ב-17 מטרים יש</span>
+              <div class="s5-dropdown" data-row="1">
+                <button class="s5-dd-trigger" type="button" onclick="s5Q2Toggle(1)">
+                  <span class="s5-dd-icon" id="s5-dd-icon-1"></span>
+                  <span class="s5-dd-value" id="s5-dd-val-1">-</span>
+                  <span class="s5-dd-chevron"><svg width="16" height="8" viewBox="0 0 16 8" fill="none"><path d="M1 1L8 7L15 1" stroke="#AEAEAE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <div class="s5-dd-panel" id="s5-dd-panel-1" hidden>
+                  <button class="s5-dd-opt" type="button" onclick="s5Q2Select(1,'170')">170</button>
+                  <button class="s5-dd-opt" type="button" onclick="s5Q2Select(1,'1,700')">1,700</button>
+                  <button class="s5-dd-opt" type="button" onclick="s5Q2Select(1,'17,000')">17,000</button>
+                </div>
+              </div>
+              <span class="s5-fill-text">ס"מ</span>
+            </div>
+
+            <!-- שורה 2: ב-32 ס"מ יש [dropdown] מ"מ -->
+            <div class="s5-fill-row">
+              <span class="s5-fill-text">ב-32 ס"מ יש</span>
+              <div class="s5-dropdown" data-row="2">
+                <button class="s5-dd-trigger" type="button" onclick="s5Q2Toggle(2)">
+                  <span class="s5-dd-icon" id="s5-dd-icon-2"></span>
+                  <span class="s5-dd-value" id="s5-dd-val-2">-</span>
+                  <span class="s5-dd-chevron"><svg width="16" height="8" viewBox="0 0 16 8" fill="none"><path d="M1 1L8 7L15 1" stroke="#AEAEAE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <div class="s5-dd-panel" id="s5-dd-panel-2" hidden>
+                  <button class="s5-dd-opt" type="button" onclick="s5Q2Select(2,'320')">320</button>
+                  <button class="s5-dd-opt" type="button" onclick="s5Q2Select(2,'3,200')">3,200</button>
+                  <button class="s5-dd-opt" type="button" onclick="s5Q2Select(2,'32,000')">32,000</button>
+                </div>
+              </div>
+              <span class="s5-fill-text">מ"מ</span>
+            </div>
+
+            <!-- שורה 3: ב-7 ק"מ יש [dropdown] ס"מ -->
+            <div class="s5-fill-row">
+              <span class="s5-fill-text">ב-7 ק"מ יש</span>
+              <div class="s5-dropdown" data-row="3">
+                <button class="s5-dd-trigger" type="button" onclick="s5Q2Toggle(3)">
+                  <span class="s5-dd-icon" id="s5-dd-icon-3"></span>
+                  <span class="s5-dd-value" id="s5-dd-val-3">-</span>
+                  <span class="s5-dd-chevron"><svg width="16" height="8" viewBox="0 0 16 8" fill="none"><path d="M1 1L8 7L15 1" stroke="#AEAEAE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <div class="s5-dd-panel" id="s5-dd-panel-3" hidden>
+                  <button class="s5-dd-opt" type="button" onclick="s5Q2Select(3,'7,000')">7,000</button>
+                  <button class="s5-dd-opt" type="button" onclick="s5Q2Select(3,'70,000')">70,000</button>
+                  <button class="s5-dd-opt" type="button" onclick="s5Q2Select(3,'700,000')">700,000</button>
+                </div>
+              </div>
+              <span class="s5-fill-text">ס"מ</span>
+            </div>
+
+          </div>
+
+          <!-- בדוק — physical LEFT (align-self: flex-end in RTL column) -->
+          <button class="btn-continue s5-q2-btn-check" id="s5-q2-check" type="button" disabled onclick="s5Q2Submit()" style="margin-right:205px;">
+            צדקתי?
+          </button>
+          <!-- Inline feedback — icon first = physical RIGHT in RTL -->
+          <div class="s5-inline-feedback" id="s5-q2-inline-feedback" hidden>
+            <div class="s5-fb-icon" id="s5-q2-fb-icon"></div>
+            <div class="s5-fb-text">
+              <span class="s5-fb-bold" id="s5-q2-fb-bold"></span>
+              <span class="s5-fb-regular" id="s5-q2-fb-regular"></span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Character widget — same structure as screen 1/2, positioned on physical right -->
+      <div class="character-widget hidden" id="s5-char-widget">
+        <div class="speech-bubble">לאורך כל היחידה,<br>שימו לב ליחידות המידה!</div>
+        <img id="s5-char-img" src="./assets/images/Character1.png" alt="דמות מלווה">
+      </div>
+
+      <!-- Bottom bar (same pattern as screens 3 & 4) -->
+      <div class="bottom-bar s3-bottom-bar" id="s5-bottom-bar">
+
+        <!-- Center: toggle pill (dynamic based on selectedDesign) -->
+        <div class="s3-mode-toggle" role="group" aria-label="מצב למידה" id="s5-mode-toggle">
+          <button class="s3-toggle-opt" data-view="video" type="button" id="s5-toggle-video">לצפות בסרטון</button>
+          <button class="s3-toggle-opt" data-view="cards" type="button" id="s5-toggle-cards">להפוך קלפים</button>
+        </div>
+
+        <!-- Left: "המשך" continue button -->
+        <button class="btn-continue" id="s5-continue" type="button" disabled onclick="s5Continue()">
+          המשך
+        </button>
+
+      </div>
+
+    </section>
+
+    <section class="screen" data-screen="6" id="s6">
+
+      <div class="s0-content">
+        <h1 class="s0-title">עוד מעט נתחיל לתרגל,</h1>
+        <p class="s2-subtitle">רגע לפני, בואו נפתור תרגיל אחד יחד</p>
+        <img id="s6-char-img" src="./assets/images/Character1_holdhands.png" alt="דמות מלווה" class="s6-char-img">
+      </div>
+
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(5)">חזרה</button>
+        <button class="btn-continue" id="s6-continue" type="button" onclick="goTo(7)">המשך</button>
+      </div>
+
+    </section>
+
+    <section class="screen" data-screen="7" id="s7">
+
+      <!-- כותרת + הנחיה -->
+      <div class="s7-header">
+        <h1 class="s7-title">קנה מידה – בואו נפתור תרגיל ראשון יחד</h1>
+        <p class="s7-prompt">התבוננו בתרגיל הבא. אל תפתרו אותו, רק הסתכלו על הנתונים וחישבו האם יש לכם כיוון לפתרון.</p>
+      </div>
+
+      <!-- כרטיס: מסגרת כחולה, רקע לבן, תמונה מרכזית בין הטקסטים -->
+      <div class="s7-card">
+
+        <p class="s7-card-desc">
+          אורך משטח ההחלקה לסקייטבורד שבתמונה הוא 5 ס"מ.<br>
+          אורך המשטח במציאות הוא 10 מטרים.
+        </p>
+
+        <div class="s7-card-img">
+          <img src="./assets/images/Guided practice Q1.png" alt="משטח החלקה לסקייטבורד">
+        </div>
+
+        <p class="s7-card-q"><strong>1. מה מהבאים נכון?</strong></p>
+        <div class="s7-options">
+          <p class="s7-opt">א. הנתונים הם 5 ו-10, לכן קנה המידה הוא 10 : 5</p>
+          <p class="s7-opt">ב. אורך המשטח הוא 10 מטרים שהם 100 ס"מ, ולכן קנה המידה הוא 100 : 5</p>
+          <p class="s7-opt">ג. אורך המשטח הוא 10 מטרים שהם 1,000 ס"מ, ולכן קנה המידה הוא 1,000 : 5</p>
+        </div>
+
+      </div>
+
+      <!-- Character widget — same structure & classes as screen 1 -->
+      <div class="character-widget" id="s7-char-widget">
+        <div class="speech-bubble">מיד נסביר את הפתרון,<br>שלב אחר שלב</div>
+        <img id="s7-char-img" src="./assets/images/Character1.png" alt="דמות מלווה">
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(6)">חזרה</button>
+        <button class="btn-continue" id="s7-continue" type="button" disabled onclick="goTo(8)">המשך</button>
+      </div>
+
+    </section>
+
+    <section class="screen" data-screen="8" id="s8">
+
+      <!-- כותרת + הנחיה -->
+      <div class="s7-header">
+        <h1 class="s7-title">קנה מידה – בואו נפתור תרגיל ראשון יחד</h1>
+        <p class="s7-prompt">התבוננו בתרגיל הבא. אל תפתרו אותו, רק הסתכלו על הנתונים וחישבו האם יש לכם כיוון לפתרון.</p>
+      </div>
+
+      <!-- Layout: כרטיס (ימין) + פופאפ (שמאל) — RTL flex row -->
+      <div class="s8-layout">
+
+        <!-- כרטיס — physical RIGHT (first child in RTL) -->
+        <div class="s7-card s8-card">
+
+          <p class="s7-card-desc">
+            אורך משטח ההחלקה לסקייטבורד שבתמונה הוא <span class="s8-highlight">5 ס"מ</span>.<br>
+            אורך המשטח במציאות הוא <span class="s8-highlight">10 מטרים</span>.
+          </p>
+
+          <div class="s7-card-img">
+            <img src="./assets/images/Guided practice Q1.png" alt="משטח החלקה לסקייטבורד">
+          </div>
+
+          <p class="s7-card-q"><strong>1. מה מהבאים נכון?</strong></p>
+          <div class="s7-options">
+            <p class="s7-opt">א. הנתונים הם 5 ו-10, לכן קנה המידה הוא 10 : 5</p>
+            <p class="s7-opt">ב. אורך המשטח הוא 10 מטרים שהם 100 ס"מ, ולכן קנה המידה הוא 100 : 5</p>
+            <p class="s7-opt">ג. אורך המשטח הוא 10 מטרים שהם 1,000 ס"מ, ולכן קנה המידה הוא 1,000 : 5</p>
+          </div>
+
+        </div>
+
+        <!-- פופאפ — physical LEFT (second child in RTL) -->
+        <div class="s8-popup" id="s8-popup">
+          <p class="s8-popup-text">קודם כל, נבדוק את הנתונים.</p>
+          <p class="s8-popup-text">האם יחידות המידה של אורך המשטח במציאות ובתמונה זהות?</p>
+          <div class="s8-popup-btns">
+            <button class="s8-btn" type="button" id="s8-btn-yes" onclick="s8Answer('yes')">כן</button>
+            <button class="s8-btn s8-btn-no" type="button" id="s8-btn-no" onclick="s8Answer('no')">
+              <span class="s8-correct-mark" id="s8-correct-mark">
+                <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="13" fill="none" stroke="#a51cff75" stroke-width="2"/><path d="M8 14.5L12 18.5L20 10" stroke="#a51cff75" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              לא
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(7)">חזרה</button>
+        <button class="btn-continue" id="s8-continue" type="button" disabled onclick="goTo(9)">המשך</button>
+      </div>
+
+    </section>
+
+    <section class="screen" data-screen="9" id="s9">
+
+      <!-- כותרת + הנחיה -->
+      <div class="s7-header">
+        <h1 class="s7-title">קנה מידה – בואו נפתור תרגיל ראשון יחד</h1>
+        <p class="s7-prompt">התבוננו בתרגיל הבא. אל תפתרו אותו, רק הסתכלו על הנתונים וחישבו האם יש לכם כיוון לפתרון.</p>
+      </div>
+
+      <!-- Layout: כרטיס (ימין) + פופאפ (שמאל) — RTL flex row -->
+      <div class="s8-layout">
+
+        <!-- כרטיס — physical RIGHT (first child in RTL) -->
+        <div class="s7-card s8-card">
+
+          <p class="s7-card-desc">
+            אורך משטח ההחלקה לסקייטבורד שבתמונה הוא <span class="s8-highlight">5 ס"מ</span>.<br>
+            אורך המשטח במציאות הוא <span class="s8-highlight">10 מטרים</span>.
+          </p>
+
+          <div class="s7-card-img">
+            <img src="./assets/images/Guided practice Q1.png" alt="משטח החלקה לסקייטבורד">
+          </div>
+
+          <p class="s7-card-q"><strong>1. מה מהבאים נכון?</strong></p>
+          <div class="s7-options">
+            <p class="s7-opt">א. הנתונים הם 5 ו-10, לכן קנה המידה הוא 10 : 5</p>
+            <p class="s7-opt">ב. אורך המשטח הוא 10 מטרים שהם 100 ס"מ, ולכן קנה המידה הוא 100 : 5</p>
+            <p class="s7-opt">ג. אורך המשטח הוא 10 מטרים שהם 1,000 ס"מ, ולכן קנה המידה הוא 1,000 : 5</p>
+          </div>
+
+        </div>
+
+        <!-- פופאפ — physical LEFT (second child in RTL) -->
+        <div class="s8-popup" id="s9-popup">
+          <p class="s8-popup-text">נוכל לראות שיחידות המידה אינן זהות.</p>
+          <p class="s8-popup-text">האם נוכל לבנות יחס בין יחידות מידה שונות?</p>
+          <div class="s8-popup-btns">
+            <button class="s8-btn" type="button" id="s9-btn-yes" onclick="s9Answer('yes')">כן</button>
+            <button class="s8-btn s8-btn-no" type="button" id="s9-btn-no" onclick="s9Answer('no')">
+              <span class="s8-correct-mark" id="s9-correct-mark">
+                <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="13" fill="none" stroke="#a51cff75" stroke-width="2"/><path d="M8 14.5L12 18.5L20 10" stroke="#a51cff75" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              לא
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(8)">חזרה</button>
+        <button class="btn-continue" id="s9-continue" type="button" disabled onclick="goTo(10)">המשך</button>
+      </div>
+
+    </section>
+
+    <section class="screen" data-screen="10" id="s10">
+
+      <!-- כותרת + הנחיה -->
+      <div class="s7-header">
+        <h1 class="s7-title">קנה מידה – בואו נפתור תרגיל ראשון יחד</h1>
+        <p class="s7-prompt">התבוננו בתרגיל הבא. אל תפתרו אותו, רק הסתכלו על הנתונים וחישבו האם יש לכם כיוון לפתרון.</p>
+      </div>
+
+      <!-- Layout: כרטיס (ימין) + פופאפ (שמאל) — RTL flex row -->
+      <div class="s8-layout">
+
+        <!-- כרטיס — physical RIGHT (first child in RTL) -->
+        <div class="s7-card s8-card">
+
+          <p class="s7-card-desc">
+            אורך משטח ההחלקה לסקייטבורד שבתמונה הוא <span class="s8-highlight">5 ס"מ</span>.<br>
+            אורך המשטח במציאות הוא <span class="s8-highlight">10 מטרים</span>.
+          </p>
+
+          <div class="s7-card-img">
+            <img src="./assets/images/Guided practice Q1.png" alt="משטח החלקה לסקייטבורד">
+          </div>
+
+          <p class="s7-card-q"><strong>1. מה מהבאים נכון?</strong></p>
+          <div class="s7-options">
+            <p class="s7-opt">א. הנתונים הם 5 ו-10, לכן קנה המידה הוא 10 : 5</p>
+            <p class="s7-opt">ב. אורך המשטח הוא 10 מטרים שהם 100 ס"מ, ולכן קנה המידה הוא 100 : 5</p>
+            <p class="s7-opt">ג. אורך המשטח הוא 10 מטרים שהם 1,000 ס"מ, ולכן קנה המידה הוא 1,000 : 5</p>
+          </div>
+
+        </div>
+
+        <!-- פופאפ — physical LEFT (second child in RTL) -->
+        <div class="s8-popup" id="s10-popup">
+          <p class="s8-popup-text">לא נוכל לבנות יחס בין יחידות מידה שונות, לכן נמיר את המטרים לסנטימטרים.</p>
+          <p class="s8-popup-text">כמה סנטימטרים יש ב-10 מטרים?</p>
+          <div class="s8-popup-btns">
+            <button class="s8-btn s8-btn-no" type="button" id="s10-btn-1000" onclick="s10Answer('1000')">
+              <span class="s8-correct-mark" id="s10-correct-mark">
+                <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="13" fill="none" stroke="#a51cff75" stroke-width="2"/><path d="M8 14.5L12 18.5L20 10" stroke="#a51cff75" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              1,000
+            </button>
+            <button class="s8-btn" type="button" id="s10-btn-100" onclick="s10Answer('100')">100</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(9)">חזרה</button>
+        <button class="btn-continue" id="s10-continue" type="button" disabled onclick="goTo(11)">המשך</button>
+      </div>
+
+    </section>
+
+    <section class="screen" data-screen="11" id="s11">
+
+      <!-- כותרת + הנחיה -->
+      <div class="s7-header">
+        <h1 class="s7-title">קנה מידה – בואו נפתור תרגיל ראשון יחד</h1>
+        <p class="s7-prompt">התבוננו בתרגיל הבא. אל תפתרו אותו, רק הסתכלו על הנתונים וחישבו האם יש לכם כיוון לפתרון.</p>
+      </div>
+
+      <!-- Layout: כרטיס (ימין) + פופאפ (שמאל) — RTL flex row -->
+      <div class="s8-layout">
+
+        <!-- כרטיס — physical RIGHT (first child in RTL) -->
+        <div class="s7-card s8-card">
+
+          <p class="s7-card-desc">
+            אורך משטח ההחלקה לסקייטבורד שבתמונה הוא 5 ס"מ.<br>
+            אורך המשטח במציאות הוא 10 מטרים.
+          </p>
+
+          <div class="s7-card-img">
+            <img src="./assets/images/Guided practice Q1.png" alt="משטח החלקה לסקייטבורד">
+          </div>
+
+          <p class="s7-card-q s11-black"><strong>1. מה מהבאים נכון?</strong></p>
+          <div class="s7-options">
+            <p class="s7-opt s11-black">א. הנתונים הם 5 ו-10, לכן קנה המידה הוא 10 : 5</p>
+            <p class="s7-opt s11-black">ב. אורך המשטח הוא 10 מטרים שהם 100 ס"מ, ולכן קנה המידה הוא 100 : 5</p>
+            <p class="s7-opt s11-black"><span class="s8-highlight">ג. אורך המשטח הוא 10 מטרים שהם 1,000 ס"מ, ולכן קנה המידה הוא 1,000 : 5</span></p>
+          </div>
+
+        </div>
+
+        <!-- פופאפ — physical LEFT (second child in RTL) -->
+        <div class="s8-popup" id="s11-popup">
+          <p class="s8-popup-text">ב-10 מטרים יש 1,000 סנטימטרים, וידוע שאורך המשטח בתמונה הוא 5 ס"מ.</p>
+          <p class="s8-popup-text">מכאן, שקנה המידה הוא 1,000 : 5.</p>
+          <p class="s8-popup-text">כלומר, תשובה ג היא הנכונה.</p>
+        </div>
+
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(10)">חזרה</button>
+        <button class="btn-continue" id="s11-continue" type="button" onclick="goTo(12)">המשך</button>
+      </div>
+
+    </section>
+
+    <section class="screen" data-screen="12" id="s12">
+
+      <!-- כותרת + הנחיה -->
+      <div class="s7-header">
+        <h1 class="s7-title">קנה מידה – בואו נפתור תרגיל ראשון יחד</h1>
+        <p class="s7-prompt">התבוננו בתרגיל הבא. אל תפתרו אותו, רק הסתכלו על הנתונים וחישבו האם יש לכם כיוון לפתרון.</p>
+      </div>
+
+      <!-- כרטיס -->
+      <div class="s7-card">
+
+        <p class="s7-card-desc">
+          אורך משטח ההחלקה לסקייטבורד שבתמונה הוא 5 ס"מ.<br>
+          אורך המשטח במציאות הוא 10 מטרים.
+        </p>
+
+        <div class="s7-card-img">
+          <img src="./assets/images/Guided practice Q1.png" alt="משטח החלקה לסקייטבורד">
+        </div>
+
+        <p class="s7-card-q"><strong>2. גילינו שקנה המידה הוא 1,000 : 5. השלימו:</strong></p>
+        <div class="s7-options">
+          <p class="s7-opt">היחס המצומצם הוא: _______ : 1</p>
+          <p class="s7-opt">1 ס"מ בתמונה מייצג _______ ס"מ במציאות</p>
+        </div>
+
+      </div>
+
+      <!-- Character widget -->
+      <div class="character-widget" id="s12-char-widget">
+        <div class="speech-bubble">יש לכם רעיון איך לפתור?</div>
+        <img id="s12-char-img" src="./assets/images/Character1.png" alt="דמות מלווה">
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(11)">חזרה</button>
+        <button class="btn-continue" id="s12-continue" type="button" onclick="goTo(13)">המשך</button>
+      </div>
+
+    </section>
+
+    <section class="screen" data-screen="13" id="s13">
+
+      <!-- כותרת + הנחיה -->
+      <div class="s7-header">
+        <h1 class="s7-title">קנה מידה – בואו נפתור תרגיל ראשון יחד</h1>
+        <p class="s7-prompt">התבוננו בתרגיל הבא. אל תפתרו אותו, רק הסתכלו על הנתונים וחישבו האם יש לכם כיוון לפתרון.</p>
+      </div>
+
+      <!-- Layout: כרטיס (ימין) + פופאפ (שמאל) — RTL flex row -->
+      <div class="s8-layout">
+
+        <!-- כרטיס — physical RIGHT (first child in RTL) -->
+        <div class="s7-card s8-card">
+
+          <p class="s7-card-desc">
+            אורך משטח ההחלקה לסקייטבורד שבתמונה הוא 5 ס"מ.<br>
+            אורך המשטח במציאות הוא 10 מטרים.
+          </p>
+
+          <div class="s7-card-img">
+            <img src="./assets/images/Guided practice Q1.png" alt="משטח החלקה לסקייטבורד">
+          </div>
+
+          <p class="s7-card-q s13-black"><strong>2. גילינו שקנה המידה הוא <span class="s8-highlight">1,000 : 5.</span> השלימו:</strong></p>
+          <div class="s7-options">
+            <p class="s7-opt s13-black">היחס המצומצם הוא: <span class="s8-highlight">_______ : 1</span></p>
+            <p class="s7-opt">1 ס"מ בתמונה מייצג _______ ס"מ במציאות</p>
+          </div>
+
+        </div>
+
+        <!-- פופאפ — physical LEFT (second child in RTL) -->
+        <div class="s8-popup" id="s13-popup">
+          <p class="s8-popup-text">גילינו ש-5 ס"מ בתמונה מייצגים 1,000 ס"מ במציאות.</p>
+          <p class="s8-popup-text">מה עלינו לעשות כדי לגלות מה מייצג 1 ס"מ בתמונה?</p>
+          <div class="s8-popup-btns">
+            <button class="s8-btn s8-btn-no s13-btn-wide" type="button" id="s13-btn-divide" onclick="s13Answer('divide')">
+              <span class="s8-correct-mark" id="s13-correct-mark">
+                <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="13" fill="none" stroke="#a51cff75" stroke-width="2"/><path d="M8 14.5L12 18.5L20 10" stroke="#a51cff75" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              לחלק ב-5 את הצד השני
+            </button>
+            <button class="s8-btn s13-btn-wide" type="button" id="s13-btn-multiply" onclick="s13Answer('multiply')">לכפול פי 5 את הצד השני</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(12)">חזרה</button>
+        <button class="btn-continue" id="s13-continue" type="button" disabled onclick="goTo(14)">המשך</button>
+      </div>
+
+    </section>
+
+    <section class="screen" data-screen="14" id="s14">
+
+      <!-- כותרת + הנחיה -->
+      <div class="s7-header">
+        <h1 class="s7-title">קנה מידה – בואו נפתור תרגיל ראשון יחד</h1>
+        <p class="s7-prompt">התבוננו בתרגיל הבא. אל תפתרו אותו, רק הסתכלו על הנתונים וחישבו האם יש לכם כיוון לפתרון.</p>
+      </div>
+
+      <!-- Layout: כרטיס (ימין) + פופאפ (שמאל) — RTL flex row -->
+      <div class="s8-layout">
+
+        <!-- כרטיס — physical RIGHT (first child in RTL) -->
+        <div class="s7-card s8-card">
+
+          <p class="s7-card-desc">
+            אורך משטח ההחלקה לסקייטבורד שבתמונה הוא 5 ס"מ.<br>
+            אורך המשטח במציאות הוא 10 מטרים.
+          </p>
+
+          <div class="s7-card-img">
+            <img src="./assets/images/Guided practice Q1.png" alt="משטח החלקה לסקייטבורד">
+          </div>
+
+          <p class="s7-card-q s13-black"><strong>2. גילינו שקנה המידה הוא 1,000 : 5. השלימו:</strong></p>
+          <div class="s7-options">
+            <p class="s7-opt s13-black">היחס המצומצם הוא: _______ : 1</p>
+            <p class="s7-opt s13-black"><span class="s8-highlight">1 ס"מ בתמונה מייצג _______ ס"מ במציאות</span></p>
+          </div>
+
+        </div>
+
+        <!-- פופאפ — physical LEFT (second child in RTL) -->
+        <div class="s8-popup" id="s14-popup">
+          <p class="s8-popup-text">חילקנו גם את 1,000 ב-5, וקיבלנו יחס מצומצם של 200 : 1.</p>
+          <p class="s8-popup-text">המשמעות היא שכל 1 ס"מ מייצג 200 ס"מ במציאות.</p>
+        </div>
+
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(13)">חזרה</button>
+        <button class="btn-continue" id="s14-continue" type="button" onclick="goTo(15)">המשך</button>
+      </div>
+
+    </section>
+
+    <section class="screen" data-screen="15" id="s15">
+
+      <div class="s0-content">
+        <h1 class="s0-title">ועכשיו, תרגיל לחימום!</h1>
+        <img id="s15-char-img" src="./assets/images/Character1_workout.png" alt="דמות מלווה" class="s6-char-img">
+      </div>
+
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(14)">חזרה</button>
+        <button class="btn-continue" type="button" onclick="goTo(16)">המשך</button>
+      </div>
+
+    </section>
+
+    <section class="screen" data-screen="16" id="s16">
+
+      <div class="s16-content">
+
+        <!-- ─── Q1 ─── -->
+        <div class="s5-q1-wrap">
+          <div class="s5-question-block s16-no-img">
+
+            <div class="s5-text-col">
+              <div class="s5-question-text">
+                <strong>קנה מידה של 1:100 אומר שכל 1 ס"מ בשרטוט שווה ל-100 ס"מ במציאות.</strong>
+              </div>
+              <div class="s5-answers" role="group" aria-label="אפשרויות תשובה">
+                <button class="s5-opt" data-index="0" type="button" onclick="s16Select(0)"
+                        aria-label="אפשרות 1: נכון">
+                  <span class="s5-opt-circle"></span>
+                  <span class="s5-opt-text">נכון</span>
+                </button>
+                <button class="s5-opt" data-index="1" type="button" onclick="s16Select(1)"
+                        aria-label="אפשרות 2: לא נכון">
+                  <span class="s5-opt-circle"></span>
+                  <span class="s5-opt-text">לא נכון</span>
+                </button>
+              </div>
+              <div class="s5-inline-feedback" id="s16-inline-feedback" hidden>
+                <div class="s5-fb-icon" id="s16-fb-icon"></div>
+                <div class="s5-fb-text">
+                  <span class="s5-fb-bold" id="s16-fb-bold"></span>
+                  <span class="s5-fb-regular" id="s16-fb-regular"></span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+      </div>
+
+      <div class="character-widget" id="s16-char-widget">
+        <div class="speech-bubble">זו רק שאלה לחימום, כן?</div>
+        <img id="s16-char-img" src="./assets/images/Character2.png" alt="דמות מלווה">
+      </div>
+
+      <!-- Hint popup overlay -->
+      <div class="s16-hint-popup" id="s16-hint-popup" hidden>
+        <div class="s16-hint-popup-header">
+          <svg width="48" height="56" viewBox="0 0 48 56" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M24 2C15.16 2 8 9.16 8 18C8 23.52 10.78 28.38 15 31.34L16 31.98V40C16 41.1 16.9 42 18 42H30C31.1 42 32 41.1 32 40V31.98L33 31.34C37.22 28.38 40 23.52 40 18C40 9.16 32.84 2 24 2Z" fill="white"/>
+            <rect x="17" y="43" width="14" height="3.5" rx="1.75" fill="white"/>
+            <rect x="19" y="47.5" width="10" height="3.5" rx="1.75" fill="white"/>
+            <rect x="21" y="52" width="6" height="3" rx="1.5" fill="white"/>
+          </svg>
+          <div class="s16-hint-popup-title">רמז</div>
+        </div>
+        <div class="s16-hint-popup-text">זכרו את סדר הכתיבה הקבוע של קנה המידה -<br>(אורך בשרטוט) : (אורך במציאות)</div>
+        <button class="s16-hint-popup-close" type="button" onclick="s16CloseHint()">חזרה לשאלה</button>
+      </div>
+
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(15)">חזרה</button>
+        <div class="s16-hint-continue-group">
+          <button class="s16-hint-btn" type="button" id="s16-hint-btn" onclick="s16ToggleHint()">
+            <svg width="22" height="26" viewBox="0 0 22 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M11 1C6.58 1 3 4.58 3 9C3 11.76 4.39 14.19 7 15.67L7.5 15.97V19C7.5 19.55 7.95 20 8.5 20H13.5C14.05 20 14.5 19.55 14.5 19V15.97L15 15.67C17.61 14.19 19 11.76 19 9C19 4.58 15.42 1 11 1Z" fill="#a51cff75"/>
+              <rect x="8" y="20.5" width="6" height="1.5" rx="0.75" fill="#a51cff75"/>
+              <rect x="8.75" y="22.5" width="4.5" height="1.5" rx="0.75" fill="#a51cff75"/>
+              <rect x="9.5" y="24.5" width="3" height="1.25" rx="0.625" fill="#a51cff75"/>
+            </svg>
+            אפשר רמז?
+          </button>
+          <button class="btn-continue" id="s16-continue" type="button" disabled onclick="goTo(17)">צדקתי?</button>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="screen" data-screen="17" id="s17">
+
+      <div class="s0-content">
+        <p class="s2-subtitle">סיימנו את שלב הלימוד, ועכשיו נעבור לתרגול.</p>
+        <h1 class="s0-title s17-big">מיד יוצגו 5 תרגילים.</h1>
+        <p class="s2-subtitle">מענה נכון על 4 תרגילים ומעלה – נעבור לתרגול המתקדם.</p>
+        <p class="s2-subtitle">פחות מזה – נתרגל עוד קצת לחיזוק.</p>
+        <div class="s17-img-wrap">
+          <img id="s17-char-img" src="./assets/images/Character1.png" alt="דמות מלווה" class="s6-char-img">
+          <div class="s17-bubble">אם לא תגיעו ל-80%, נמשיך לתרגל עוד קצת, עד שנצליח :)</div>
+        </div>
+      </div>
+
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(16)">חזרה</button>
+        <button class="btn-continue" type="button" onclick="goTo(18)">המשך</button>
+      </div>
+
+    </section>
+
+    <section class="screen" data-screen="18" id="s18">
+
+      <!-- Header -->
+      <div class="s18-header">
+        <button class="s18-back-btn" type="button" onclick="goTo(17)" aria-label="חזרה">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 18L15 12L9 6" stroke="#a51cff75" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Question navigation dots -->
+      <div class="s18-nav" dir="rtl">
+        <!-- Q1 (active) -->
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--active"></div>
+          <div class="s18-nav-label s18-nav-label--on">1</div>
+        </div>
+        <div class="s18-nav-line"></div>
+        <!-- Q2 -->
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--off"></div>
+          <div class="s18-nav-label s18-nav-label--off">2</div>
+        </div>
+        <div class="s18-nav-line"></div>
+        <!-- Q3 -->
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--off"></div>
+          <div class="s18-nav-label s18-nav-label--off">3</div>
+        </div>
+        <div class="s18-nav-line"></div>
+        <!-- Q4 -->
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--off"></div>
+          <div class="s18-nav-label s18-nav-label--off">4</div>
+        </div>
+        <div class="s18-nav-line"></div>
+        <!-- Q5 -->
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--off"></div>
+          <div class="s18-nav-label s18-nav-label--off">5</div>
+        </div>
+      </div>
+
+      <!-- Question -->
+      <div class="s18-question">
+        <div class="s18-q-layout">
+          <!-- RIGHT column: question text + input + feedback -->
+          <div class="s18-q-right">
+            <div class="s18-q-inner">
+              <div class="s18-q-text-wrap">
+                <div class="s18-q-text">
+                  לפניכם תמונה של קונסולת משחק.<br>
+                  קנה המידה של התמונה הוא 6 : 1.<br>
+                  הזיזו את הסרגל אל הקונסולה ומדדו את אורכה.<br>
+                  <strong>מהו האורך של הקונסולה במציאות?</strong>
+                </div>
+              </div>
+              <div class="s18-fill-row">
+                <span class="s18-fill-text">הקלידו את התשובה:</span>
+                <input class="s18-answer-box" id="s18-answer-input" type="text" dir="rtl" oninput="s18CheckInput()">
+              </div>
+            </div>
+          </div>
+          <!-- LEFT column: console image -->
+          <div class="s18-q-left">
+            <img class="s18-console-img" src="./assets/images/Play_Consulse.png" alt="קונסולת משחק">
+          </div>
+        </div>
+      </div>
+
+      <!-- Draggable ruler -->
+      <img class="s18-ruler" id="s18-ruler" src="./assets/images/Ruller.png" alt="סרגל" draggable="false">
+
+      <!-- Character widget — right side above back button -->
+      <div class="character-widget" id="s18-char-widget">
+        <div class="speech-bubble">אתם יכולים למדוד גם אותי עם הסרגל!</div>
+        <img id="s18-char-img" src="./assets/images/Character1.png" alt="דמות מלווה">
+      </div>
+
+      <!-- Hint popup -->
+      <div class="s16-hint-popup" id="s18-hint-popup" hidden>
+        <div class="s16-hint-popup-header">
+          <svg width="48" height="56" viewBox="0 0 48 56" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M24 2C15.16 2 8 9.16 8 18C8 23.52 10.78 28.38 15 31.34L16 31.98V40C16 41.1 16.9 42 18 42H30C31.1 42 32 41.1 32 40V31.98L33 31.34C37.22 28.38 40 23.52 40 18C40 9.16 32.84 2 24 2Z" fill="white"/>
+            <rect x="17" y="43" width="14" height="3.5" rx="1.75" fill="white"/>
+            <rect x="19" y="47.5" width="10" height="3.5" rx="1.75" fill="white"/>
+            <rect x="21" y="52" width="6" height="3" rx="1.5" fill="white"/>
+          </svg>
+          <div class="s16-hint-popup-title">רמז</div>
+        </div>
+        <div class="s16-hint-popup-text">נסו לחשוב – פי כמה גדול אורך הקונסולה במציאות מאורך הקונסולה בתמונה?</div>
+        <button class="s16-hint-popup-close" type="button" onclick="s18CloseHint()">חזרה לשאלה</button>
+      </div>
+
+      <!-- Feedback — above bottom bar -->
+      <div class="s5-inline-feedback s18-feedback-bar" id="s18-feedback" hidden>
+        <div class="s5-fb-icon" id="s18-fb-icon"></div>
+        <div class="s5-fb-text">
+          <span class="s5-fb-bold" id="s18-fb-bold"></span>
+          <span class="s5-fb-regular" id="s18-fb-regular"></span>
+        </div>
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(17)">חזרה</button>
+        <div class="s16-hint-continue-group">
+          <button class="s16-hint-btn" type="button" id="s18-hint-btn" hidden onclick="s18ToggleHint()">
+            <svg width="22" height="26" viewBox="0 0 22 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M11 1C6.58 1 3 4.58 3 9C3 11.76 4.39 14.19 7 15.67L7.5 15.97V19C7.5 19.55 7.95 20 8.5 20H13.5C14.05 20 14.5 19.55 14.5 19V15.97L15 15.67C17.61 14.19 19 11.76 19 9C19 4.58 15.42 1 11 1Z" fill="#a51cff75"/>
+              <rect x="8" y="20.5" width="6" height="1.5" rx="0.75" fill="#a51cff75"/>
+              <rect x="8.75" y="22.5" width="4.5" height="1.5" rx="0.75" fill="#a51cff75"/>
+              <rect x="9.5" y="24.5" width="3" height="1.25" rx="0.625" fill="#a51cff75"/>
+            </svg>
+            אפשר רמז?
+          </button>
+          <button class="btn-continue" id="s18-continue" type="button" disabled onclick="s18Submit()">צדקתי?</button>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="screen" data-screen="19" id="s19">
+
+      <!-- Header -->
+      <div class="s18-header">
+        <button class="s18-back-btn" type="button" onclick="goTo(18)" aria-label="חזרה">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 18L15 12L9 6" stroke="#a51cff75" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Nav dots — Q1 done, Q2 active, Q3-Q5 off -->
+      <div class="s18-nav" dir="rtl">
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--done"></div>
+          <div class="s18-nav-label s18-nav-label--on">1</div>
+        </div>
+        <div class="s18-nav-line s18-nav-line--done"></div>
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--active"></div>
+          <div class="s18-nav-label s18-nav-label--on">2</div>
+        </div>
+        <div class="s18-nav-line"></div>
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--off"></div>
+          <div class="s18-nav-label s18-nav-label--off">3</div>
+        </div>
+        <div class="s18-nav-line"></div>
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--off"></div>
+          <div class="s18-nav-label s18-nav-label--off">4</div>
+        </div>
+        <div class="s18-nav-line"></div>
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--off"></div>
+          <div class="s18-nav-label s18-nav-label--off">5</div>
+        </div>
+      </div>
+
+      <!-- Question -->
+      <div class="s18-question">
+        <div class="s18-q-layout">
+          <!-- RIGHT column: question text + input -->
+          <div class="s18-q-right">
+            <div class="s18-q-inner">
+              <div class="s18-q-text-wrap">
+                <div class="s18-q-text">
+                  לפניכם תרשים של חדר ילדים.<br>
+                  אורך שולחן הכתיבה בתרשים הוא 7 ס"מ.<br>
+                  אורך השולחן במציאות הוא 1.4 מטרים.<br>
+                  <strong>א. מהו קנה המידה המצומצם של התרשים?</strong>
+                </div>
+              </div>
+              <div class="s18-fill-row">
+                <span class="s18-fill-text">הקלידו את התשובה:</span>
+                <input class="s18-answer-box" id="s19-answer-input" type="text" dir="rtl" oninput="s19CheckInput()">
+              </div>
+            </div>
+          </div>
+          <!-- LEFT column: bedroom image -->
+          <div class="s18-q-left">
+            <img class="s18-console-img" src="./assets/images/Bed Room.png" alt="תרשים חדר ילדים">
+          </div>
+        </div>
+      </div>
+
+      <!-- Feedback — above bottom bar -->
+      <div class="s5-inline-feedback s18-feedback-bar" id="s19-feedback" hidden>
+        <div class="s5-fb-icon" id="s19-fb-icon"></div>
+        <div class="s5-fb-text">
+          <span class="s5-fb-bold" id="s19-fb-bold"></span>
+          <span class="s5-fb-regular" id="s19-fb-regular"></span>
+        </div>
+      </div>
+
+      <!-- Hint popup -->
+      <div class="s16-hint-popup" id="s19-hint-popup" hidden>
+        <div class="s16-hint-popup-header">
+          <svg width="48" height="56" viewBox="0 0 48 56" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M24 2C15.16 2 8 9.16 8 18C8 23.52 10.78 28.38 15 31.34L16 31.98V40C16 41.1 16.9 42 18 42H30C31.1 42 32 41.1 32 40V31.98L33 31.34C37.22 28.38 40 23.52 40 18C40 9.16 32.84 2 24 2Z" fill="white"/>
+            <rect x="17" y="43" width="14" height="3.5" rx="1.75" fill="white"/>
+            <rect x="19" y="47.5" width="10" height="3.5" rx="1.75" fill="white"/>
+            <rect x="21" y="52" width="6" height="3" rx="1.5" fill="white"/>
+          </svg>
+          <div class="s16-hint-popup-title">רמז</div>
+        </div>
+        <div class="s16-hint-popup-text">זכרו - כדי לבנות קנה מידה, הנתון המייצג את השרטוט והנתון המייצג את המציאות חייבים להיות באותן יחידות. בדקו כמה סנטימטרים יש ב-1.4 מטרים.</div>
+        <button class="s16-hint-popup-close" type="button" onclick="s19CloseHint()">חזרה לשאלה</button>
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(18)">חזרה</button>
+        <div class="s16-hint-continue-group">
+          <button class="s16-hint-btn" type="button" id="s19-hint-btn" hidden onclick="s19ToggleHint()">
+            <svg width="22" height="26" viewBox="0 0 22 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M11 1C6.58 1 3 4.58 3 9C3 11.76 4.39 14.19 7 15.67L7.5 15.97V19C7.5 19.55 7.95 20 8.5 20H13.5C14.05 20 14.5 19.55 14.5 19V15.97L15 15.67C17.61 14.19 19 11.76 19 9C19 4.58 15.42 1 11 1Z" fill="#a51cff75"/>
+              <rect x="8" y="20.5" width="6" height="1.5" rx="0.75" fill="#a51cff75"/>
+              <rect x="8.75" y="22.5" width="4.5" height="1.5" rx="0.75" fill="#a51cff75"/>
+              <rect x="9.5" y="24.5" width="3" height="1.25" rx="0.625" fill="#a51cff75"/>
+            </svg>
+            אפשר רמז?
+          </button>
+          <button class="btn-continue" id="s19-continue" type="button" disabled onclick="s19Submit()">צדקתי?</button>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="screen" data-screen="20" id="s20">
+
+      <!-- Header -->
+      <div class="s18-header">
+        <button class="s18-back-btn" type="button" onclick="goTo(19)" aria-label="חזרה">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 18L15 12L9 6" stroke="#a51cff75" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Nav dots — Q1 done, Q2 active, Q3-Q5 off -->
+      <div class="s18-nav" dir="rtl">
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--done"></div>
+          <div class="s18-nav-label s18-nav-label--on">1</div>
+        </div>
+        <div class="s18-nav-line s18-nav-line--done"></div>
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--active"></div>
+          <div class="s18-nav-label s18-nav-label--on">2</div>
+        </div>
+        <div class="s18-nav-line"></div>
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--off"></div>
+          <div class="s18-nav-label s18-nav-label--off">3</div>
+        </div>
+        <div class="s18-nav-line"></div>
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--off"></div>
+          <div class="s18-nav-label s18-nav-label--off">4</div>
+        </div>
+        <div class="s18-nav-line"></div>
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--off"></div>
+          <div class="s18-nav-label s18-nav-label--off">5</div>
+        </div>
+      </div>
+
+      <!-- Question -->
+      <div class="s18-question">
+        <div class="s18-q-layout">
+          <!-- RIGHT column: question text + options -->
+          <div class="s18-q-right">
+            <div class="s18-q-inner">
+              <div class="s18-q-text-wrap">
+                <div class="s18-q-text">
+                  גילינו שקנה המידה הוא 20 : 1.<br>
+                  נרצה לפרוס בחדר שטיח שמידותיו במציאות הן:<br>
+                  אורך 1.8 מטרים, רוחב 2.4 מטרים.<br>
+                  <strong>ב. מה יהיו מידות השטיח בתרשים?</strong>
+                </div>
+              </div>
+              <div class="s5-answers" role="group" aria-label="אפשרויות תשובה">
+                <button class="s5-opt" data-index="0" type="button" onclick="s20Select(0)">
+                  <span class="s5-opt-circle"></span>
+                  <span class="s5-opt-text">רוחב 4.5 ס"מ, אורך 6 ס"מ</span>
+                </button>
+                <button class="s5-opt" data-index="1" type="button" onclick="s20Select(1)">
+                  <span class="s5-opt-circle"></span>
+                  <span class="s5-opt-text">רוחב 9 ס"מ, אורך 12 ס"מ</span>
+                </button>
+                <button class="s5-opt" data-index="2" type="button" onclick="s20Select(2)">
+                  <span class="s5-opt-circle"></span>
+                  <span class="s5-opt-text">רוחב 18 ס"מ, אורך 24 ס"מ</span>
+                </button>
+                <button class="s5-opt" data-index="3" type="button" onclick="s20Select(3)">
+                  <span class="s5-opt-circle"></span>
+                  <span class="s5-opt-text">רוחב 36 ס"מ, אורך 48 ס"מ</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- LEFT column: bedroom image -->
+          <div class="s18-q-left">
+            <img class="s18-console-img" src="./assets/images/Bed Room.png" alt="תרשים חדר ילדים">
+          </div>
+        </div>
+      </div>
+
+      <!-- Feedback — above bottom bar -->
+      <div class="s5-inline-feedback s18-feedback-bar" id="s20-feedback" hidden>
+        <div class="s5-fb-icon" id="s20-fb-icon"></div>
+        <div class="s5-fb-text">
+          <span class="s5-fb-bold" id="s20-fb-bold"></span>
+          <span class="s5-fb-regular" id="s20-fb-regular"></span>
+        </div>
+      </div>
+
+      <!-- Hint popup -->
+      <div class="s16-hint-popup" id="s20-hint-popup" hidden>
+        <div class="s16-hint-popup-header">
+          <svg width="48" height="56" viewBox="0 0 48 56" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M24 2C15.16 2 8 9.16 8 18C8 23.52 10.78 28.38 15 31.34L16 31.98V40C16 41.1 16.9 42 18 42H30C31.1 42 32 41.1 32 40V31.98L33 31.34C37.22 28.38 40 23.52 40 18C40 9.16 32.84 2 24 2Z" fill="white"/>
+            <rect x="17" y="43" width="14" height="3.5" rx="1.75" fill="white"/>
+            <rect x="19" y="47.5" width="10" height="3.5" rx="1.75" fill="white"/>
+            <rect x="21" y="52" width="6" height="3" rx="1.5" fill="white"/>
+          </svg>
+          <div class="s16-hint-popup-title">רמז</div>
+        </div>
+        <div class="s16-hint-popup-text">כדי להשוות בין מידות השטיח לבין מידות החלל בתרשים, חשבו תחילה: באילו יחידות כתובות המידות, ופי כמה השטיח במציאות גדול יותר מהשטיח בתרשים?</div>
+        <button class="s16-hint-popup-close" type="button" onclick="s20CloseHint()">חזרה לשאלה</button>
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(19)">חזרה</button>
+        <div class="s16-hint-continue-group">
+          <button class="s16-hint-btn" type="button" id="s20-hint-btn" hidden onclick="s20ToggleHint()">
+            <svg width="22" height="26" viewBox="0 0 22 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M11 1C6.58 1 3 4.58 3 9C3 11.76 4.39 14.19 7 15.67L7.5 15.97V19C7.5 19.55 7.95 20 8.5 20H13.5C14.05 20 14.5 19.55 14.5 19V15.97L15 15.67C17.61 14.19 19 11.76 19 9C19 4.58 15.42 1 11 1Z" fill="#a51cff75"/>
+              <rect x="8" y="20.5" width="6" height="1.5" rx="0.75" fill="#a51cff75"/>
+              <rect x="8.75" y="22.5" width="4.5" height="1.5" rx="0.75" fill="#a51cff75"/>
+              <rect x="9.5" y="24.5" width="3" height="1.25" rx="0.625" fill="#a51cff75"/>
+            </svg>
+            אפשר רמז?
+          </button>
+          <button class="btn-continue" id="s20-continue" type="button" disabled onclick="s20Submit()">צדקתי?</button>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="screen" data-screen="21" id="s21">
+
+      <!-- Header -->
+      <div class="s18-header">
+        <button class="s18-back-btn" type="button" onclick="goTo(20)" aria-label="חזרה">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 18L15 12L9 6" stroke="#a51cff75" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Nav dots — Q1 done, Q2 done, Q3 active, Q4-Q5 off -->
+      <div class="s18-nav" dir="rtl">
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--done"></div>
+          <div class="s18-nav-label s18-nav-label--on">1</div>
+        </div>
+        <div class="s18-nav-line s18-nav-line--done"></div>
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--done"></div>
+          <div class="s18-nav-label s18-nav-label--on">2</div>
+        </div>
+        <div class="s18-nav-line s18-nav-line--done"></div>
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--active"></div>
+          <div class="s18-nav-label s18-nav-label--on">3</div>
+        </div>
+        <div class="s18-nav-line"></div>
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--off"></div>
+          <div class="s18-nav-label s18-nav-label--off">4</div>
+        </div>
+        <div class="s18-nav-line"></div>
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--off"></div>
+          <div class="s18-nav-label s18-nav-label--off">5</div>
+        </div>
+      </div>
+
+      <!-- Question -->
+      <div class="s18-question">
+        <div class="s18-q-layout">
+          <!-- RIGHT column: question text + input -->
+          <div class="s18-q-right">
+            <div class="s18-q-inner">
+              <div class="s18-q-text-wrap">
+                <div class="s18-q-text">
+                  לפניכם מפה מאפליקציית הניווט "דרכים".<br>
+                  כל קטע באורך 8 ס"מ במפה מתאר מסלול באורך 2 ק"מ במציאות.<br>
+                  <strong>מהו קנה המידה של המפה?</strong>
+                </div>
+              </div>
+              <div class="s18-fill-row">
+                <span class="s18-fill-text">הקלידו את התשובה:</span>
+                <input class="s18-answer-box" id="s21-answer-input" type="text" dir="rtl" oninput="s21CheckInput()">
+              </div>
+            </div>
+          </div>
+          <!-- LEFT column: phone/map image -->
+          <div class="s18-q-left">
+            <img class="s18-console-img" src="./assets/images/Phone.png" alt="מפת ניווט">
+          </div>
+        </div>
+      </div>
+
+      <!-- Feedback — above bottom bar -->
+      <div class="s5-inline-feedback s18-feedback-bar" id="s21-feedback" hidden>
+        <div class="s5-fb-icon" id="s21-fb-icon"></div>
+        <div class="s5-fb-text">
+          <span class="s5-fb-bold" id="s21-fb-bold"></span>
+          <span class="s5-fb-regular" id="s21-fb-regular"></span>
+        </div>
+      </div>
+
+      <!-- Hint popup -->
+      <div class="s16-hint-popup" id="s21-hint-popup" hidden>
+        <div class="s16-hint-popup-header">
+          <svg width="48" height="56" viewBox="0 0 48 56" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M24 2C15.16 2 8 9.16 8 18C8 23.52 10.78 28.38 15 31.34L16 31.98V40C16 41.1 16.9 42 18 42H30C31.1 42 32 41.1 32 40V31.98L33 31.34C37.22 28.38 40 23.52 40 18C40 9.16 32.84 2 24 2Z" fill="white"/>
+            <rect x="17" y="43" width="14" height="3.5" rx="1.75" fill="white"/>
+            <rect x="19" y="47.5" width="10" height="3.5" rx="1.75" fill="white"/>
+            <rect x="21" y="52" width="6" height="3" rx="1.5" fill="white"/>
+          </svg>
+          <div class="s16-hint-popup-title">רמז</div>
+        </div>
+        <div class="s16-hint-popup-text">לפני שתחשבו את קנה המידה, המירו את המרחק במציאות לס"מ.<br>כמה סנטימטרים יש בקילומטר?</div>
+        <button class="s16-hint-popup-close" type="button" onclick="s21CloseHint()">חזרה לשאלה</button>
+      </div>
+
+      <!-- Character widget — right side above back button -->
+      <div class="character-widget" id="s21-char-widget">
+        <div class="speech-bubble">אפשר טרמפ?</div>
+        <img id="s21-char-img" src="./assets/images/Character1.png" alt="דמות מלווה">
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(20)">חזרה</button>
+        <div class="s16-hint-continue-group">
+          <button class="s16-hint-btn" type="button" id="s21-hint-btn" hidden onclick="s21ToggleHint()">
+            <svg width="22" height="26" viewBox="0 0 22 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M11 1C6.58 1 3 4.58 3 9C3 11.76 4.39 14.19 7 15.67L7.5 15.97V19C7.5 19.55 7.95 20 8.5 20H13.5C14.05 20 14.5 19.55 14.5 19V15.97L15 15.67C17.61 14.19 19 11.76 19 9C19 4.58 15.42 1 11 1Z" fill="#a51cff75"/>
+              <rect x="8" y="20.5" width="6" height="1.5" rx="0.75" fill="#a51cff75"/>
+              <rect x="8.75" y="22.5" width="4.5" height="1.5" rx="0.75" fill="#a51cff75"/>
+              <rect x="9.5" y="24.5" width="3" height="1.25" rx="0.625" fill="#a51cff75"/>
+            </svg>
+            אפשר רמז?
+          </button>
+          <button class="btn-continue" id="s21-continue" type="button" disabled onclick="s21Submit()">צדקתי?</button>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="screen" data-screen="22" id="s22">
+
+      <!-- Header -->
+      <div class="s18-header">
+        <button class="s18-back-btn" type="button" onclick="goTo(21)" aria-label="חזרה">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 18L15 12L9 6" stroke="#a51cff75" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Nav dots — Q1-Q3 done, Q4 active, Q5 off -->
+      <div class="s18-nav" dir="rtl">
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--done"></div>
+          <div class="s18-nav-label s18-nav-label--on">1</div>
+        </div>
+        <div class="s18-nav-line s18-nav-line--done"></div>
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--done"></div>
+          <div class="s18-nav-label s18-nav-label--on">2</div>
+        </div>
+        <div class="s18-nav-line s18-nav-line--done"></div>
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--done"></div>
+          <div class="s18-nav-label s18-nav-label--on">3</div>
+        </div>
+        <div class="s18-nav-line s18-nav-line--done"></div>
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--active"></div>
+          <div class="s18-nav-label s18-nav-label--on">4</div>
+        </div>
+        <div class="s18-nav-line"></div>
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--off"></div>
+          <div class="s18-nav-label s18-nav-label--off">5</div>
+        </div>
+      </div>
+
+      <!-- Question -->
+      <div class="s18-question">
+        <div class="s18-q-layout">
+          <!-- RIGHT column: question + options -->
+          <div class="s18-q-right">
+            <div class="s18-q-inner">
+              <div class="s18-q-text-wrap">
+                <div class="s18-q-text">
+                  חברת תעופה מתכננת קו טיסה חדש מישראל לתאילנד.<br>
+                  המרחק האווירי
+                  <span class="s22-help-wrap">
+                    <button class="s22-help-btn" type="button" onclick="s22ToggleHelp()" aria-label="מה זה מרחק אווירי?">
+                      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="9" cy="9" r="8.25" stroke="#a51cff75" stroke-width="1.5"/>
+                        <text x="9" y="13.5" text-anchor="middle" font-family="Assistant,sans-serif" font-size="11" font-weight="700" fill="#a51cff75">i</text>
+                      </svg>
+                    </button>
+                    <span class="s22-help-tooltip" id="s22-help-tooltip">מרחק אווירי הוא המסלול הקצר והישיר ביותר בין שתי נקודות על פני כדור הארץ. מכיוון שכדור הארץ הוא כדורי, כשמשרטטים את המסלול הישיר הזה על גבי מפה שטוחה, הוא נראה כמו קשת של מעגל.</span>
+                  </span>
+                  בין שתי המדינות הוא כ-7,000 ק"מ.<br>
+                  קנה המידה של מפת העולם המוצגת הוא 100,000,000 : 1<br>
+                  (1 ס"מ במפה מייצג 10 ק"מ במציאות).<br>
+                  <strong>מה יהיה בקירוב אורכו של קו הטיסה המייצג מרחק זה במפה (בס"מ)?</strong>
+                </div>
+              </div>
+              <div class="s5-answers" role="group" aria-label="אפשרויות תשובה">
+                <button class="s5-opt" data-index="0" type="button" onclick="s22Select(0)">
+                  <span class="s5-opt-circle"></span>
+                  <span class="s5-opt-text">7,000 ס"מ</span>
+                </button>
+                <button class="s5-opt" data-index="1" type="button" onclick="s22Select(1)">
+                  <span class="s5-opt-circle"></span>
+                  <span class="s5-opt-text">700 ס"מ</span>
+                </button>
+                <button class="s5-opt" data-index="2" type="button" onclick="s22Select(2)">
+                  <span class="s5-opt-circle"></span>
+                  <span class="s5-opt-text">70 ס"מ</span>
+                </button>
+                <button class="s5-opt" data-index="3" type="button" onclick="s22Select(3)">
+                  <span class="s5-opt-circle"></span>
+                  <span class="s5-opt-text">7 ס"מ</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- LEFT column: map image -->
+          <div class="s18-q-left">
+            <img class="s18-console-img" src="./assets/images/Map.png" alt="מפת עולם">
+          </div>
+        </div>
+      </div>
+
+      <!-- Feedback — above bottom bar -->
+      <div class="s5-inline-feedback s18-feedback-bar" id="s22-feedback" hidden>
+        <div class="s5-fb-icon" id="s22-fb-icon"></div>
+        <div class="s5-fb-text">
+          <span class="s5-fb-bold" id="s22-fb-bold"></span>
+          <span class="s5-fb-regular" id="s22-fb-regular"></span>
+        </div>
+      </div>
+
+      <!-- Hint popup -->
+      <div class="s16-hint-popup" id="s22-hint-popup" hidden>
+        <div class="s16-hint-popup-header">
+          <svg width="48" height="56" viewBox="0 0 48 56" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M24 2C15.16 2 8 9.16 8 18C8 23.52 10.78 28.38 15 31.34L16 31.98V40C16 41.1 16.9 42 18 42H30C31.1 42 32 41.1 32 40V31.98L33 31.34C37.22 28.38 40 23.52 40 18C40 9.16 32.84 2 24 2Z" fill="white"/>
+            <rect x="17" y="43" width="14" height="3.5" rx="1.75" fill="white"/>
+            <rect x="19" y="47.5" width="10" height="3.5" rx="1.75" fill="white"/>
+            <rect x="21" y="52" width="6" height="3" rx="1.5" fill="white"/>
+          </svg>
+          <div class="s16-hint-popup-title">רמז</div>
+        </div>
+        <div class="s16-hint-popup-text">קנה מידה חייב להיות ביחידות מידה זהות.<br>בדקו כמה סנטימטרים יש בקילומטר אחד.</div>
+        <button class="s16-hint-popup-close" type="button" onclick="s22CloseHint()">חזרה לשאלה</button>
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(21)">חזרה</button>
+        <div class="s16-hint-continue-group">
+          <button class="s16-hint-btn" type="button" id="s22-hint-btn" hidden onclick="s22ToggleHint()">
+            <svg width="22" height="26" viewBox="0 0 22 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M11 1C6.58 1 3 4.58 3 9C3 11.76 4.39 14.19 7 15.67L7.5 15.97V19C7.5 19.55 7.95 20 8.5 20H13.5C14.05 20 14.5 19.55 14.5 19V15.97L15 15.67C17.61 14.19 19 11.76 19 9C19 4.58 15.42 1 11 1Z" fill="#a51cff75"/>
+              <rect x="8" y="20.5" width="6" height="1.5" rx="0.75" fill="#a51cff75"/>
+              <rect x="8.75" y="22.5" width="4.5" height="1.5" rx="0.75" fill="#a51cff75"/>
+              <rect x="9.5" y="24.5" width="3" height="1.25" rx="0.625" fill="#a51cff75"/>
+            </svg>
+            אפשר רמז?
+          </button>
+          <button class="btn-continue" id="s22-continue" type="button" disabled onclick="s22Submit()">צדקתי?</button>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="screen" data-screen="23" id="s23">
+
+      <!-- Header -->
+      <div class="s18-header">
+        <button class="s18-back-btn" type="button" onclick="goTo(22)" aria-label="חזרה">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 18L15 12L9 6" stroke="#a51cff75" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Nav dots — Q1-Q4 done, Q5 active -->
+      <div class="s18-nav" dir="rtl">
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--done"></div>
+          <div class="s18-nav-label s18-nav-label--on">1</div>
+        </div>
+        <div class="s18-nav-line s18-nav-line--done"></div>
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--done"></div>
+          <div class="s18-nav-label s18-nav-label--on">2</div>
+        </div>
+        <div class="s18-nav-line s18-nav-line--done"></div>
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--done"></div>
+          <div class="s18-nav-label s18-nav-label--on">3</div>
+        </div>
+        <div class="s18-nav-line s18-nav-line--done"></div>
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--done"></div>
+          <div class="s18-nav-label s18-nav-label--on">4</div>
+        </div>
+        <div class="s18-nav-line s18-nav-line--done"></div>
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--active"></div>
+          <div class="s18-nav-label s18-nav-label--on">5</div>
+        </div>
+      </div>
+
+      <!-- Question — no image, single column -->
+      <div class="s18-question">
+        <div class="s18-q-inner s23-q-inner">
+          <div class="s18-q-text-wrap">
+            <div class="s18-q-text">
+              שני רחפנים צילמו מלמעלה את אותו מסלול טיול, וייצרו שתי מפות תצלום שונות של האזור:<br>
+              במפה של רחפן א, אורך המסלול היה <em>y</em> ס"מ.<br>
+              במפה של רחפן ב, אותו המסלול היה <em>y+5</em> ס"מ.<br>
+              <strong>האם קנה מידה של שתי המפות זהה?</strong>
+            </div>
+          </div>
+          <div class="s5-answers" role="group" aria-label="אפשרויות תשובה">
+            <button class="s5-opt" data-index="0" type="button" onclick="s23Select(0)">
+              <span class="s5-opt-circle"></span>
+              <span class="s5-opt-text">כן. מכיוון ששניהם צילמו בדיוק את אותו מסלול במציאות, קנה המידה חייב להיות זהה</span>
+            </button>
+            <button class="s5-opt" data-index="1" type="button" onclick="s23Select(1)">
+              <span class="s5-opt-circle"></span>
+              <span class="s5-opt-text">לא. במפה של רחפן ב' הוסיפו עוד 5 ס"מ למסלול הטיול, ולכן המרחק במציאות השתנה</span>
+            </button>
+            <button class="s5-opt" data-index="2" type="button" onclick="s23Select(2)">
+              <span class="s5-opt-circle"></span>
+              <span class="s5-opt-text">לא. מכיוון שאורכי המסלולים בשתי המפות שונה, קני המידה בהכרח שונים</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feedback — above bottom bar -->
+      <div class="s5-inline-feedback s18-feedback-bar" id="s23-feedback" hidden>
+        <div class="s5-fb-icon" id="s23-fb-icon"></div>
+        <div class="s5-fb-text">
+          <span class="s5-fb-bold" id="s23-fb-bold"></span>
+          <span class="s5-fb-regular" id="s23-fb-regular"></span>
+        </div>
+      </div>
+
+      <!-- Hint popup -->
+      <div class="s16-hint-popup" id="s23-hint-popup" hidden>
+        <div class="s16-hint-popup-header">
+          <svg width="48" height="56" viewBox="0 0 48 56" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M24 2C15.16 2 8 9.16 8 18C8 23.52 10.78 28.38 15 31.34L16 31.98V40C16 41.1 16.9 42 18 42H30C31.1 42 32 41.1 32 40V31.98L33 31.34C37.22 28.38 40 23.52 40 18C40 9.16 32.84 2 24 2Z" fill="white"/>
+            <rect x="17" y="43" width="14" height="3.5" rx="1.75" fill="white"/>
+            <rect x="19" y="47.5" width="10" height="3.5" rx="1.75" fill="white"/>
+            <rect x="21" y="52" width="6" height="3" rx="1.5" fill="white"/>
+          </svg>
+          <div class="s16-hint-popup-title">רמז</div>
+        </div>
+        <div class="s16-hint-popup-text">כדי להחליט אם קנה המידה זהה, לא מספיק לדעת שזה אותו מסלול.<br>חישבו על הקשר בין המסלול במציאות לבין המסלול במפה.</div>
+        <button class="s16-hint-popup-close" type="button" onclick="s23CloseHint()">חזרה לשאלה</button>
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(22)">חזרה</button>
+        <div class="s16-hint-continue-group">
+          <button class="s16-hint-btn" type="button" id="s23-hint-btn" hidden onclick="s23ToggleHint()">
+            <svg width="22" height="26" viewBox="0 0 22 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M11 1C6.58 1 3 4.58 3 9C3 11.76 4.39 14.19 7 15.67L7.5 15.97V19C7.5 19.55 7.95 20 8.5 20H13.5C14.05 20 14.5 19.55 14.5 19V15.97L15 15.67C17.61 14.19 19 11.76 19 9C19 4.58 15.42 1 11 1Z" fill="#a51cff75"/>
+              <rect x="8" y="20.5" width="6" height="1.5" rx="0.75" fill="#a51cff75"/>
+              <rect x="8.75" y="22.5" width="4.5" height="1.5" rx="0.75" fill="#a51cff75"/>
+              <rect x="9.5" y="24.5" width="3" height="1.25" rx="0.625" fill="#a51cff75"/>
+            </svg>
+            אפשר רמז?
+          </button>
+          <button class="btn-continue" id="s23-continue" type="button" disabled onclick="s23Submit()">צדקתי?</button>
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- ═══════════════════════════════════════
+         REPORT MODAL
+    ════════════════════════════════════════ -->
+    <div id="report-modal"
+         class="report-modal-overlay"
+         hidden
+         role="dialog"
+         aria-modal="true"
+         aria-labelledby="report-modal-title">
+      <div class="report-modal-box">
+        <button class="report-close-btn" onclick="tryCloseReportModal()" aria-label="סגור">&#10005;</button>
+        <h2 class="report-modal-title" id="report-modal-title">דיווח על בעיה</h2>
+        <p class="report-modal-body">משהו לא ברור או לא עובד כמו שצריך? ספרו לנו מה קרה כדי שנטפל.</p>
+
+        <div class="report-field">
+          <label class="report-label" for="report-type">מה סוג הבעיה <span class="required-star">*</span></label>
+          <select class="report-select" id="report-type">
+            <option value="" disabled selected>בחרו סוג בעיה</option>
+            <option value="technical">תקלה טכנית או שמשהו לא עובד</option>
+            <option value="unclear">משהו לא ברור לי</option>
+            <option value="other">אחר</option>
+          </select>
+        </div>
+
+        <div class="report-field">
+          <label class="report-label" for="report-text">מה קרה? <span class="required-star">*</span></label>
+          <textarea class="report-textarea" id="report-text" maxlength="250" rows="4" placeholder="תארו את הבעיה..."></textarea>
+          <span class="report-char-count" id="report-char-count">0 / 250</span>
+        </div>
+
+        <div class="report-actions">
+          <button class="report-submit-btn" onclick="submitReport()">שליחה</button>
+          <button class="report-cancel-btn" onclick="tryCloseReportModal()">ביטול</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         REPORT CONFIRM-CLOSE MODAL
+    ════════════════════════════════════════ -->
+    <div id="report-confirm-modal"
+         class="report-modal-overlay"
+         hidden
+         role="dialog"
+         aria-modal="true"
+         aria-labelledby="confirm-modal-title">
+      <div class="report-modal-box report-confirm-box">
+        <h2 class="report-modal-title" id="confirm-modal-title">בטוח לסגור את החלון?</h2>
+        <p class="report-modal-body">בלחיצה על סגירה לא יישלח דיווח</p>
+        <div class="report-actions">
+          <button class="report-cancel-btn" onclick="forceCloseReportModal()">סגור חלון</button>
+          <button class="report-submit-btn" onclick="backToReportForm()">אני רוצה לדווח</button>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

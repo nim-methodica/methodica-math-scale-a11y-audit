@@ -1,0 +1,9 @@
+# Large source binary (>100MB, exceeds GitHub limit)
+*.story
+# Derived/build output
+build/
+extracted/
+# Local editor/harness config
+.claude/
+# Nested skill git metadata (copied skill keeps files, not history)
+accessibility-qa-skill/.git/

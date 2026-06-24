@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>דוח בקרת נגישות — קנה מידה (Scale) · מודול 01-04</title>
+<style>
+  :root { --blocker:#d12; --warning:#e67e00; --polish:#1769d1; }
+  body { font-family:"Assistant","Segoe UI",Arial,sans-serif; line-height:1.65; max-width:1000px;
+         margin:0 auto; padding:24px; color:#222; background:#fafafa; }
+  h1 { font-size:1.7rem; border-bottom:2px solid #ccc; padding-bottom:8px; }
+  h2 { font-size:1.3rem; margin-top:30px; }
+  h3 { font-size:1.1rem; margin-top:26px; background:#eef1f5; padding:6px 12px; border-radius:6px;
+       border-inline-start:5px solid #6b7a90; }
+  table { border-collapse:collapse; width:100%; margin:8px 0 18px; background:#fff; font-size:0.95rem; }
+  th,td { border:1px solid #d6d6d6; padding:8px 10px; text-align:right; vertical-align:top; }
+  th { background:#33405a; color:#fff; font-weight:600; }
+  th:nth-child(1),td:nth-child(1) { width:16%; }
+  th:nth-child(2),td:nth-child(2) { width:30%; }
+  th:nth-child(3),td:nth-child(3) { width:30%; }
+  th:nth-child(4),td:nth-child(4) { width:24%; }
+  tr.blocker td:first-child { border-inline-start:5px solid var(--blocker); background:#fdecec; }
+  tr.warning td:first-child { border-inline-start:5px solid var(--warning); background:#fff6e9; }
+  tr.polish  td:first-child { border-inline-start:5px solid var(--polish);  background:#eaf2fd; }
+  code { background:#eee; padding:1px 5px; border-radius:4px; font-family:Consolas,monospace; direction:ltr; display:inline-block; }
+  blockquote { color:#555; border-inline-start:3px solid #bbb; margin:12px 0; padding:4px 12px; font-style:italic; }
+  ul { padding-inline-start:20px; }
+  strong { color:#000; }
+</style>
+</head>
+<body>
+<h1>דוח בקרת נגישות — קנה מידה (Scale) · מודול 01-04</h1>
+<p class=""><strong>מודול:</strong> methodica-math-scale-01-04 (תרגול מתקדם) · <strong>קבצים:</strong> index.html / script.js / styles.css · <strong>תאריך:</strong> 2026-06-24</p>
+<p class=""><strong>תקן:</strong> WCAG 2.1 AA + ת"י 5568 · <strong>שיטה:</strong> scan.py + axe-core 4.10.2 על <strong>כל 18 המסכים</strong> (ניווט <code>goTo</code>) + ניגודיות מחושבת + אינוונטר תמונות/רכיבים מלא + אימות-מקלדת</p>
+<p class="blocker"><strong>סיכום:</strong> 🔴 3 חוסמים · 🟠 3 אזהרות · 🔵 2 ליטוש</p>
+<blockquote><strong>כיסוי:</strong> נסרקו 18/18 המסכים בריצה חיה (כולל מסך-הגרירה s39 ומסך משוב-ה-GIF). מצבים שמאחורי</blockquote>
+<blockquote>אינטראקציה (חלון-רמז, צבעי נכון/שגוי) לא תמיד נתפסו. אישור סופי דורש קורא-מסך אנושי.</blockquote>
+<h2>מה נמצא תקין (אומת חי על כל המסכים)</h2>
+<ul>
+<li class=""><code>&lt;html lang="he" dir="rtl"&gt;</code> ✓ · כותרת ✓ · <strong>15 תמונות — כולן עם <code>alt</code>, אף אחת לא שבורה</strong> ✓</li>
+<li class=""><strong>ניגודיות תקינה במצב-ברירת-המחדל של כל 18 המסכים</strong> (טקסט כהה על לבן) ✓</li>
+</ul>
+<h2>ממצאים לפי קטגוריה</h2>
+<h3>ג. מקלדת — תרגיל הגרירה (מסך 3 / s39) ⚠️ החמור ביותר</h3>
+<table>
+<thead><tr><th>סוג הבעיה</th><th>מיקום</th><th>מה נמצא (אומת חי)</th><th>המלצת תיקון</th><th>מה הפתרון פותר</th></tr></thead>
+<tbody>
+<tr class="blocker"><td>🔴 #33 גרירה ללא חלופת-מקלדת</td><td><code>index.html:289,297,313,321</code> (אזורי-שחרור) · <code>335,339,343,347,351,355,359</code> (כרטיסים) · <code>script.js</code> (מנוע DDQ)</td><td>7 כרטיסי <code>.ddq-num-chip</code> עם <code>draggable="true"</code>, ו-4 אזורי-שחרור <code>.s39-target</code> — <strong>כולם ללא <code>tabindex</code>/<code>role</code>/<code>aria</code>/<code>keydown</code></strong>. אימות חי: הכרטיסים <strong>לא ניתנים למיקוד</strong>, מקלדת לא מזיזה דבר; האזורים <code>&lt;div&gt;</code> ריקים בלתי-נראים לקורא-מסך</td><td><strong>חלופת-מקלדת מלאה</strong>: כרטיסים <code>tabindex="0"</code>+<code>role</code>, הרמה/הצבה ב-Enter/Space, מעבר בחיצים, הכרזת-מצב ב-<code>aria</code>; <code>aria-label</code> לכל אזור-שחרור — או החלפת-תבנית בבחירה-נגישה</td><td><strong>חוסם:</strong> משתמש מקלדת/קורא-מסך <strong>אינו יכול לענות כלל</strong> — חסימת השלמת הלומדה (WCAG 2.1.1 A + 4.1.2 A; וכן 2.5.7 ב-WCAG 2.2)</td></tr>
+</tbody></table>
+<h3>ד. טפסים</h3>
+<p class="blocker">| 🔴 #28 שדה קלט ללא תווית | <code>index.html:444, 643, 756</code> (<code>.s18-answer-box</code>, מסכים 4,6,9) | 3 שדות <code>&lt;input&gt;</code> ללא תווית — axe critical | <strong>הוסיפו</strong> <code>aria-label</code> מתאר לכל שדה | קורא-מסך מזהה ייעוד השדה (WCAG 1.3.1/4.1.2 A) |</p>
+<h3>ב. מדיה</h3>
+<p class="blocker">| 🔴 #8 GIF משוב מונפש ללא עצירה | <code>script.js:1448</code> → <code>&lt;img&gt;</code> GIF במסך 16/17 | משוב נכון/שגוי מוצג כ-GIF מונפש (<code>Character{1,2} GIF {Happy,Sad}.gif</code>) ללא בקרת-עצירה; ה-alt גנרי ("דמות מלווה") | <strong>ספקו</strong> בקרת-עצירה/השהיה, או GIF שמתנגן פעם אחת &lt;5שנ', או החליפו בתמונה סטטית + טקסט. עדכנו <code>alt</code> שישקף את המשוב | תוכן-נע נשלט; משוב נגיש (WCAG 2.2.2 A) — *אם מתנגן &lt;5שנ' פעם אחת, יורד ל-🔵* |</p>
+<h3>מבנה / פוקוס / reflow</h3>
+<p class="warning">| 🟠 #3 אין H1 | <code>index.html</code> | אין אף <code>&lt;h1&gt;</code> | <strong>הוסיפו</strong> <code>&lt;h1&gt;</code> ראשית | היררכיית-תוכן (1.3.1 A) |</p>
+<p class="warning">| 🟠 #13 חיווי-פוקוס חלש | <code>styles.css:141</code> + מופעי <code>outline:none</code> | פוקוס נשען על <code>border-color:#a51cff75</code> שקוף, לא <code>:focus-visible</code> אחיד | <strong>אחדו</strong> ל-<code>:focus-visible</code> בולט | פוקוס נראה (2.4.7 AA) |</p>
+<p class="warning">| 🟠 #26 reflow/הגדלה | קנבס 1280×710 | מתכווץ כיחידה; טקסט זעיר במובייל/בזום | <strong>אפשרו reflow</strong> / זום 200% | קריאוּת (1.4.4/1.4.10 AA) |</p>
+<p class="polish">| 🔵 #4 אין landmark | <code>index.html</code> | אין <code>&lt;main&gt;</code> | <strong>עטפו</strong> ב-<code>&lt;main&gt;</code> | ניווט-מהיר (best practice) |</p>
+<p class="polish">| 🔵 #30 reduced-motion | <code>styles.css</code> | חסר בלוק תנועה-מופחתת (רלוונטי במיוחד בגלל ה-GIF) | <strong>הוסיפו</strong> <code>@media (prefers-reduced-motion)</code> | רגישי-תנועה (AAA) |</p>
+<h2>הערות</h2>
+<ul>
+<li class=""><strong>תיקון מהבדיקה המקיפה:</strong> דיווח קודם טען לבעיית-ניגודיות סגולה — לא נמצאה במצב-ברירת-המחדל של 18 המסכים.</li>
+<li class=""><strong>alt — איכות:</strong> התמונות תקינות בנוכחות; שני שמות לבדיקת-התאמה: <code>Airplane.png</code>=alt "חללית" (מסך 2), <code>Area.png</code>=alt "מפה של השטח" בשאלת-קנה-מידה — ודאו שכל הנתונים לפתרון מופיעים גם בטקסט, לא רק בתמונה.</li>
+</ul>
+<h2>עדיפויות</h2>
+<p class="blocker">1. 🔴 <strong>גרירה (#33)</strong> — חלופת-מקלדת מלאה למסך 3. 2. 🔴 <code>aria-label</code> ל-3 השדות. 3. 🔴 בקרת-עצירה ל-GIF. 4. 🟠 H1, פוקוס, reflow. 5. 🔵 main + reduced-motion.</p>
+<p class=""><strong>צעד הבא:</strong> בדיקת קורא-מסך על 18 המסכים — הכרזת-משוב, מלכודת-פוקוס, ניתוב-פוקוס.</p>
+</body>
+</html>

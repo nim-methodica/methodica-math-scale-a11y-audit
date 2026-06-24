@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>קנה מידה — לומדה</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+
+    <!-- ═══════════════════════════════════════
+         GLOBAL — Flag / Report Issue button
+    ════════════════════════════════════════ -->
+    <button class="flag-btn" id="flag-btn" onclick="openReportModal()" aria-label="דיווח על בעיה">
+      <span class="flag-icon" aria-hidden="true">⚑</span>
+      <span class="flag-label">מצאתי תקלה</span>
+    </button>
+    <section class="screen active" data-screen="0" id="s0">
+
+      <div class="s0-content">
+        <p class="s25-text-large">הגענו ל-3 שאלות של תרגול מתקדם!</p>
+        <img id="s36-char-img" src="./assets/images/Character1.png" alt="דמות מלווה" class="s6-char-img">
+        <div class="s17-bubble s25-bubble s36-bubble">זה אומר שעלינו רמה!</div>
+      </div>
+
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(35)">חזרה</button>
+        <button class="btn-continue" id="s36-continue" type="button" onclick="goTo(1)">המשך</button>
+      </div>
+
+    </section>
+
+    <section class="screen" data-screen="1" id="s1">
+
+      <!-- Progress: 3 questions, Q1 active -->
+      <div class="s18-nav" dir="rtl">
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--active"></div>
+          <div class="s18-nav-label s18-nav-label--on">1</div>
+        </div>
+        <div class="s18-nav-line"></div>
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--off"></div>
+          <div class="s18-nav-label s18-nav-label--off">2</div>
+        </div>
+        <div class="s18-nav-line"></div>
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--off"></div>
+          <div class="s18-nav-label s18-nav-label--off">3</div>
+        </div>
+      </div>
+
+      <div class="s18-question">
+        <div class="s18-q-layout">
+
+          <!-- RIGHT: question text + options -->
+          <div class="s18-q-right">
+            <div class="s18-q-inner">
+              <div class="s18-q-text-wrap">
+                <div class="s18-q-text">
+                  בורג' ח'ליפה הוא גורד שחקים בעיר דובאי שבאיחוד האמירויות.<br>
+                  זהו הסמל המוכר ביותר של דובאי, ואחד המבנים המפורסמים בעולם.<br>
+                  גובהו של המגדל 828.8 מטרים, והוא מחזיק בשיא גינס כמגדל הגבוה בעולם.<br>
+                  במסגרת חוג ציור, ירדן רוצה לצייר תרשים של המגדל על גבי דף שאורכו 29.7 ס"מ.<br>
+                  <strong>מהו קנה המידה הגדול ביותר שיאפשר למגדל "להיכנס" במלואו לדף?</strong>
+                </div>
+              </div>
+              <div class="s5-answers" role="group" aria-label="אפשרויות תשובה">
+                <button class="s5-opt" data-index="0" type="button" onclick="s37Select(0)">
+                  <span class="s5-opt-circle"></span>
+                  <span class="s5-opt-text">30 : 1</span>
+                </button>
+                <button class="s5-opt" data-index="1" type="button" onclick="s37Select(1)">
+                  <span class="s5-opt-circle"></span>
+                  <span class="s5-opt-text">300 : 1</span>
+                </button>
+                <button class="s5-opt" data-index="2" type="button" onclick="s37Select(2)">
+                  <span class="s5-opt-circle"></span>
+                  <span class="s5-opt-text">3,000 : 1</span>
+                </button>
+                <button class="s5-opt" data-index="3" type="button" onclick="s37Select(3)">
+                  <span class="s5-opt-circle"></span>
+                  <span class="s5-opt-text">30,000 : 1</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- LEFT: Burj Khalifa image -->
+          <div class="s18-q-left">
+            <img class="s18-console-img" src="./assets/images/Borge Halifa.jpg" alt="בורג' ח'ליפה">
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Feedback -->
+      <div class="s5-inline-feedback s18-feedback-bar" id="s37-feedback" hidden>
+        <div class="s5-fb-icon" id="s37-fb-icon"></div>
+        <div class="s5-fb-text">
+          <span class="s5-fb-bold" id="s37-fb-bold"></span>
+          <span class="s5-fb-regular" id="s37-fb-regular"></span>
+        </div>
+      </div>
+
+      <!-- Hint popup -->
+      <div class="s16-hint-popup" id="s37-hint-popup" hidden>
+        <div class="s16-hint-popup-header">
+          <svg width="48" height="56" viewBox="0 0 48 56" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M24 2C15.16 2 8 9.16 8 18C8 23.52 10.78 28.38 15 31.34L16 31.98V40C16 41.1 16.9 42 18 42H30C31.1 42 32 41.1 32 40V31.98L33 31.34C37.22 28.38 40 23.52 40 18C40 9.16 32.84 2 24 2Z" fill="white"/>
+            <rect x="17" y="43" width="14" height="3.5" rx="1.75" fill="white"/>
+            <rect x="19" y="47.5" width="10" height="3.5" rx="1.75" fill="white"/>
+            <rect x="21" y="52" width="6" height="3" rx="1.5" fill="white"/>
+          </svg>
+          <div class="s16-hint-popup-title">רמז</div>
+        </div>
+        <div class="s16-hint-popup-text">לפני שתבחרו קנה מידה, בדקו מהו הגובה של המגדל בס"מ, ומהו האורך המרבי שיכול "להיכנס" על הדף.</div>
+        <button class="s16-hint-popup-close" type="button" onclick="s37CloseHint()">חזרה לשאלה</button>
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(0)">חזרה</button>
+        <div class="s16-hint-continue-group">
+          <button class="s16-hint-btn" type="button" id="s37-hint-btn" onclick="s37ToggleHint()" hidden>
+            <svg width="22" height="26" viewBox="0 0 22 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M11 1C6.58 1 3 4.58 3 9C3 11.76 4.39 14.19 7 15.67L7.5 15.97V19C7.5 19.55 7.95 20 8.5 20H13.5C14.05 20 14.5 19.55 14.5 19V15.97L15 15.67C17.61 14.19 19 11.76 19 9C19 4.58 15.42 1 11 1Z" fill="#a51cff75"/>
+              <rect x="8" y="20.5" width="6" height="1.5" rx="0.75" fill="#a51cff75"/>
+              <rect x="8.75" y="22.5" width="4.5" height="1.5" rx="0.75" fill="#a51cff75"/>
+              <rect x="9.5" y="24.5" width="3" height="1.25" rx="0.625" fill="#a51cff75"/>
+            </svg>
+            אפשר רמז?
+          </button>
+          <button class="btn-continue" id="s37-continue" type="button" disabled onclick="s37Submit()">צדקתי?</button>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="screen" data-screen="2" id="s2">
+
+      <!-- Progress: 3 questions, Q1 done, Q2 active, Q3 off -->
+      <div class="s18-nav" dir="rtl">
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--done"></div>
+          <div class="s18-nav-label s18-nav-label--on">1</div>
+        </div>
+        <div class="s18-nav-line s18-nav-line--done"></div>
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--active"></div>
+          <div class="s18-nav-label s18-nav-label--on">2</div>
+        </div>
+        <div class="s18-nav-line"></div>
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--off"></div>
+          <div class="s18-nav-label s18-nav-label--off">3</div>
+        </div>
+      </div>
+
+      <div class="s18-question">
+        <div class="s18-q-layout">
+
+          <!-- RIGHT: question text + options -->
+          <div class="s18-q-right">
+            <div class="s18-q-inner">
+              <div class="s18-q-text-wrap">
+                <div class="s18-q-text">
+                  יובל מצלם דגם של חללית המיועד לצילומי סרט מדע בדיוני.<br>
+                  קנה המידה של התמונה שצילם הוא 1:300.<br>
+                  יובל לוחץ פעם אחת על כפתור זום המגדיל את התמונה פי 2,<br>
+                  ופעם אחת על כפתור זום המגדיל את התמונה פי 3.<br>
+                  <strong>א. מהו קנה המידה החדש של התמונה על המסך?</strong>
+                </div>
+              </div>
+              <div class="s5-answers" role="group" aria-label="אפשרויות תשובה">
+                <button class="s5-opt" data-index="0" type="button" onclick="s38Select(0)">
+                  <span class="s5-opt-circle"></span>
+                  <span class="s5-opt-text">50 : 1</span>
+                </button>
+                <button class="s5-opt" data-index="1" type="button" onclick="s38Select(1)">
+                  <span class="s5-opt-circle"></span>
+                  <span class="s5-opt-text">100 : 1</span>
+                </button>
+                <button class="s5-opt" data-index="2" type="button" onclick="s38Select(2)">
+                  <span class="s5-opt-circle"></span>
+                  <span class="s5-opt-text">501 : 1</span>
+                </button>
+                <button class="s5-opt" data-index="3" type="button" onclick="s38Select(3)">
+                  <span class="s5-opt-circle"></span>
+                  <span class="s5-opt-text">1,800 : 1</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- LEFT: airplane image -->
+          <div class="s18-q-left">
+            <img class="s18-console-img" src="./assets/images/Airplane.png" alt="חללית">
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Feedback -->
+      <div class="s5-inline-feedback s18-feedback-bar" id="s38-feedback" hidden>
+        <div class="s5-fb-icon" id="s38-fb-icon"></div>
+        <div class="s5-fb-text">
+          <span class="s5-fb-bold" id="s38-fb-bold"></span>
+          <span class="s5-fb-regular" id="s38-fb-regular"></span>
+        </div>
+      </div>
+
+      <!-- Hint popup -->
+      <div class="s16-hint-popup" id="s38-hint-popup" hidden>
+        <div class="s16-hint-popup-header">
+          <svg width="48" height="56" viewBox="0 0 48 56" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M24 2C15.16 2 8 9.16 8 18C8 23.52 10.78 28.38 15 31.34L16 31.98V40C16 41.1 16.9 42 18 42H30C31.1 42 32 41.1 32 40V31.98L33 31.34C37.22 28.38 40 23.52 40 18C40 9.16 32.84 2 24 2Z" fill="white"/>
+            <rect x="17" y="43" width="14" height="3.5" rx="1.75" fill="white"/>
+            <rect x="19" y="47.5" width="10" height="3.5" rx="1.75" fill="white"/>
+            <rect x="21" y="52" width="6" height="3" rx="1.5" fill="white"/>
+          </svg>
+          <div class="s16-hint-popup-title">רמז</div>
+        </div>
+        <div class="s16-hint-popup-text">אחרי הזום, אותו הדגם מוגדל בתמונה.<br>האם כל ס"מ בתמונה מייצג במציאות אורך גדול יותר או קטן יותר?</div>
+        <button class="s16-hint-popup-close" type="button" onclick="s38CloseHint()">חזרה לשאלה</button>
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(1)">חזרה</button>
+        <div class="s16-hint-continue-group">
+          <button class="s16-hint-btn" type="button" id="s38-hint-btn" onclick="s38ToggleHint()" hidden>
+            <svg width="22" height="26" viewBox="0 0 22 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M11 1C6.58 1 3 4.58 3 9C3 11.76 4.39 14.19 7 15.67L7.5 15.97V19C7.5 19.55 7.95 20 8.5 20H13.5C14.05 20 14.5 19.55 14.5 19V15.97L15 15.67C17.61 14.19 19 11.76 19 9C19 4.58 15.42 1 11 1Z" fill="#a51cff75"/>
+              <rect x="8" y="20.5" width="6" height="1.5" rx="0.75" fill="#a51cff75"/>
+              <rect x="8.75" y="22.5" width="4.5" height="1.5" rx="0.75" fill="#a51cff75"/>
+              <rect x="9.5" y="24.5" width="3" height="1.25" rx="0.625" fill="#a51cff75"/>
+            </svg>
+            אפשר רמז?
+          </button>
+          <button class="btn-continue" id="s38-continue" type="button" disabled onclick="s38Submit()">צדקתי?</button>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="screen" data-screen="3" id="s3">
+
+      <!-- Nav: Q1 done | Q2 active | Q3 off -->
+      <div class="s18-nav" dir="rtl">
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--done"></div>
+          <div class="s18-nav-label s18-nav-label--on">1</div>
+        </div>
+        <div class="s18-nav-line s18-nav-line--done"></div>
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--active"></div>
+          <div class="s18-nav-label s18-nav-label--on">2</div>
+        </div>
+        <div class="s18-nav-line"></div>
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--off"></div>
+          <div class="s18-nav-label s18-nav-label--off">3</div>
+        </div>
+      </div>
+
+      <!-- Question text — same position/size as other screens -->
+      <div class="s39-qtext">
+        אורכה של החללית במציאות הוא 12 מטרים וגובהה 6 מטרים.<br>
+        יובל מצלם את דגם החללית בקנה המידה שחישבתם בסעיף הקודם (1:50).<br>
+        ליאור מצלמת את אותו הדגם בקנה מידה של 1:20.<br>
+        <strong>ב. גררו מהמחסן את מידות החללית שיופיעו בתמונה של כל אחד מהם:</strong>
+      </div>
+
+      <!-- Main DnD content -->
+      <div class="s39-main">
+
+        <!-- Two columns: ליאור (right in RTL) | יובל (left) -->
+        <div class="s39-cols">
+
+          <!-- RIGHT: ליאור + Airplane Zoom -->
+          <div class="s39-col">
+            <div class="s39-col-name">התמונה של ליאור:</div>
+            <img class="s39-col-img" src="./assets/images/Airplane Zoom.png" alt="תמונת זום של ליאור">
+            <div class="s39-targets-grid">
+              <div class="s39-target-row">
+                <span class="s39-tlabel">אורך:</span>
+                <div class="s39-target" id="target-lior-orech"
+                     ondragover="ddqDragOver(event,'target-lior-orech')"
+                     ondragleave="ddqDragLeave(event,'target-lior-orech')"
+                     ondrop="ddqDrop(event,'target-lior-orech')"></div>
+                <span class="s39-unit">ס״מ</span>
+              </div>
+              <div class="s39-target-row">
+                <span class="s39-tlabel">גובה:</span>
+                <div class="s39-target" id="target-lior-gova"
+                     ondragover="ddqDragOver(event,'target-lior-gova')"
+                     ondragleave="ddqDragLeave(event,'target-lior-gova')"
+                     ondrop="ddqDrop(event,'target-lior-gova')"></div>
+                <span class="s39-unit">ס״מ</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- LEFT: יובל + Airplane -->
+          <div class="s39-col">
+            <div class="s39-col-name">התמונה של יובל:</div>
+            <img class="s39-col-img" src="./assets/images/Airplane.png" alt="תמונת יובל">
+            <div class="s39-targets-grid">
+              <div class="s39-target-row">
+                <span class="s39-tlabel">אורך:</span>
+                <div class="s39-target" id="target-yuval-orech"
+                     ondragover="ddqDragOver(event,'target-yuval-orech')"
+                     ondragleave="ddqDragLeave(event,'target-yuval-orech')"
+                     ondrop="ddqDrop(event,'target-yuval-orech')"></div>
+                <span class="s39-unit">ס״מ</span>
+              </div>
+              <div class="s39-target-row">
+                <span class="s39-tlabel">גובה:</span>
+                <div class="s39-target" id="target-yuval-gova"
+                     ondragover="ddqDragOver(event,'target-yuval-gova')"
+                     ondragleave="ddqDragLeave(event,'target-yuval-gova')"
+                     ondrop="ddqDrop(event,'target-yuval-gova')"></div>
+                <span class="s39-unit">ס״מ</span>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /.s39-cols -->
+
+        <!-- Source tray (drag bank) -->
+        <div class="ddq-source" id="ddq-source">
+          <div class="ddq-source-slot" id="slot-drag-6">
+            <div class="ddq-num-chip" id="drag-6" draggable="true"
+                 ondragstart="ddqDragStart(event,'drag-6')" ondragend="ddqDragEnd(event)">6</div>
+          </div>
+          <div class="ddq-source-slot" id="slot-drag-12">
+            <div class="ddq-num-chip" id="drag-12" draggable="true"
+                 ondragstart="ddqDragStart(event,'drag-12')" ondragend="ddqDragEnd(event)">12</div>
+          </div>
+          <div class="ddq-source-slot" id="slot-drag-15">
+            <div class="ddq-num-chip" id="drag-15" draggable="true"
+                 ondragstart="ddqDragStart(event,'drag-15')" ondragend="ddqDragEnd(event)">15</div>
+          </div>
+          <div class="ddq-source-slot" id="slot-drag-24">
+            <div class="ddq-num-chip" id="drag-24" draggable="true"
+                 ondragstart="ddqDragStart(event,'drag-24')" ondragend="ddqDragEnd(event)">24</div>
+          </div>
+          <div class="ddq-source-slot" id="slot-drag-30">
+            <div class="ddq-num-chip" id="drag-30" draggable="true"
+                 ondragstart="ddqDragStart(event,'drag-30')" ondragend="ddqDragEnd(event)">30</div>
+          </div>
+          <div class="ddq-source-slot" id="slot-drag-48">
+            <div class="ddq-num-chip" id="drag-48" draggable="true"
+                 ondragstart="ddqDragStart(event,'drag-48')" ondragend="ddqDragEnd(event)">48</div>
+          </div>
+          <div class="ddq-source-slot" id="slot-drag-60">
+            <div class="ddq-num-chip" id="drag-60" draggable="true"
+                 ondragstart="ddqDragStart(event,'drag-60')" ondragend="ddqDragEnd(event)">60</div>
+          </div>
+        </div><!-- /.ddq-source -->
+
+      </div><!-- /.s39-main -->
+
+      <!-- Inline feedback bar -->
+      <div class="s5-inline-feedback s18-feedback-bar" id="s39-feedback" hidden>
+        <div class="s5-fb-icon" id="s39-fb-icon"></div>
+        <div class="s5-fb-text">
+          <span class="s5-fb-bold" id="s39-fb-bold"></span>
+          <span class="s5-fb-regular" id="s39-fb-regular"></span>
+        </div>
+      </div>
+
+      <!-- Hint popup -->
+      <div class="s16-hint-popup" id="s39-hint-popup" hidden>
+        <div class="s16-hint-popup-header">
+          <svg width="48" height="56" viewBox="0 0 48 56" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M24 2C15.16 2 8 9.16 8 18C8 23.52 10.78 28.38 15 31.34L16 31.98V40C16 41.1 16.9 42 18 42H30C31.1 42 32 41.1 32 40V31.98L33 31.34C37.22 28.38 40 23.52 40 18C40 9.16 32.84 2 24 2Z" fill="white"/>
+            <rect x="17" y="43" width="14" height="3.5" rx="1.75" fill="white"/>
+            <rect x="19" y="47.5" width="10" height="3.5" rx="1.75" fill="white"/>
+            <rect x="21" y="52" width="6" height="3" rx="1.5" fill="white"/>
+          </svg>
+          <div class="s16-hint-popup-title">רמז</div>
+        </div>
+        <div class="s16-hint-popup-text">אחרי הזום, אותו הדגם מוגדל בתמונה.<br>האם כל ס״מ בתמונה מייצג במציאות אורך גדול יותר או קטן יותר?</div>
+        <button class="s16-hint-popup-close" type="button" onclick="ddqCloseHint()">חזרה לשאלה</button>
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(2)">חזרה</button>
+        <div class="s16-hint-continue-group">
+          <button class="s16-hint-btn" type="button" id="s39-hint-btn" onclick="ddqToggleHint()" hidden>
+            <svg width="22" height="26" viewBox="0 0 22 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M11 1C6.58 1 3 4.58 3 9C3 11.76 4.39 14.19 7 15.67L7.5 15.97V19C7.5 19.55 7.95 20 8.5 20H13.5C14.05 20 14.5 19.55 14.5 19V15.97L15 15.67C17.61 14.19 19 11.76 19 9C19 4.58 15.42 1 11 1Z" fill="#a51cff75"/>
+              <rect x="8" y="20.5" width="6" height="1.5" rx="0.75" fill="#a51cff75"/>
+              <rect x="8.75" y="22.5" width="4.5" height="1.5" rx="0.75" fill="#a51cff75"/>
+              <rect x="9.5" y="24.5" width="3" height="1.25" rx="0.625" fill="#a51cff75"/>
+            </svg>
+            אפשר רמז?
+          </button>
+          <button class="btn-continue" id="ddq-check" type="button" disabled onclick="ddqCheck()">צדקתי?</button>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="screen" data-screen="4" id="s4">
+
+      <!-- Nav: Q1 done | Q2 done | Q3 active -->
+      <div class="s18-nav" dir="rtl">
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--done"></div>
+          <div class="s18-nav-label s18-nav-label--on">1</div>
+        </div>
+        <div class="s18-nav-line s18-nav-line--done"></div>
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--done"></div>
+          <div class="s18-nav-label s18-nav-label--on">2</div>
+        </div>
+        <div class="s18-nav-line s18-nav-line--done"></div>
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--active"></div>
+          <div class="s18-nav-label s18-nav-label--on">3</div>
+        </div>
+      </div>
+
+      <div class="s18-question">
+        <div class="s18-q-layout">
+
+          <!-- RIGHT: question text + input row -->
+          <div class="s18-q-right">
+            <div class="s18-q-inner">
+              <div class="s18-q-text-wrap">
+                <div class="s18-q-text">
+                  עיריית גני שלום מקימה פסטיבל גיימינג בפארק, הנה תמונת ההדמייה שלו. ביציאה ממתחם ה-VR (מציאות מדומה), יש שביל ישר שאורכו בתמונה 12 ס"מ.<br>
+                  מנהל הבטיחות רוצה להציב עמדת עזרה ראשונה בדיוק ב-1/4 הדרך מתחילת השביל. קנה המידה של התמונה הוא 1:200.<br>
+                  <strong>א. באיזה מרחק (במטרים) מתחילת השביל תוצב העמדה במציאות?</strong>
+                </div>
+              </div>
+              <div class="s18-fill-row">
+                <span class="s18-fill-text">הקלידו את התשובה:</span>
+                <input class="s18-answer-box" id="s40-answer-input" type="text" inputmode="numeric" dir="rtl" oninput="s40OnInput()">
+                <span class="s18-fill-text">מטרים</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- LEFT: gaming festival image -->
+          <div class="s18-q-left">
+            <img class="s18-console-img" src="./assets/images/Gaming Festival.png" alt="הדמיית פסטיבל גיימינג">
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Inline feedback bar -->
+      <div class="s5-inline-feedback s18-feedback-bar" id="s40-feedback" hidden>
+        <div class="s5-fb-icon" id="s40-fb-icon"></div>
+        <div class="s5-fb-text">
+          <span class="s5-fb-bold" id="s40-fb-bold"></span>
+          <span class="s5-fb-regular" id="s40-fb-regular"></span>
+        </div>
+      </div>
+
+      <!-- Hint popup -->
+      <div class="s16-hint-popup" id="s40-hint-popup" hidden>
+        <div class="s16-hint-popup-header">
+          <svg width="48" height="56" viewBox="0 0 48 56" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M24 2C15.16 2 8 9.16 8 18C8 23.52 10.78 28.38 15 31.34L16 31.98V40C16 41.1 16.9 42 18 42H30C31.1 42 32 41.1 32 40V31.98L33 31.34C37.22 28.38 40 23.52 40 18C40 9.16 32.84 2 24 2Z" fill="white"/>
+            <rect x="17" y="43" width="14" height="3.5" rx="1.75" fill="white"/>
+            <rect x="19" y="47.5" width="10" height="3.5" rx="1.75" fill="white"/>
+            <rect x="21" y="52" width="6" height="3" rx="1.5" fill="white"/>
+          </svg>
+          <div class="s16-hint-popup-title">רמז</div>
+        </div>
+        <div class="s16-hint-popup-text">חשבו מהו אורך השביל במציאות, ואז התמקדו במיקום המבוקש.</div>
+        <button class="s16-hint-popup-close" type="button" onclick="s40CloseHint()">חזרה לשאלה</button>
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(3)">חזרה</button>
+        <div class="s16-hint-continue-group">
+          <button class="s16-hint-btn" type="button" id="s40-hint-btn" onclick="s40ToggleHint()" hidden>
+            <svg width="22" height="26" viewBox="0 0 22 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M11 1C6.58 1 3 4.58 3 9C3 11.76 4.39 14.19 7 15.67L7.5 15.97V19C7.5 19.55 7.95 20 8.5 20H13.5C14.05 20 14.5 19.55 14.5 19V15.97L15 15.67C17.61 14.19 19 11.76 19 9C19 4.58 15.42 1 11 1Z" fill="#a51cff75"/>
+              <rect x="8" y="20.5" width="6" height="1.5" rx="0.75" fill="#a51cff75"/>
+              <rect x="8.75" y="22.5" width="4.5" height="1.5" rx="0.75" fill="#a51cff75"/>
+              <rect x="9.5" y="24.5" width="3" height="1.25" rx="0.625" fill="#a51cff75"/>
+            </svg>
+            אפשר רמז?
+          </button>
+          <button class="btn-continue" id="s40-check" type="button" disabled onclick="s40Check()">צדקתי?</button>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="screen" data-screen="5" id="s5">
+
+      <!-- Nav: Q1 done | Q2 done | Q3 active -->
+      <div class="s18-nav" dir="rtl">
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--done"></div>
+          <div class="s18-nav-label s18-nav-label--on">1</div>
+        </div>
+        <div class="s18-nav-line s18-nav-line--done"></div>
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--done"></div>
+          <div class="s18-nav-label s18-nav-label--on">2</div>
+        </div>
+        <div class="s18-nav-line s18-nav-line--done"></div>
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--active"></div>
+          <div class="s18-nav-label s18-nav-label--on">3</div>
+        </div>
+      </div>
+
+      <!-- Draggable ruler (overlaps image area) -->
+      <img id="s41-ruler" class="s18-ruler" src="./assets/images/Ruller.png" alt="סרגל"
+           onmousedown="s41RulerDown(event)">
+
+      <div class="s18-question">
+        <div class="s18-q-layout">
+
+          <!-- RIGHT: question text + MCQ options -->
+          <div class="s18-q-right">
+            <div class="s18-q-inner">
+              <div class="s18-q-text-wrap">
+                <div class="s18-q-text">
+                  מדדו בעזרת הסרגל את צלע הריבוע של מתחם ה-VR.<br>
+                  <strong>ב. מהו שטח המתחם במציאות?</strong>
+                </div>
+              </div>
+              <div class="s5-answers" role="group" aria-label="אפשרויות תשובה">
+                <button class="s5-opt" data-index="0" type="button" onclick="s41Select(0)">
+                  <span class="s5-opt-circle"></span>
+                  <span class="s5-opt-text">8 מ"ר</span>
+                </button>
+                <button class="s5-opt" data-index="1" type="button" onclick="s41Select(1)">
+                  <span class="s5-opt-circle"></span>
+                  <span class="s5-opt-text">16 מ"ר</span>
+                </button>
+                <button class="s5-opt" data-index="2" type="button" onclick="s41Select(2)">
+                  <span class="s5-opt-circle"></span>
+                  <span class="s5-opt-text">32 מ"ר</span>
+                </button>
+                <button class="s5-opt" data-index="3" type="button" onclick="s41Select(3)">
+                  <span class="s5-opt-circle"></span>
+                  <span class="s5-opt-text">64 מ"ר</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- LEFT: gaming room image -->
+          <div class="s18-q-left">
+            <img class="s18-console-img" src="./assets/images/Gaming Room.png" alt="מתחם VR">
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Inline feedback bar -->
+      <div class="s5-inline-feedback s18-feedback-bar" id="s41-feedback" hidden>
+        <div class="s5-fb-icon" id="s41-fb-icon"></div>
+        <div class="s5-fb-text">
+          <span class="s5-fb-bold" id="s41-fb-bold"></span>
+          <span class="s5-fb-regular" id="s41-fb-regular"></span>
+        </div>
+      </div>
+
+      <!-- Hint popup -->
+      <div class="s16-hint-popup" id="s41-hint-popup" hidden>
+        <div class="s16-hint-popup-header">
+          <svg width="48" height="56" viewBox="0 0 48 56" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M24 2C15.16 2 8 9.16 8 18C8 23.52 10.78 28.38 15 31.34L16 31.98V40C16 41.1 16.9 42 18 42H30C31.1 42 32 41.1 32 40V31.98L33 31.34C37.22 28.38 40 23.52 40 18C40 9.16 32.84 2 24 2Z" fill="white"/>
+            <rect x="17" y="43" width="14" height="3.5" rx="1.75" fill="white"/>
+            <rect x="19" y="47.5" width="10" height="3.5" rx="1.75" fill="white"/>
+            <rect x="21" y="52" width="6" height="3" rx="1.5" fill="white"/>
+          </svg>
+          <div class="s16-hint-popup-title">רמז</div>
+        </div>
+        <div class="s16-hint-popup-text">קנה המידה עוזר לעבור בין אורכים.<br>כשעוסקים בשטח, האם מספיק להתייחס לאורך אחד בלבד?</div>
+        <button class="s16-hint-popup-close" type="button" onclick="s41CloseHint()">חזרה לשאלה</button>
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(4)">חזרה</button>
+        <div class="s16-hint-continue-group">
+          <button class="s16-hint-btn" type="button" id="s41-hint-btn" onclick="s41ToggleHint()" hidden>
+            <svg width="22" height="26" viewBox="0 0 22 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M11 1C6.58 1 3 4.58 3 9C3 11.76 4.39 14.19 7 15.67L7.5 15.97V19C7.5 19.55 7.95 20 8.5 20H13.5C14.05 20 14.5 19.55 14.5 19V15.97L15 15.67C17.61 14.19 19 11.76 19 9C19 4.58 15.42 1 11 1Z" fill="#a51cff75"/>
+              <rect x="8" y="20.5" width="6" height="1.5" rx="0.75" fill="#a51cff75"/>
+              <rect x="8.75" y="22.5" width="4.5" height="1.5" rx="0.75" fill="#a51cff75"/>
+              <rect x="9.5" y="24.5" width="3" height="1.25" rx="0.625" fill="#a51cff75"/>
+            </svg>
+            אפשר רמז?
+          </button>
+          <button class="btn-continue" id="s41-continue" type="button" disabled onclick="s41Submit()">צדקתי?</button>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="screen" data-screen="6" id="s6">
+
+      <!-- Nav: Q1 done | Q2 done | Q3 active -->
+      <div class="s18-nav" dir="rtl">
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--done"></div>
+          <div class="s18-nav-label s18-nav-label--on">1</div>
+        </div>
+        <div class="s18-nav-line s18-nav-line--done"></div>
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--done"></div>
+          <div class="s18-nav-label s18-nav-label--on">2</div>
+        </div>
+        <div class="s18-nav-line s18-nav-line--done"></div>
+        <div class="s18-nav-item">
+          <div class="s18-nav-icon s18-nav-icon--active"></div>
+          <div class="s18-nav-label s18-nav-label--on">3</div>
+        </div>
+      </div>
+
+      <div class="s18-question">
+        <div class="s18-q-layout">
+
+          <!-- RIGHT: question text + input row -->
+          <div class="s18-q-right">
+            <div class="s18-q-inner">
+              <div class="s18-q-text-wrap">
+                <div class="s18-q-text">
+                  כדי לשחק בבטחה, כל שחקן בעמדת ה-VR חייב לקבל שטח פנוי משלו בגודל של 4 מ"ר. גילינו ששטח המתחם במציאות הוא 64 מ"ר.<br>
+                  <strong>ג. חשבו כמה עמדות משחק אפשר להקים בתוך מתחם ה-VR.</strong>
+                </div>
+              </div>
+              <div class="s18-fill-row">
+                <span class="s18-fill-text">הקלידו את התשובה:</span>
+                <input class="s18-answer-box" id="s42-answer-input" type="text" inputmode="numeric" dir="rtl" oninput="s42OnInput()">
+                <span class="s18-fill-text">מטרים</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- LEFT: gaming room image (same as screen 41) -->
+          <div class="s18-q-left">
+            <img class="s18-console-img" src="./assets/images/Gaming Room.png" alt="תמונת מתחם ה-VR">
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Inline feedback bar -->
+      <div class="s5-inline-feedback s18-feedback-bar" id="s42-feedback" hidden>
+        <div class="s5-fb-icon" id="s42-fb-icon"></div>
+        <div class="s5-fb-text">
+          <span class="s5-fb-bold" id="s42-fb-bold"></span>
+          <span class="s5-fb-regular" id="s42-fb-regular"></span>
+        </div>
+      </div>
+
+      <!-- Hint popup -->
+      <div class="s16-hint-popup" id="s42-hint-popup" hidden>
+        <div class="s16-hint-popup-header">
+          <svg width="48" height="56" viewBox="0 0 48 56" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M24 2C15.16 2 8 9.16 8 18C8 23.52 10.78 28.38 15 31.34L16 31.98V40C16 41.1 16.9 42 18 42H30C31.1 42 32 41.1 32 40V31.98L33 31.34C37.22 28.38 40 23.52 40 18C40 9.16 32.84 2 24 2Z" fill="white"/>
+            <rect x="17" y="43" width="14" height="3.5" rx="1.75" fill="white"/>
+            <rect x="19" y="47.5" width="10" height="3.5" rx="1.75" fill="white"/>
+            <rect x="21" y="52" width="6" height="3" rx="1.5" fill="white"/>
+          </svg>
+          <div class="s16-hint-popup-title">רמז</div>
+        </div>
+        <div class="s16-hint-popup-text">גילינו מהו שטח מתחם ה-VR.<br>עכשיו חשבו כמה עמדות של 4 מ״ר אפשר להכניס בשטח הזה.</div>
+        <button class="s16-hint-popup-close" type="button" onclick="s42CloseHint()">חזרה לשאלה</button>
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(5)">חזרה</button>
+        <div class="s16-hint-continue-group">
+          <button class="s16-hint-btn" type="button" id="s42-hint-btn" onclick="s42ToggleHint()" hidden>
+            <svg width="22" height="26" viewBox="0 0 22 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M11 1C6.58 1 3 4.58 3 9C3 11.76 4.39 14.19 7 15.67L7.5 15.97V19C7.5 19.55 7.95 20 8.5 20H13.5C14.05 20 14.5 19.55 14.5 19V15.97L15 15.67C17.61 14.19 19 11.76 19 9C19 4.58 15.42 1 11 1Z" fill="#a51cff75"/>
+              <rect x="8" y="20.5" width="6" height="1.5" rx="0.75" fill="#a51cff75"/>
+              <rect x="8.75" y="22.5" width="4.5" height="1.5" rx="0.75" fill="#a51cff75"/>
+              <rect x="9.5" y="24.5" width="3" height="1.25" rx="0.625" fill="#a51cff75"/>
+            </svg>
+            אפשר רמז?
+          </button>
+          <button class="btn-continue" id="s42-check" type="button" disabled onclick="s42Check()">צדקתי?</button>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="screen" data-screen="7" id="s7">
+
+      <div class="s0-content">
+        <p class="s25-text-small">כל הכבוד!</p>
+        <p class="s25-text-small">הסתיים שלב התרגול.</p>
+        <p class="s25-text-small">אם לא הצלחת לענות נכון על חלק מהשאלות, חשוב להבין מה עדיין לא ברור ולפנות לצ'אט או למורה להסבר נוסף.</p>
+        <p class="s25-text-large">עכשיו מגיעה שאלת השיא</p>
+        <p class="s25-text-small">יש בה 4 סעיפים. תצליחו ב – 3 לפחות וסיימנו את היחידה!</p>
+        <img id="s43-char-img" src="./assets/images/Character1_workout.png" alt="דמות מלווה" class="s6-char-img">
+      </div>
+
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(6)">חזרה</button>
+        <button class="btn-continue" type="button" onclick="goTo(8)">המשך</button>
+      </div>
+
+    </section>
+
+    <section class="screen" data-screen="8" id="s8">
+
+      <div class="s44-bg">
+        <img src="./assets/images/Rescue team.png" alt="סיירת הרחפנים" class="s44-bg-img">
+      </div>
+
+      <div class="s44-content">
+        <div class="s44-text-box">
+          <p>סיירת הרחפנים הארצית הוקפצה לסייע באיתור מטיילים שאיבדו את דרכם בפארק הלאומי. הרחפן משדר למסך הטאבלט תצלומים בזמן אמת.</p>
+          <p>עזרו לצוות בשטח לקבל החלטות מבוססות נתונים על סמך המפות וכלי המדידה.</p>
+        </div>
+      </div>
+
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(7)">חזרה</button>
+        <button class="btn-continue" type="button" onclick="goTo(9)">המשך</button>
+      </div>
+
+    </section>
+
+    <section class="screen" data-screen="9" id="s9">
+
+      <div class="s18-question">
+        <div class="s18-q-layout">
+
+          <!-- RIGHT: question text + input row -->
+          <div class="s18-q-right">
+            <div class="s18-q-inner">
+              <div class="s18-q-text-wrap">
+                <div class="s18-q-text">
+                  א. הצוות התחיל במשימה.<br>
+                  כדי לכייל את הרחפן צריך להגדיר את קנה המידה של המפה שעל המסך.<br>
+                  במציאות, המרחק הישיר ממרכז המבקרים לאגם הוא 2 ק"מ.<br>
+                  אורך אותו מסלול על המפה הוא 8 ס"מ.<br>
+                  <strong>חשבו את קנה המידה המצומצם של המפה.</strong>
+                </div>
+              </div>
+              <div class="s18-fill-row">
+                <input class="s18-answer-box" id="s45-answer-input" type="text" inputmode="numeric" dir="rtl" oninput="s45OnInput()">
+                <span class="s18-fill-text">:1</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- LEFT: Area map image -->
+          <div class="s18-q-left">
+            <img class="s18-console-img" src="./assets/images/Area.png" alt="מפה של השטח">
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Inline feedback bar -->
+      <div class="s5-inline-feedback s18-feedback-bar" id="s45-feedback" hidden>
+        <div class="s5-fb-icon" id="s45-fb-icon"></div>
+        <div class="s5-fb-text">
+          <span class="s5-fb-bold" id="s45-fb-bold"></span>
+          <span class="s5-fb-regular" id="s45-fb-regular"></span>
+        </div>
+      </div>
+
+      <!-- Hint popup -->
+      <div class="s16-hint-popup" id="s45-hint-popup" hidden>
+        <div class="s16-hint-popup-header">
+          <svg width="48" height="56" viewBox="0 0 48 56" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M24 2C15.16 2 8 9.16 8 18C8 23.52 10.78 28.38 15 31.34L16 31.98V40C16 41.1 16.9 42 18 42H30C31.1 42 32 41.1 32 40V31.98L33 31.34C37.22 28.38 40 23.52 40 18C40 9.16 32.84 2 24 2Z" fill="white"/>
+            <rect x="17" y="43" width="14" height="3.5" rx="1.75" fill="white"/>
+            <rect x="19" y="47.5" width="10" height="3.5" rx="1.75" fill="white"/>
+            <rect x="21" y="52" width="6" height="3" rx="1.5" fill="white"/>
+          </svg>
+          <div class="s16-hint-popup-title">רמז</div>
+        </div>
+        <div class="s16-hint-popup-text">כדי למצוא את קנה המידה, עלינו להשוות בין האורך במפה לאורך במציאות. כיצד נייצג את שניהם באותן יחידות מידה כדי לגלות את היחס המצומצם?</div>
+        <button class="s16-hint-popup-close" type="button" onclick="s45CloseHint()">חזרה לשאלה</button>
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(8)">חזרה</button>
+        <div class="s16-hint-continue-group">
+          <button class="s16-hint-btn" type="button" id="s45-hint-btn" onclick="s45ToggleHint()" hidden>
+            <svg width="22" height="26" viewBox="0 0 22 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M11 1C6.58 1 3 4.58 3 9C3 11.76 4.39 14.19 7 15.67L7.5 15.97V19C7.5 19.55 7.95 20 8.5 20H13.5C14.05 20 14.5 19.55 14.5 19V15.97L15 15.67C17.61 14.19 19 11.76 19 9C19 4.58 15.42 1 11 1Z" fill="#a51cff75"/>
+              <rect x="8" y="20.5" width="6" height="1.5" rx="0.75" fill="#a51cff75"/>
+              <rect x="8.75" y="22.5" width="4.5" height="1.5" rx="0.75" fill="#a51cff75"/>
+              <rect x="9.5" y="24.5" width="3" height="1.25" rx="0.625" fill="#a51cff75"/>
+            </svg>
+            אפשר רמז?
+          </button>
+          <button class="btn-continue" id="s45-check" type="button" disabled onclick="s45Check()">המשך</button>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="screen" data-screen="10" id="s10">
+
+      <div class="s44-bg">
+        <img src="./assets/images/Team.png" alt="צוות חיפוש" class="s44-bg-img">
+      </div>
+
+      <div class="s44-content">
+        <div class="s44-text-box">
+          <p>החיפושים כבר בעיצומם, אבל נראה שיש בעיית קליטה של הרחפן באיזור האגם.</p>
+        </div>
+      </div>
+
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(9)">חזרה</button>
+        <button class="btn-continue" type="button" onclick="goTo(11)">המשך</button>
+      </div>
+
+    </section>
+
+    <section class="screen" data-screen="11" id="s11">
+
+      <div class="s18-question">
+        <div class="s18-q-layout">
+
+          <!-- RIGHT: question text + multi-select options -->
+          <div class="s18-q-right">
+            <div class="s18-q-inner">
+              <div class="s18-q-text-wrap">
+                <div class="s18-q-text">
+                  ב. הצוות מחליט לפרוס כבל תקשורת בין אוהל הפיקוד לאגם, לשיפור הקליטה.<br>
+                  המרחק במציאות בין אוהל הפיקוד לאגם הוא 1 ק״מ.<br>
+                  קנה המידה של המפה הוא 1:25,000.<br>
+                  במשאית החילוץ יש 3 גלילי כבל, כל אחד באורך של 350 מטרים.<br>
+                  <strong>סמנו את כל האפשרויות המתאימות:</strong>
+                </div>
+              </div>
+
+              <div class="s47-answers" role="group" aria-label="אפשרויות תשובה">
+                <label class="s47-option">
+                  <input type="checkbox" class="s47-checkbox" data-index="0" onchange="s47Toggle(0)">
+                  <span class="s47-checkbox-custom"></span>
+                  <span class="s47-option-text">3 גלילי הכבל יספיקו כדי להגיע לאגם במציאות.</span>
+                </label>
+
+                <label class="s47-option">
+                  <input type="checkbox" class="s47-checkbox" data-index="1" onchange="s47Toggle(1)">
+                  <span class="s47-checkbox-custom"></span>
+                  <span class="s47-option-text">האורך הכולל של הכבלים הוא 10.5 מטרים במציאות.</span>
+                </label>
+
+                <label class="s47-option">
+                  <input type="checkbox" class="s47-checkbox" data-index="2" onchange="s47Toggle(2)">
+                  <span class="s47-checkbox-custom"></span>
+                  <span class="s47-option-text">המרחק בין האוהל לאגם על גבי המפה הוא 4 ס״מ.</span>
+                </label>
+
+                <label class="s47-option">
+                  <input type="checkbox" class="s47-checkbox" data-index="3" onchange="s47Toggle(3)">
+                  <span class="s47-checkbox-custom"></span>
+                  <span class="s47-option-text">גם 2 גלילים יספיקו כדי לכסות את כל המרחק עד לאגם.</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- LEFT: Area map image -->
+          <div class="s18-q-left">
+            <img class="s18-console-img" src="./assets/images/Area.png" alt="מפה של השטח">
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Inline feedback bar -->
+      <div class="s5-inline-feedback s18-feedback-bar" id="s47-feedback" hidden>
+        <div class="s5-fb-icon" id="s47-fb-icon"></div>
+        <div class="s5-fb-text">
+          <span class="s5-fb-bold" id="s47-fb-bold"></span>
+          <span class="s5-fb-regular" id="s47-fb-regular"></span>
+        </div>
+      </div>
+
+      <!-- Hint popup -->
+      <div class="s16-hint-popup" id="s47-hint-popup" hidden>
+        <div class="s16-hint-popup-header">
+          <svg width="48" height="56" viewBox="0 0 48 56" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M24 2C15.16 2 8 9.16 8 18C8 23.52 10.78 28.38 15 31.34L16 31.98V40C16 41.1 16.9 42 18 42H30C31.1 42 32 41.1 32 40V31.98L33 31.34C37.22 28.38 40 23.52 40 18C40 9.16 32.84 2 24 2Z" fill="white"/>
+            <rect x="17" y="43" width="14" height="3.5" rx="1.75" fill="white"/>
+            <rect x="19" y="47.5" width="10" height="3.5" rx="1.75" fill="white"/>
+            <rect x="21" y="52" width="6" height="3" rx="1.5" fill="white"/>
+          </svg>
+          <div class="s16-hint-popup-title">רמז</div>
+        </div>
+        <div class="s16-hint-popup-text">המרחק בין אוהל הפיקוד לאגם מוגדר כ-1 ק״מ. מהו האורך הכולל של הכבלים שיש ברשותנו, והאם הוא יספיק כדי לכסות מרחק זה?</div>
+        <button class="s16-hint-popup-close" type="button" onclick="s47CloseHint()">חזרה לשאלה</button>
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(10)">חזרה</button>
+        <div class="s16-hint-continue-group">
+          <button class="s16-hint-btn" type="button" id="s47-hint-btn" onclick="s47ToggleHint()" hidden>
+            <svg width="22" height="26" viewBox="0 0 22 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M11 1C6.58 1 3 4.58 3 9C3 11.76 4.39 14.19 7 15.67L7.5 15.97V19C7.5 19.55 7.95 20 8.5 20H13.5C14.05 20 14.5 19.55 14.5 19V15.97L15 15.67C17.61 14.19 19 11.76 19 9C19 4.58 15.42 1 11 1Z" fill="#a51cff75"/>
+              <rect x="8" y="20.5" width="6" height="1.5" rx="0.75" fill="#a51cff75"/>
+              <rect x="8.75" y="22.5" width="4.5" height="1.5" rx="0.75" fill="#a51cff75"/>
+              <rect x="9.5" y="24.5" width="3" height="1.25" rx="0.625" fill="#a51cff75"/>
+            </svg>
+            אפשר רמז?
+          </button>
+          <button class="btn-continue" id="s47-check" type="button" disabled onclick="s47Check()">המשך</button>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="screen" data-screen="12" id="s12">
+
+      <div class="s44-bg">
+        <img src="./assets/images/Noa.png" alt="נועה מחילוץ" class="s44-bg-img">
+      </div>
+
+      <div class="s44-content">
+        <div class="s44-text-box">
+          <p>רגע, מה זה?</p>
+          <p>נועה מצוות החילוץ חושבת שהיא מזהה סימן לאחד המטיילים האבודים באיזור האגם.</p>
+        </div>
+      </div>
+
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(11)">חזרה</button>
+        <button class="btn-continue" type="button" onclick="goTo(13)">המשך</button>
+      </div>
+
+    </section>
+
+    <section class="screen" data-screen="13" id="s13">
+
+      <div class="s18-question">
+        <div class="s18-q-layout">
+
+          <!-- RIGHT: question text + options -->
+          <div class="s18-q-right">
+            <div class="s18-q-inner">
+              <div class="s18-q-text-wrap">
+                <div class="s18-q-text">
+                  ג. כדי לראות טוב יותר את האגם, נועה לוחצת על כפתור הזום ומגדילה את התמונה שעל המסך פי 4.<br>
+                  צוות הרחפן רוצה לבדוק איך משפיע הזום על קנה המידה של התמונה.<br>
+                  נזכיר – קנה המידה לפני ההגדלה היה 25,000 : 1.<br>
+                  <strong>מי מהם צודק?</strong>
+                </div>
+              </div>
+              <div class="s5-answers" role="group" aria-label="אפשרויות תשובה">
+                <button class="s5-opt" data-index="0" type="button" onclick="s49Select(0)">
+                  <span class="s5-opt-circle"></span>
+                  <span class="s5-opt-text"><strong>דן:</strong> קנה המידה גדל פי 4, כלומר הפך ל-100,000 : 1.<br>הגדלנו את הזום, אז נכפיל גם את הצד הימני.</span>
+                </button>
+                <button class="s5-opt" data-index="1" type="button" onclick="s49Select(1)">
+                  <span class="s5-opt-circle"></span>
+                  <span class="s5-opt-text"><strong>נועה:</strong> קנה המידה קטן פי 4, כלומר הפך ל- 6,250 : 1.<br>כשהתמונה על המסך מוגדלת, כל ס״מ במסך מייצג עכשיו גודל קטן יותר במציאות.</span>
+                </button>
+                <button class="s5-opt" data-index="2" type="button" onclick="s49Select(2)">
+                  <span class="s5-opt-circle"></span>
+                  <span class="s5-opt-text"><strong>שירה:</strong> קנה המידה נשאר 25,000 : 1. הפארק במציאות לא שינה את הגודל שלו, ולכן קנה המידה לא משתנה.</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- LEFT: Area map image (zoomed 4x) -->
+          <div class="s18-q-left">
+            <div class="s49-image-zoom">
+              <img class="s18-console-img s49-zoomed-img" src="./assets/images/Area.png" alt="מפה של השטח - זום">
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Inline feedback bar -->
+      <div class="s5-inline-feedback s18-feedback-bar" id="s49-feedback" hidden>
+        <div class="s5-fb-icon" id="s49-fb-icon"></div>
+        <div class="s5-fb-text">
+          <span class="s5-fb-bold" id="s49-fb-bold"></span>
+          <span class="s5-fb-regular" id="s49-fb-regular"></span>
+        </div>
+      </div>
+
+      <!-- Hint popup -->
+      <div class="s16-hint-popup" id="s49-hint-popup" hidden>
+        <div class="s16-hint-popup-header">
+          <svg width="48" height="56" viewBox="0 0 48 56" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M24 2C15.16 2 8 9.16 8 18C8 23.52 10.78 28.38 15 31.34L16 31.98V40C16 41.1 16.9 42 18 42H30C31.1 42 32 41.1 32 40V31.98L33 31.34C37.22 28.38 40 23.52 40 18C40 9.16 32.84 2 24 2Z" fill="white"/>
+            <rect x="17" y="43" width="14" height="3.5" rx="1.75" fill="white"/>
+            <rect x="19" y="47.5" width="10" height="3.5" rx="1.75" fill="white"/>
+            <rect x="21" y="52" width="6" height="3" rx="1.5" fill="white"/>
+          </svg>
+          <div class="s16-hint-popup-title">רמז</div>
+        </div>
+        <div class="s16-hint-popup-text">כשמגדילים את התמונה במסך (מבצעים זום) המציאות לא משתנה, אך כל ס״מ במסך מציג כעת מרחק קטן יותר במציאות. נסו לחשוב - איך זה משפיע על יחס ההקטנה שלנו?</div>
+        <button class="s16-hint-popup-close" type="button" onclick="s49CloseHint()">חזרה לשאלה</button>
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(12)">חזרה</button>
+        <div class="s16-hint-continue-group">
+          <button class="s16-hint-btn" type="button" id="s49-hint-btn" onclick="s49ToggleHint()" hidden>
+            <svg width="22" height="26" viewBox="0 0 22 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M11 1C6.58 1 3 4.58 3 9C3 11.76 4.39 14.19 7 15.67L7.5 15.97V19C7.5 19.55 7.95 20 8.5 20H13.5C14.05 20 14.5 19.55 14.5 19V15.97L15 15.67C17.61 14.19 19 11.76 19 9C19 4.58 15.42 1 11 1Z" fill="#a51cff75"/>
+              <rect x="8" y="20.5" width="6" height="1.5" rx="0.75" fill="#a51cff75"/>
+              <rect x="8.75" y="22.5" width="4.5" height="1.5" rx="0.75" fill="#a51cff75"/>
+              <rect x="9.5" y="24.5" width="3" height="1.25" rx="0.625" fill="#a51cff75"/>
+            </svg>
+            אפשר רמז?
+          </button>
+          <button class="btn-continue" id="s49-continue" type="button" disabled onclick="s49Submit()">המשך</button>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="screen" data-screen="14" id="s14">
+
+      <div class="s44-bg">
+        <img src="./assets/images/Elicopter.png" alt="מסוק חילוץ" class="s44-bg-img">
+      </div>
+
+      <div class="s44-content">
+        <div class="s44-text-box">
+          <p>המטיילים נמצאו, אך אחד מהם שבר את הרגל.</p>
+          <p>צוות החילוץ הזעיק מסוק שיפנה אותו לבית החולים.</p>
+          <p>עכשיו צריך לחפש קרחת יער מספיק גדולה להנחתת המסוק.</p>
+        </div>
+      </div>
+
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(13)">חזרה</button>
+        <button class="btn-continue" type="button" onclick="goTo(15)">המשך</button>
+      </div>
+
+    </section>
+
+    <section class="screen" data-screen="15" id="s15">
+
+      <div class="s18-question">
+        <div class="s18-q-layout">
+
+          <!-- RIGHT: question text + options -->
+          <div class="s18-q-right">
+            <div class="s18-q-inner">
+              <div class="s18-q-text-wrap">
+                <div class="s18-q-text">
+                  ד. טייס המסוק דורש משטח נחיתה שרוחבו במציאות הוא לפחות 50 מטרים.<br>
+                  שני רחפנים צילמו שתי קרחות יער שונות, בקני מידה שונים:<br>
+                  <strong>רחפן א׳</strong> צילם קרחת יער בקנה מידה 6,250 : 1. רוחב קרחת היער במסך הוא 1 ס״מ.<br>
+                  <strong>רחפן ב׳</strong> צילם קרחת יער בקנה מידה 2,000 : 1. רוחב קרחת היער במסך הוא 2 ס״מ.<br>
+                  <strong>איזו קרחת יער מתאימה להנחתת המסוק?</strong>
+                </div>
+              </div>
+              <div class="s5-answers" role="group" aria-label="אפשרויות תשובה">
+                <button class="s5-opt" data-index="0" type="button" onclick="s51Select(0)">
+                  <span class="s5-opt-circle"></span>
+                  <span class="s5-opt-text">רק קרחת היער שצילם רחפן א׳</span>
+                </button>
+                <button class="s5-opt" data-index="1" type="button" onclick="s51Select(1)">
+                  <span class="s5-opt-circle"></span>
+                  <span class="s5-opt-text">רק קרחת היער שצילם רחפן ב׳</span>
+                </button>
+                <button class="s5-opt" data-index="2" type="button" onclick="s51Select(2)">
+                  <span class="s5-opt-circle"></span>
+                  <span class="s5-opt-text">שתי קרחות היער מתאימות להנחתה</span>
+                </button>
+                <button class="s5-opt" data-index="3" type="button" onclick="s51Select(3)">
+                  <span class="s5-opt-circle"></span>
+                  <span class="s5-opt-text">אף אחת מקרחות היער אינה מתאימה להנחתה</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- LEFT: Helicopter image -->
+          <div class="s18-q-left">
+            <img class="s18-console-img" src="./assets/images/Elicopter2.png" alt="מסוק חילוץ">
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Inline feedback bar -->
+      <div class="s5-inline-feedback s18-feedback-bar" id="s51-feedback" hidden>
+        <div class="s5-fb-icon" id="s51-fb-icon"></div>
+        <div class="s5-fb-text">
+          <span class="s5-fb-bold" id="s51-fb-bold"></span>
+          <span class="s5-fb-regular" id="s51-fb-regular"></span>
+        </div>
+      </div>
+
+      <!-- Hint popup -->
+      <div class="s16-hint-popup" id="s51-hint-popup" hidden>
+        <div class="s16-hint-popup-header">
+          <svg width="48" height="56" viewBox="0 0 48 56" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M24 2C15.16 2 8 9.16 8 18C8 23.52 10.78 28.38 15 31.34L16 31.98V40C16 41.1 16.9 42 18 42H30C31.1 42 32 41.1 32 40V31.98L33 31.34C37.22 28.38 40 23.52 40 18C40 9.16 32.84 2 24 2Z" fill="white"/>
+            <rect x="17" y="43" width="14" height="3.5" rx="1.75" fill="white"/>
+            <rect x="19" y="47.5" width="10" height="3.5" rx="1.75" fill="white"/>
+            <rect x="21" y="52" width="6" height="3" rx="1.5" fill="white"/>
+          </svg>
+          <div class="s16-hint-popup-title">רמז</div>
+        </div>
+        <div class="s16-hint-popup-text">מהו הרוחב במציאות של כל קרחת יער, והאם הוא עומד בתנאי הנדרש?</div>
+        <button class="s16-hint-popup-close" type="button" onclick="s51CloseHint()">חזרה לשאלה</button>
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(14)">חזרה</button>
+        <div class="s16-hint-continue-group">
+          <button class="s16-hint-btn" type="button" id="s51-hint-btn" onclick="s51ToggleHint()" hidden>
+            <svg width="22" height="26" viewBox="0 0 22 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M11 1C6.58 1 3 4.58 3 9C3 11.76 4.39 14.19 7 15.67L7.5 15.97V19C7.5 19.55 7.95 20 8.5 20H13.5C14.05 20 14.5 19.55 14.5 19V15.97L15 15.67C17.61 14.19 19 11.76 19 9C19 4.58 15.42 1 11 1Z" fill="#a51cff75"/>
+              <rect x="8" y="20.5" width="6" height="1.5" rx="0.75" fill="#a51cff75"/>
+              <rect x="8.75" y="22.5" width="4.5" height="1.5" rx="0.75" fill="#a51cff75"/>
+              <rect x="9.5" y="24.5" width="3" height="1.25" rx="0.625" fill="#a51cff75"/>
+            </svg>
+            אפשר רמז?
+          </button>
+          <button class="btn-continue" id="s51-continue" type="button" disabled onclick="s51Submit()">המשך</button>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="screen" data-screen="16" id="s16">
+
+      <div class="s44-bg">
+        <img src="./assets/images/Happy Team.png" alt="צוות חילוץ שמח" class="s44-bg-img">
+      </div>
+
+      <div class="s44-content">
+        <div class="s44-text-box">
+          <p>המשימה הושלמה!</p>
+          <p>המטיילים חולצו, והמטייל הפצוע פונה לבית חולים.</p>
+          <p>תודה שעזרתם לצוות החילוץ!</p>
+        </div>
+      </div>
+
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(15)">חזרה</button>
+        <button class="btn-continue" type="button" onclick="goTo(17)">המשך</button>
+      </div>
+
+    </section>
+
+    <section class="screen" data-screen="17" id="s17">
+
+      <div class="s0-content">
+        <!-- Success state -->
+        <div id="s53-success" hidden>
+          <p class="s25-text-large">כל הכבוד!</p>
+          <p class="s25-text-large">השלמת את היחידה בהצלחה!</p>
+        </div>
+
+        <!-- Failure state -->
+        <div id="s53-retry" hidden>
+          <p class="s25-text-large">אני רואה שזה היה קצת קשה.</p>
+          <p class="s25-text-large">העיקר שניסית והתאמצת!</p>
+        </div>
+
+        <img id="s53-gif" alt="דמות מלווה" class="s53-gif">
+      </div>
+
+      <div class="bottom-bar s3-bottom-bar">
+        <button class="btn-back-s3" type="button" onclick="goTo(16)">חזרה</button>
+        <button class="btn-continue" type="button" onclick="goTo(0)">לדף הבית</button>
+      </div>
+
+    </section>
+
+
+    <!-- ═══════════════════════════════════════
+         REPORT MODAL
+    ════════════════════════════════════════ -->
+    <div id="report-modal"
+         class="report-modal-overlay"
+         hidden
+         role="dialog"
+         aria-modal="true"
+         aria-labelledby="report-modal-title">
+      <div class="report-modal-box">
+        <button class="report-close-btn" onclick="tryCloseReportModal()" aria-label="סגור">&#10005;</button>
+        <h2 class="report-modal-title" id="report-modal-title">דיווח על בעיה</h2>
+        <p class="report-modal-body">משהו לא ברור או לא עובד כמו שצריך? ספרו לנו מה קרה כדי שנטפל.</p>
+
+        <div class="report-field">
+          <label class="report-label" for="report-type">מה סוג הבעיה <span class="required-star">*</span></label>
+          <select class="report-select" id="report-type">
+            <option value="" disabled selected>בחרו סוג בעיה</option>
+            <option value="technical">תקלה טכנית או שמשהו לא עובד</option>
+            <option value="unclear">משהו לא ברור לי</option>
+            <option value="other">אחר</option>
+          </select>
+        </div>
+
+        <div class="report-field">
+          <label class="report-label" for="report-text">מה קרה? <span class="required-star">*</span></label>
+          <textarea class="report-textarea" id="report-text" maxlength="250" rows="4" placeholder="תארו את הבעיה..."></textarea>
+          <span class="report-char-count" id="report-char-count">0 / 250</span>
+        </div>
+
+        <div class="report-actions">
+          <button class="report-submit-btn" onclick="submitReport()">שליחה</button>
+          <button class="report-cancel-btn" onclick="tryCloseReportModal()">ביטול</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         REPORT CONFIRM-CLOSE MODAL
+    ════════════════════════════════════════ -->
+    <div id="report-confirm-modal"
+         class="report-modal-overlay"
+         hidden
+         role="dialog"
+         aria-modal="true"
+         aria-labelledby="confirm-modal-title">
+      <div class="report-modal-box report-confirm-box">
+        <h2 class="report-modal-title" id="confirm-modal-title">בטוח לסגור את החלון?</h2>
+        <p class="report-modal-body">בלחיצה על סגירה לא יישלח דיווח</p>
+        <div class="report-actions">
+          <button class="report-cancel-btn" onclick="forceCloseReportModal()">סגור חלון</button>
+          <button class="report-submit-btn" onclick="backToReportForm()">אני רוצה לדווח</button>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
