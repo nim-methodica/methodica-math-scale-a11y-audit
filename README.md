@@ -29,9 +29,9 @@
 ## תוכן ה-repo
 - `accessibility-report-*.{md,html}` — 5 הדוחות.
 - `methodica-math-scale-01-main/` — קוד 4 מודולי הלומדה (index.html / script.js / styles.css / assets).
-- [`accessibility-qa-skill/`](accessibility-qa-skill/) — סקיל ה-Claude Code בשם **`accessibility-qa`**
+- [`accessibility-qa/`](accessibility-qa/) — סקיל ה-Claude Code בשם **`accessibility-qa`**
   שהפיק את הבדיקה (scan.py, הנחיות ביקורת חיה, קטלוג 33 בדיקות, renderer ל-HTML).
-  להרצה מחדש: ראו [`accessibility-qa-skill/SKILL.md`](accessibility-qa-skill/SKILL.md).
+  להרצה מחדש: ראו [`accessibility-qa/SKILL.md`](accessibility-qa/SKILL.md).
 
 ## הסתייגות
 הבדיקה האוטומטית (axe-core + scan.py) מכסה ~30-40% מהבעיות. מצבים שמאחורי אינטראקציה (הכרזת-משוב,
